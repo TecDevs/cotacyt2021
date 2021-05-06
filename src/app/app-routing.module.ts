@@ -20,6 +20,10 @@ const routes: Routes = [
         redirectTo: 'user'
       }
     ]
+  },
+  {
+    path: '**',
+    redirectTo: 'app',
   }
 ];
 
