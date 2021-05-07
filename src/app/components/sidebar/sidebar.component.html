@@ -13,30 +13,26 @@
                 <p><span>General</span></p>
             </div>
             <li class="item">
-                <a [routerLink]="['dashboard']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="menu-btn">
+                <a [routerLink]="['dashboard']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+                    class="menu-btn">
                     <i class="fas fa-home"></i><span> Inicio <i class="fas fa-chevron-right drop-down"></i></span>
                 </a>
-                <a class="menu-btn"   [routerLink]="['projects']" routerLinkActive="active"  >
+                <a class="menu-btn" [routerLink]="['projects']" routerLinkActive="active">
                     <i class="fas fa-user-circle"></i><span> Proyectos <i
-
-							class="fas fa-chevron-right drop-down"></i></span>
+                            class="fas fa-chevron-right drop-down"></i></span>
                 </a>
             </li>
-
             <!-- OPCIONES DE ADMINISTRADOR -->
             <div class="indicador">
                 <p><span>Administrador</span></p>
             </div>
-
-
-			<li class="item">
-				<a  [routerLink]="['judges']" routerLinkActive="active" class="menu-btn">
-					<i class="fas fa-users"></i><span> Jueces <i class="fas fa-chevron-right drop-down"></i></span>
-				</a>
-				<a  [routerLink]="['add-projects']" routerLinkActive="active" class="menu-btn">
-					<i class="fas fa-pencil-ruler"></i><span> Proyectos <i
-
-							class="fas fa-chevron-right drop-down"></i></span>
+            <li class="item">
+                <a [routerLink]="['judges']" routerLinkActive="active" class="menu-btn">
+                    <i class="fas fa-users"></i><span> Jueces <i class="fas fa-chevron-right drop-down"></i></span>
+                </a>
+                <a [routerLink]="['add-projects']" routerLinkActive="active" class="menu-btn">
+                    <i class="fas fa-pencil-ruler"></i><span> Proyectos <i
+                            class="fas fa-chevron-right drop-down"></i></span>
                 </a>
                 <!-- <a class="menu-btn">
                     <i class="fas fa-align-left"></i><span> Categorias <i
@@ -47,11 +43,9 @@
                 </a>
             </li>
             <!-- TERMINA OPCIONES DE ADMINISTRADOR -->
-
         </div>
+    </div>
 </div>
-</div>
-
 <div class="wrapper">
     <div class=" sidebar-s sidebar">
         <div class="sidebar-menu">
@@ -60,45 +54,44 @@
                 <img src="../../../assets/logotam.png" alt="">
                 <!-- <p>Hola, Bienvenido</p> -->
                 <!-- <p><span>{{sessionData['nombre']}}</span></p> -->
-                <hr>
             </div>
             <div class="indicador">
                 <p><span>General</span></p>
             </div>
             <li class="item">
-                <a [routerLink]="['dashboard']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="menu-btn">
+                <a [routerLink]="['dashboard']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+                    class="menu-btn">
                     <i class="fas fa-home"></i><span> Inicio <i class="fas fa-chevron-right drop-down"></i></span>
                 </a>
-                <a  class="menu-btn" [routerLink]="['projects']" routerLinkActive="active">
+                <a class="menu-btn" [routerLink]="['projects']" routerLinkActive="active">
                     <i class="fas fa-tasks"></i><span> Proyectos <i class="fas fa-chevron-right drop-down"></i></span>
                 </a>
             </li>
-
             <!-- OPCIONES DE ADMINISTRADOR -->
-            <div class="indicador" >
+            <div class="indicador">
                 <p><span>Administrador</span></p>
             </div>
-
-
             <li class="item">
-                <a  [routerLink]="['judges']" routerLinkActive="active" class="menu-btn">
+                <a [routerLink]="['judges']" routerLinkActive="active" class="menu-btn">
                     <i class="fas fa-balance-scale"></i><span> Jueces <i
                             class="fas fa-chevron-right drop-down"></i></span>
                 </a>
-                <a  [routerLink]="['add-projects']" routerLinkActive="active" class="menu-btn">
+                <a [routerLink]="['add-projects']" routerLinkActive="active" class="menu-btn">
                     <i class="fas fa-pencil-ruler"></i><span> Proyectos <i
                             class="fas fa-chevron-right drop-down"></i></span>
                 </a>
-                <a  [routerLink]="['add-advisers']" routerLinkActive="active" class="menu-btn">
+                <a [routerLink]="['add-advisers']" routerLinkActive="active" class="menu-btn">
                     <i class="fas fa-users"></i><span> Asesores <i class="fas fa-chevron-right drop-down"></i></span>
                 </a>
 
-                <a  [routerLink]="['add-authors']" routerLinkActive="active" class="menu-btn">
-                    <i class="fas fa-user-check"></i><span> Autores <i class="fas fa-chevron-right drop-down"></i></span>
+                <a [routerLink]="['add-authors']" routerLinkActive="active" class="menu-btn">
+                    <i class="fas fa-user-check"></i><span> Autores <i
+                            class="fas fa-chevron-right drop-down"></i></span>
                 </a>
 
-                <a  [routerLink]="['add-estadistics']" routerLinkActive="active" class="menu-btn">
-                    <i class="fas fa-user-check"></i><span> Estadísticas <i class="fas fa-chevron-right drop-down"></i></span>
+                <a [routerLink]="['add-estadistics']" routerLinkActive="active" class="menu-btn">
+                    <i class="fas fa-user-check"></i><span> Estadísticas <i
+                            class="fas fa-chevron-right drop-down"></i></span>
                 </a>
 
                 <a class="menu-btn" style="cursor: pointer;">
@@ -109,13 +102,9 @@
 
         </div>
     </div>
-
-
-
-
     <div class="main-container">
-        <nav class="navbar navbar-light bg-light justify-content-between mb-3 p-3">
-            <p class="" >Categoria: <span class="ml-3 category-label">Administrador</span></p>
+        <nav class="mb-3 p-3">
+            <p class="">Categoria: <span class="ml-3 category-label">Administrador</span></p>
             <!-- <p class="" >Categoria: <span class="ml-3 category-label">{{categoria | titlecase}}</span></p> -->
             <!-- <button class="fas fa-cog btn-cog"></button> -->
         </nav>
@@ -123,12 +112,3 @@
     </div>
 
 </div>
-<!-- 
-
-<script type="text/javascript">
-	$(document).ready(function () {
-		$(".sidebar-btn").click(function () {
-			$(".wrapper").toggleClass("collapse");
-		});
-	});
-</script> -->

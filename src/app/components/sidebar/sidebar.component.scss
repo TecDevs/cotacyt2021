@@ -38,10 +38,15 @@
   position: fixed;
   top: 0px;
   width: 250px;
+  left: 0;
   height: calc(100% - 0%);
-  transition: 0.3s;
-  transition-property: width;
+  transition: all 0.3s ease;
   overflow-y: auto;
+  opacity: 1;
+}
+.active-nav {
+  left: -100%;
+  opacity: 0;
 }
 
 .wrapper .sidebar .sidebar-menu {
@@ -163,18 +168,15 @@
   background-color: var(--grey) !important;
 }
 
-.wrapper .main-container {
+.main-container {
   // width: (100% - 250);
-  // margin-top: 0px;
+  margin-top: 0px;
   margin-left: 250px;
-  position: relative;
-  top: 0px;
   // padding: 15px;
   // background-size: cover;
   // height: 100vh;
   // transition: 0.3s;
 }
-
 //tamaño sidebar pequeño
 .wrapper.collapse .sidebar {
   width: 70px;
