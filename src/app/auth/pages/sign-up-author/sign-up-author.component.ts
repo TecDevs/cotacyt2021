@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-sign-up-author',
@@ -7,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignUpAuthorComponent implements OnInit {
 
-  constructor() { }
+  formAuthor: FormGroup;
+  constructor(private fb: FormBuilder) {
+    this.formAuthor = this.fb.group({
+      // todo: datos
+    });
+  }
 
   ngOnInit(): void {
   }
