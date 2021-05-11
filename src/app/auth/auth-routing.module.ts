@@ -17,7 +17,7 @@ const routes: Routes = [
       },
       {
         path: '**',
-        redirectTo: 'sign-up-author',
+        redirectTo: 'sign-in',
       }
     ]
   }

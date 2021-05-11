@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-sign-in',
@@ -12,10 +12,16 @@ export class SignInComponent implements OnInit {
   constructor(private fb: FormBuilder) {
     this.formSignIn = this.fb.group({
       // TODO: datos de login
+      user: ['', [Validators.required, Validators.maxLength(20)]],
+      password: ['', [Validators.required, Validators.maxLength(20)]],
     });
   }
 
   ngOnInit(): void {
+  }
+
+  signIn(): void {
+    // TODO: consume API
   }
 
 }
