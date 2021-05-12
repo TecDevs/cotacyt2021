@@ -25,6 +25,7 @@ export class FormProyectComponent implements OnInit {
   formRegisterProyect: FormGroup;
   formSecondAuthor: FormGroup;
   autors = false;
+  terminado = false;
   @ViewChild('project_image', {
     read: ElementRef
   }) project_image: ElementRef;
@@ -173,38 +174,39 @@ export class FormProyectComponent implements OnInit {
     this.authService.registerProject(fr).subscribe(
       data => {
         console.log(data);
-        Swal.fire({
-          icon: 'success',
-          text: 'Registro exitoso'
-        });
-        switch (this.formRegisterProyect.value.id_category) {
-          case 'PETIT':
-            window.open('https://drive.google.com/file/d/1U230peNB_6XEXcF2hWIFvonsOWkQp1eO/view?usp=sharing', '_blank');
-            break;
-          case 'KIDS':
-            window.open('https://drive.google.com/file/d/1gZ0RKrFM9euxNFjEohR7z6AAvO9eccYT/view?usp=sharing', '_blank');
-            break;
-          case 'JUVENIL':
-            window.open('https://drive.google.com/file/d/1SezhWNgY64atINHHRBl27R_ue6Etxgxe/view?usp=sharing', '_blank');
-            break;
-          case 'MEDIA SUPERIOR':
-            window.open('https://drive.google.com/file/d/1y6_meM3CgML4ZEsMJrI5ROg6JjGuCTm4/view?usp=sharing', '_blank');
-            break;
-          case 'SUPERIOR':
-            window.open('https://drive.google.com/file/d/16pHHUHS2k46i5PKMNHTacyEi-GxfyJEJ/view?usp=sharing', '_blank');
-            break;
-          case 'POSGRADO':
-            window.open('https://drive.google.com/file/d/1z_E9WPMvSCt82rBr6IANSE2Bkl_fNVgv/view?usp=sharing', '_blank');
-            break;
+        if (!data.error) {
+          Swal.fire({
+            icon: 'success',
+            text: 'Registro exitoso'
+          });
+          switch (this.formRegisterProyect.value.id_category) {
+            case 'PETIT':
+              window.open('https://drive.google.com/file/d/1U230peNB_6XEXcF2hWIFvonsOWkQp1eO/view?usp=sharing', '_blank');
+              break;
+            case 'KIDS':
+              window.open('https://drive.google.com/file/d/1gZ0RKrFM9euxNFjEohR7z6AAvO9eccYT/view?usp=sharing', '_blank');
+              break;
+            case 'JUVENIL':
+              window.open('https://drive.google.com/file/d/1SezhWNgY64atINHHRBl27R_ue6Etxgxe/view?usp=sharing', '_blank');
+              break;
+            case 'MEDIA SUPERIOR':
+              window.open('https://drive.google.com/file/d/1y6_meM3CgML4ZEsMJrI5ROg6JjGuCTm4/view?usp=sharing', '_blank');
+              break;
+            case 'SUPERIOR':
+              window.open('https://drive.google.com/file/d/16pHHUHS2k46i5PKMNHTacyEi-GxfyJEJ/view?usp=sharing', '_blank');
+              break;
+            case 'POSGRADO':
+              window.open('https://drive.google.com/file/d/1z_E9WPMvSCt82rBr6IANSE2Bkl_fNVgv/view?usp=sharing', '_blank');
+              break;
+          }
+        } else {
+          Swal.fire({
+            icon: 'success',
+            text: data.data.message
+          });
         }
       },
-      error => {
-        console.log(error);
-        Swal.fire({
-          icon: 'warning',
-          text: 'Registro inconcluso'
-        });
-      }
+      error => console.log(error)
     );
   }
 

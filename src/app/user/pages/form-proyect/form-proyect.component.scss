@@ -25,3 +25,24 @@
 .pading {
     padding-top: 90px;
 }
+.complete {
+    z-index: 100000;
+    position: fixed;
+    left: 0;
+    top: 80px;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: aliceblue;
+    flex-direction: column;
+    h1 {
+        font-size: 30px;
+    }
+    span {
+        font-size: 20px;
+    }
+}
