@@ -1,5 +1,4 @@
 <div class="container-fluid">
-
     <div class="row mb-4">
         <div class="col-12">
             <h1>Registro del proyecto</h1>
@@ -8,27 +7,28 @@
             <h5>Los datos con <b style="color: red;">*</b> son obligatorios</h5>
         </div>
         <div class="col-12 pl-5 pr-5 pt-2">
-            <form class="row">
+            <form class="row" [formGroup]="formRegisterProyect">
                 <div class="col-12">
                     <h3 class="mb-4 mt-3">Información del proyecto</h3>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Imagen del proyecto<b style="color: red;">*</b></label>
-                    <input type="file" class="form-control">
+                    <input formControlName="project_image" type="file" class="form-control">
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Nombre del proyecto<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
+                    <input formControlName="project_name" type="text" class="form-control">
+                    <small class="form-text text-muted">Maximo 60 caracteres.</small>
                 </div>
                 <div class="form-group col-12">
                     <label>Descripción del proyecto<b style="color: red;">*</b></label>
-                    <textarea type="text" class="form-control"
+                    <textarea formControlName="project_description" type="text" class="form-control"
                         style="max-height: 200px; min-height: 100px;"> </textarea>
                     <small class="form-text text-muted">Maximo 1000 caracteres.</small>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Sede:<b style="color: red;">*</b></label>
-                    <select class="form-control">
+                    <select formControlName="id_sedes" class="form-control">
                         <option>Nuevo laredo</option>
                         <option>Reynosa</option>
                         <option>Matamoros</option>
@@ -39,25 +39,25 @@
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Categoria:<b style="color: red;">*</b></label>
-                    <select class="form-control">
-                        <option>PETIT</option>
-                        <option>KIDS</option>
-                        <option>JUVENIL</option>
-                        <option>MEDIA SUPERIOR</option>
-                        <option>SUPERIOR</option>
-                        <option>POSGRADO</option>
+                    <select formControlName="id_category" class="form-control">
+                        <option value="PETIT">PETIT</option>
+                        <option value="KIDS">KIDS</option>
+                        <option value="JUVENIL">JUVENIL</option>
+                        <option value="MEDIA SUPERIOR">MEDIA SUPERIOR</option>
+                        <option value="SUPERIOR">SUPERIOR</option>
+                        <option value="POSGRADO">POSGRADO</option>
                     </select>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Modalidad autores del proyecto:<b style="color: red;">*</b></label>
-                    <select class="form-control" (change)="changeModality($event.target.value)">
+                    <select formControlName="id_modality" class="form-control" (change)="changeModality($event.target.value)">
                         <option value="1">Individual</option>
                         <option value="2">2 Integrantes</option>
                     </select>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Área de conocimiento:<b style="color: red;">*</b></label>
-                    <select class="form-control">
+                    <select formControlName="id_area" class="form-control">
                         <option>Agropecuarias y Alimentos</option>
                         <option>Biología</option>
                         <option>Ciencias de la Ingeniería</option>
@@ -73,165 +73,165 @@
                 </div>
                 <div class="form-group col-12">
                     <label>URL del video (youtube)<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
-                </div>
-            </form>
-        </div>
-        <div *ngIf="autors" class="col-12 pl-5 pr-5 pt-2">
-            <form class="row">
-                <div class="col-12">
-                    <h3 class="mb-4 mt-3">Datos generales del segundo autor</h3>
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                    <label>Nombre(s)<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                    <label>Apellido paterno<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                    <label>Apellido materno<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                    <label>Domicilio<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                    <label>Colonia<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                    <label>Codigo postal<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                    <label>CURP<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
-                    <small class="form-text text-muted">Consulta tu CURP <a href="https://www.gob.mx/curp/"
-                            target="_blank">aqui</a>.</small>
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                    <label>RFC<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                    <label>Telefono de contacto<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                    <label>Correo electronico<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                    <label>Municipio<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                    <label>Localidad donde vives<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                    <label>Escuela o institución<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
-                    <small class="form-text text-muted">Ej. Ejido, Congregación, Ciudad, etc.</small>
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                    <label>Facebook</label>
-                    <input type="text" class="form-control">
-                    <small class="form-text text-muted">Opcional.</small>
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                    <label>Twitter</label>
-                    <input type="text" class="form-control">
-                    <small class="form-text text-muted">Opcional.</small>
+                    <input formControlName="url_video" type="text" class="form-control">
                 </div>
             </form>
         </div>
         <div class="col-12 pl-5 pr-5 pt-2">
-            <form class="row">
+            <form class="row" [formGroup]="formRegisterProyect">
                 <div class="col-12">
                     <h3 class="mb-4 mt-3">Datos generales del asesor</h3>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Nombre(s)<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
+                    <input formControlName="adviser_name" type="text" class="form-control">
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Apellido paterno<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
+                    <input formControlName="last_name" type="text" class="form-control">
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Apellido materno<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
+                    <input formControlName="second_last_name" type="text" class="form-control">
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Domicilio<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
+                    <input formControlName="address" type="text" class="form-control">
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Colonia<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
+                    <input formControlName="suburb" type="text" class="form-control">
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Codigo postal<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
+                    <input formControlName="postal_code" type="text" class="form-control">
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>CURP<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
+                    <input formControlName="curp" type="text" class="form-control">
                     <small class="form-text text-muted">Consulta tu CURP <a href="https://www.gob.mx/curp/"
                             target="_blank">aqui</a>.</small>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>RFC<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
+                    <input formControlName="rfc" type="text" class="form-control">
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Telefono de contacto<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
+                    <input formControlName="phone_contact" type="text" class="form-control">
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Correo electronico<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
+                    <input formControlName="email" type="text" class="form-control">
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Municipio<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
+                    <input formControlName="city" type="text" class="form-control">
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Localidad donde vives<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
+                    <input formControlName="locality" type="text" class="form-control">
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Escuela o institución<b style="color: red;">*</b></label>
-                    <input type="text" class="form-control">
+                    <input formControlName="school_institute" type="text" class="form-control">
                     <small class="form-text text-muted">Ej. Ejido, Congregación, Ciudad, etc.</small>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Facebook</label>
-                    <input type="text" class="form-control">
+                    <input formControlName="facebook" type="text" class="form-control">
                     <small class="form-text text-muted">Opcional.</small>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Twitter</label>
-                    <input type="text" class="form-control">
+                    <input formControlName="twitter" type="text" class="form-control">
                     <small class="form-text text-muted">Opcional.</small>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Adjuntar credencial de Elector<b style="color: red;">*</b></label>
-                    <input type="file" class="form-control">
+                    <input formControlName="image_ine" type="file" class="form-control">
                 </div>
                 <div class="form-group col-12">
                     <label>Descripción de su participación en el desarrollo del proyecto<b
                             style="color: red;">*</b></label>
-                    <textarea type="text" class="form-control"
+                    <textarea formControlName="participation_description" type="text" class="form-control"
                         style="max-height: 200px; min-height: 100px;"> </textarea>
                     <small class="form-text text-muted">Máximo 1000 caracteres.</small>
                 </div>
             </form>
-            <button class="btn btn-success" style="width: 200px;">Registrar</button>
         </div>
+        <div *ngIf="autors" class="col-12 pl-5 pr-5 pt-2">
+            <form class="row" [formGroup]="formSecondAuthor">
+                <div class="col-12">
+                    <h3 class="mb-4 mt-3">Datos generales del segundo autor</h3>
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label>Nombre(s)<b style="color: red;">*</b></label>
+                    <input formControlName="name_author" type="text" class="form-control">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label>Apellido paterno<b style="color: red;">*</b></label>
+                    <input formControlName="last_name" type="text" class="form-control">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label>Apellido materno<b style="color: red;">*</b></label>
+                    <input formControlName="second_last_name" type="text" class="form-control">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label>Domicilio<b style="color: red;">*</b></label>
+                    <input formControlName="address" type="text" class="form-control">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label>Colonia<b style="color: red;">*</b></label>
+                    <input formControlName="suburb" type="text" class="form-control">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label>Codigo postal<b style="color: red;">*</b></label>
+                    <input formControlName="postal_code" type="text" class="form-control">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label>CURP<b style="color: red;">*</b></label>
+                    <input formControlName="curp" type="text" class="form-control">
+                    <small class="form-text text-muted">Consulta tu CURP <a href="https://www.gob.mx/curp/"
+                            target="_blank">aqui</a>.</small>
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label>RFC<b style="color: red;">*</b></label>
+                    <input formControlName="rfc" type="text" class="form-control">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label>Telefono de contacto<b style="color: red;">*</b></label>
+                    <input formControlName="phone_contact" type="text" class="form-control">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label>Correo electronico<b style="color: red;">*</b></label>
+                    <input formControlName="email" type="text" class="form-control">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label>Municipio<b style="color: red;">*</b></label>
+                    <input formControlName="city" type="text" class="form-control">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label>Localidad donde vives<b style="color: red;">*</b></label>
+                    <input formControlName="locality" type="text" class="form-control">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label>Escuela o institución<b style="color: red;">*</b></label>
+                    <input formControlName="school" type="text" class="form-control">
+                    <small class="form-text text-muted">Ej. Ejido, Congregación, Ciudad, etc.</small>
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label>Facebook</label>
+                    <input formControlName="facebook" type="text" class="form-control">
+                    <small class="form-text text-muted">Opcional.</small>
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label>Twitter</label>
+                    <input formControlName="twitter" type="text" class="form-control">
+                    <small class="form-text text-muted">Opcional.</small>
+                </div>
+            </form>
+        </div>
+        <button class="btn btn-success" (click)="registerProyect()" style="width: 200px;">Registrar</button>
     </div>
 </div>

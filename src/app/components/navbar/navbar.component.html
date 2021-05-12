@@ -1,11 +1,13 @@
 <nav class="navbar">
-    <img src="../../../assets/logotam.png" alt="" width="100px">
-    <!-- <ul class="nav-links">
-        <li><a href="#">Inicio</a></li>
-    </ul> -->
-    <!-- <div class="" style="color: white;"><i class="fas fa-chevron-down"></i></div> -->
+    <div>
+        <img src="../../../assets/logotam.png" alt="" width="100px">
+    </div>
 
-    <!-- <button class="btn btn-success">Registrar</button> -->
+    <div class="ml-5">
+        <label for="files" class="btn btn-success"><span><i class="fas fa-upload">&nbsp; &nbsp;</i></span>Subir Archivo</label>
+        <input id="files" accept=".pdf, .docx, .doc" style="visibility:hidden; display: none;" type="file" />
+    </div>
+
 </nav>
 <div class="container pading">
     <router-outlet></router-outlet>
