@@ -3,8 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormProyectService } from '../../services/form-proyect.service';
 import Swal from 'sweetalert2';
 
-import { AppComponent } from '../../../app.component';
-
 import { CampusService } from '../../../services/campus.service';
 import { AreasService } from '../../../services/areas.service';
 import { CategoryService } from '../../../services/category.service';
@@ -46,8 +44,7 @@ export class FormProyectComponent implements OnInit {
     private categoryService: CategoryService,
     private modalityService: ModalityService,
     private utilService: UtilService,
-    )
-    {
+  ) {
     this.formRegisterProyect = this.fb.group({
       // TODO: add form parameters
       // proyect data
@@ -101,7 +98,7 @@ export class FormProyectComponent implements OnInit {
 
   }
 
-  
+
   ngOnInit(): void {
     this.utilService._loading = true;
     forkJoin({
@@ -118,10 +115,10 @@ export class FormProyectComponent implements OnInit {
         this.modalities = data.allAreas.data;
         this.categories = data.allAreas.data;
       }
-    }).add (() => this.utilService._loading = false);
+    }).add(() => this.utilService._loading = false);
   }
 
-  
+
 
   changeModality(value: any): void {
     if (value === '1') {
@@ -137,11 +134,11 @@ export class FormProyectComponent implements OnInit {
 
     console.log(this.formRegisterProyect.value);
 
-    let project_image = this.project_image.nativeElement.files[0];
-    let image_ine = this.image_ine.nativeElement.files[0];
+    const project_image = this.project_image.nativeElement.files[0];
+    const image_ine = this.image_ine.nativeElement.files[0];
 
 
-    let fr: any = new FormData();
+    const fr: FormData = new FormData();
 
     fr.append('project_name', this.formRegisterProyect.value.project_name);
     fr.append('project_description', this.formRegisterProyect.value.project_description);
@@ -168,68 +165,48 @@ export class FormProyectComponent implements OnInit {
     fr.append('facebook', this.formRegisterProyect.value.facebook);
     fr.append('twitter', this.formRegisterProyect.value.project_name);
     fr.append('participation_description', this.formRegisterProyect.value.participation_description);
-    fr.AppComponent('image_ine', image_ine);
-    
-    
-    
-    
+    fr.append('image_ine', image_ine);
     // TODO: consume API
-    if (this.autors) {
-      // modality one author
-      
-
-    } else {
-      // modalityu 2 authors
-      this.authService.registerProject(fr).subscribe(
-        data => {
-          console.log(data);
-          
-          Swal.fire({
-            icon: 'success',
-            text: 'Registro exitoso'
-          });
-
-          switch ( this.formRegisterProyect.value.id_category ) { 
-
-            case 'PETIT':
-              window.open("https://drive.google.com/file/d/1U230peNB_6XEXcF2hWIFvonsOWkQp1eO/view?usp=sharing", "_blank");
-            break;
-      
-            case 'KIDS':
-              window.open("https://drive.google.com/file/d/1gZ0RKrFM9euxNFjEohR7z6AAvO9eccYT/view?usp=sharing", "_blank");
-            break;
-      
-            case 'JUVENIL':
-              window.open("https://drive.google.com/file/d/1SezhWNgY64atINHHRBl27R_ue6Etxgxe/view?usp=sharing", "_blank");
-            break;
-      
-            case 'MEDIA SUPERIOR':
-              window.open("https://drive.google.com/file/d/1y6_meM3CgML4ZEsMJrI5ROg6JjGuCTm4/view?usp=sharing", "_blank");
-            break;
-      
-            case 'SUPERIOR':
-              window.open("https://drive.google.com/file/d/16pHHUHS2k46i5PKMNHTacyEi-GxfyJEJ/view?usp=sharing", "_blank");
-            break;
-      
-            case 'POSGRADO':
-              window.open("https://drive.google.com/file/d/1z_E9WPMvSCt82rBr6IANSE2Bkl_fNVgv/view?usp=sharing", "_blank");
-            break;
-      
-          }
-
-        },
-
-        error => {
-          console.log(error);
-          
-          Swal.fire({
-            icon: 'warning',
-            text: 'Registro inconcluso'
-          });
-        }
-      );
-
+    if (!this.autors) {
+      // modality 2 author
+      fr.append('second_author', JSON.stringify(this.formSecondAuthor.value));
     }
+    this.authService.registerProject(fr).subscribe(
+      data => {
+        console.log(data);
+        Swal.fire({
+          icon: 'success',
+          text: 'Registro exitoso'
+        });
+        switch (this.formRegisterProyect.value.id_category) {
+          case 'PETIT':
+            window.open("https://drive.google.com/file/d/1U230peNB_6XEXcF2hWIFvonsOWkQp1eO/view?usp=sharing", "_blank");
+            break;
+          case 'KIDS':
+            window.open("https://drive.google.com/file/d/1gZ0RKrFM9euxNFjEohR7z6AAvO9eccYT/view?usp=sharing", "_blank");
+            break;
+          case 'JUVENIL':
+            window.open("https://drive.google.com/file/d/1SezhWNgY64atINHHRBl27R_ue6Etxgxe/view?usp=sharing", "_blank");
+            break;
+          case 'MEDIA SUPERIOR':
+            window.open("https://drive.google.com/file/d/1y6_meM3CgML4ZEsMJrI5ROg6JjGuCTm4/view?usp=sharing", "_blank");
+            break;
+          case 'SUPERIOR':
+            window.open("https://drive.google.com/file/d/16pHHUHS2k46i5PKMNHTacyEi-GxfyJEJ/view?usp=sharing", "_blank");
+            break;
+          case 'POSGRADO':
+            window.open("https://drive.google.com/file/d/1z_E9WPMvSCt82rBr6IANSE2Bkl_fNVgv/view?usp=sharing", "_blank");
+            break;
+        }
+      },
+      error => {
+        console.log(error);
+        Swal.fire({
+          icon: 'warning',
+          text: 'Registro inconcluso'
+        });
+      }
+    );
   }
 
 }
