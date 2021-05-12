@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SignUpAuthorService } from '../../services/sign-up-author.service';
+import Swal from 'sweetalert2';
+import { UtilService } from '../../../services/util.service';
 
 @Component({
   selector: 'app-sign-up-author',
@@ -13,6 +15,7 @@ export class SignUpAuthorComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private signAuth: SignUpAuthorService,
+    private utilService: UtilService,
     ) {
     this.formAuthor = this.fb.group({
       // author data
@@ -21,9 +24,9 @@ export class SignUpAuthorComponent implements OnInit {
       name_author: ['', [Validators.required, Validators.maxLength(30)]],
       last_name: ['', [Validators.required, Validators.maxLength(20)]],
       second_last_name: ['', [Validators.required, Validators.maxLength(20)]],
-      address: ['', [Validators.required], Validators.maxLength(80)],
-      suburb: ['', [Validators.required], Validators.maxLength(80)],
-      postal_code: ['', [Validators.required], Validators.maxLength(5)],
+      address: ['', [Validators.required, Validators.maxLength(80)]],
+      suburb: ['', [Validators.required, Validators.maxLength(80)]],
+      postal_code: ['', [Validators.required, Validators.maxLength(5)]],
       curp: ['', [Validators.required, Validators.maxLength(18)]],
       rfc: ['', [Validators.required, Validators.maxLength(13)]],
       phone_contact: ['', [Validators.required, Validators.maxLength(10)]],
@@ -31,27 +34,30 @@ export class SignUpAuthorComponent implements OnInit {
       city: ['', [Validators.required, Validators.maxLength(30)]],
       locality: ['', [Validators.required, Validators.maxLength(30)]],
       school: ['', [Validators.required, Validators.maxLength(100)]],
-      facebook: ['', [Validators.required, Validators.maxLength(60)]],
-      twitter: ['', [Validators.required, Validators.maxLength(30)]],
+      facebook: ['', [Validators.maxLength(60)]],
+      twitter: ['', [Validators.maxLength(30)]],
     });
   }
 
   ngOnInit(): void {
   }
   registerAuthor(): void {
-    // TODO: consume api
     console.log(this.formAuthor.value);
-
+    this.utilService._loading = true;
+    // TODO: consume api
     this.signAuth.registerAuth( this.formAuthor.value ).subscribe(
       data => {
         console.log(data);
-        
-      }, 
+        if (!data.error) {
+          Swal.fire('Exito', 'Se registro correctamente', 'success');
+        } else {
+          Swal.fire('Advertencia', data.data.message, 'warning');
+        }
+      },
       err => {
         console.log(err);
-        
       }
-    );
+    ).add(() => this.utilService._loading = false);
   }
 
 }
