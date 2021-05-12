@@ -44,9 +44,11 @@ export class SignUpAuthorComponent implements OnInit {
 
     this.signAuth.registerAuth( this.formAuthor.value ).subscribe(
       data => {
-
+        console.log(data);
+        
       }, 
       err => {
+        console.log(err);
         
       }
     );

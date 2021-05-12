@@ -6,6 +6,6 @@ import { Injectable } from '@angular/core';
 export class AppService {
 
   // TODO: api url
-  API_URL = '';
+  API_URL = 'http://localhost/APIS-CORAZAI-2.0/author/';
   constructor() { }
 }

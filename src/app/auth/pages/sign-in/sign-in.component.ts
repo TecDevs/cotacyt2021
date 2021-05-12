@@ -29,10 +29,12 @@ export class SignInComponent implements OnInit {
     // TODO: consume API
     this.sign.loginAuth( this.formSignIn.value ).subscribe(
       data => {
-
+        console.log(data);
+        
       },
 
       err => {
+        console.log(err);
         
       }
     );

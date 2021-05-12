@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { FormProyectService } from '../../services/auth.service';
+import { FormProyectService } from '../../services/form-proyect.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -74,51 +74,29 @@ export class FormProyectComponent implements OnInit {
   }
 
   changeModality(value: any): void {
-    console.log(this.autors);
+    
     if (value === '1') {
       this.autors = false;
     } else {
       this.autors = true;
     }
+    console.log(this.autors);
   }
 
   registerProyect(): void {
     console.log(this.formRegisterProyect.value.id_category);
 
-    switch ( this.formRegisterProyect.value.id_category ) { 
-
-      case 'PETIT':
-        window.open("https://drive.google.com/file/d/1U230peNB_6XEXcF2hWIFvonsOWkQp1eO/view?usp=sharing", "_blank");
-      break;
-
-      case 'KIDS':
-        window.open("https://drive.google.com/file/d/1gZ0RKrFM9euxNFjEohR7z6AAvO9eccYT/view?usp=sharing", "_blank");
-      break;
-
-      case 'JUVENIL':
-        window.open("https://drive.google.com/file/d/1SezhWNgY64atINHHRBl27R_ue6Etxgxe/view?usp=sharing", "_blank");
-      break;
-
-      case 'MEDIA SUPERIOR':
-        window.open("https://drive.google.com/file/d/1y6_meM3CgML4ZEsMJrI5ROg6JjGuCTm4/view?usp=sharing", "_blank");
-      break;
-
-      case 'SUPERIOR':
-        window.open("https://drive.google.com/file/d/16pHHUHS2k46i5PKMNHTacyEi-GxfyJEJ/view?usp=sharing", "_blank");
-      break;
-
-      case 'POSGRADO':
-        window.open("https://drive.google.com/file/d/1z_E9WPMvSCt82rBr6IANSE2Bkl_fNVgv/view?usp=sharing", "_blank");
-      break;
-
-    }
+    console.log(this.formRegisterProyect.value);
+    
     
     
     // TODO: consume API
-    if (this.autors) {
+    // if (this.autors) {
       // modality one author
-      this.authService.registerAuth(this.formRegisterProyect.value).subscribe(
+      this.authService.registerProject(this.formRegisterProyect.value).subscribe(
         data => {
+          console.log(data);
+          
           Swal.fire({
             icon: 'success',
             text: 'Registro exitoso'
@@ -126,15 +104,45 @@ export class FormProyectComponent implements OnInit {
         },
 
         error => {
+          console.log(error);
+          
           Swal.fire({
             icon: 'warning',
             text: 'Registro inconcluso'
           });
         }
-      )
-    } else {
-      // modalityu 2 authors
-    }
+      );
+
+      // switch ( this.formRegisterProyect.value.id_category ) { 
+
+      //   case 'PETIT':
+      //     window.open("https://drive.google.com/file/d/1U230peNB_6XEXcF2hWIFvonsOWkQp1eO/view?usp=sharing", "_blank");
+      //   break;
+  
+      //   case 'KIDS':
+      //     window.open("https://drive.google.com/file/d/1gZ0RKrFM9euxNFjEohR7z6AAvO9eccYT/view?usp=sharing", "_blank");
+      //   break;
+  
+      //   case 'JUVENIL':
+      //     window.open("https://drive.google.com/file/d/1SezhWNgY64atINHHRBl27R_ue6Etxgxe/view?usp=sharing", "_blank");
+      //   break;
+  
+      //   case 'MEDIA SUPERIOR':
+      //     window.open("https://drive.google.com/file/d/1y6_meM3CgML4ZEsMJrI5ROg6JjGuCTm4/view?usp=sharing", "_blank");
+      //   break;
+  
+      //   case 'SUPERIOR':
+      //     window.open("https://drive.google.com/file/d/16pHHUHS2k46i5PKMNHTacyEi-GxfyJEJ/view?usp=sharing", "_blank");
+      //   break;
+  
+      //   case 'POSGRADO':
+      //     window.open("https://drive.google.com/file/d/1z_E9WPMvSCt82rBr6IANSE2Bkl_fNVgv/view?usp=sharing", "_blank");
+      //   break;
+  
+      // }
+    // } else {
+    //   // modalityu 2 authors
+    // }
   }
 
 }

@@ -11,6 +11,6 @@ export class SignInService {
   constructor(private http: HttpClient, private appService: AppService) { }
 
   loginAuth( body: any ): Observable<any> {
-    return this.http.post( this.appService.API_URL + '', body )
+    return this.http.post( this.appService.API_URL + 'login', body )
 }
 }
