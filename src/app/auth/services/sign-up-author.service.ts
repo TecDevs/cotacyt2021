@@ -11,6 +11,6 @@ export class SignUpAuthorService {
   constructor(private http: HttpClient, private appService: AppService) { }
 
   registerAuth( body: any ): Observable<any> {
-    return this.http.post( this.appService.API_URL + 'create', body );
+    return this.http.post( this.appService.API_URL + 'author/create', body );
 }
 }

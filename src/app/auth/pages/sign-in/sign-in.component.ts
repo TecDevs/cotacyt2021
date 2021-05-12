@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SignInService } from '../../services/sign-in.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -14,6 +15,7 @@ export class SignInComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private sign: SignInService,
+    private router: Router,
     ) {
     this.formSignIn = this.fb.group({
       // TODO: datos de login
@@ -31,14 +33,14 @@ export class SignInComponent implements OnInit {
       data => {
         console.log(data);
         
+        if( !data.error ) {
+            this.router.navigateByUrl('app/user/register-project');
+            localStorage.setItem('autor-data', JSON.stringify(data.data));
+        }
       },
-
       err => {
         console.log(err);
-        
       }
     );
-    
   }
-
 }

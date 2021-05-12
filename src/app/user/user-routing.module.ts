@@ -7,7 +7,7 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'register-proyect',
+        path: 'register-project',
         component: FormProyectComponent,
       },
       {

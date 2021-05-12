@@ -19,14 +19,17 @@ import { UtilService } from '../../../services/util.service';
   templateUrl: './form-proyect.component.html',
   styleUrls: ['./form-proyect.component.scss']
 })
+
 export class FormProyectComponent implements OnInit {
+
+  
 
   formRegisterProyect: FormGroup;
   formSecondAuthor: FormGroup;
   autors = false;
   @ViewChild("project_image", {
     read: ElementRef
-  }) project_image: ElementRef;
+  } ) project_image: ElementRef;
 
   @ViewChild("image_ine", {
     read: ElementRef
@@ -36,6 +39,8 @@ export class FormProyectComponent implements OnInit {
   campus: CampusInterface[];
   modalities: ModalityInterface[];
   categories: CategoryInterface[];
+  
+  
   constructor(
     private fb: FormBuilder,
     private authService: FormProyectService,
@@ -44,7 +49,9 @@ export class FormProyectComponent implements OnInit {
     private categoryService: CategoryService,
     private modalityService: ModalityService,
     private utilService: UtilService,
+    
   ) {
+
     this.formRegisterProyect = this.fb.group({
       // TODO: add form parameters
       // proyect data
@@ -99,6 +106,7 @@ export class FormProyectComponent implements OnInit {
   }
 
 
+
   ngOnInit(): void {
     this.utilService._loading = true;
     forkJoin({
@@ -111,9 +119,9 @@ export class FormProyectComponent implements OnInit {
         Swal.fire('Error', 'Ocurrio un error al cargar los datos', 'error');
       } else {
         this.areas = data.allAreas.data;
-        this.campus = data.allAreas.data;
-        this.modalities = data.allAreas.data;
-        this.categories = data.allAreas.data;
+        this.campus = data.allCampus.data;
+        this.modalities = data.allModalities.data;
+        this.categories = data.allCategories.data;
       }
     }).add(() => this.utilService._loading = false);
   }
@@ -129,10 +137,10 @@ export class FormProyectComponent implements OnInit {
     console.log(this.autors);
   }
 
-  registerProyect(files: FileList): void {
-    console.log(this.formRegisterProyect.value.id_category);
-
+  registerProyect(file: FileList): void {
     console.log(this.formRegisterProyect.value);
+    
+
 
     const project_image = this.project_image.nativeElement.files[0];
     const image_ine = this.image_ine.nativeElement.files[0];
@@ -144,6 +152,7 @@ export class FormProyectComponent implements OnInit {
     fr.append('project_description', this.formRegisterProyect.value.project_description);
     fr.append('id_sedes', this.formRegisterProyect.value.id_sedes);
     fr.append('id_category', this.formRegisterProyect.value.id_category);
+    fr.append('author_id', JSON.parse(localStorage.getItem('autor-data'))['id_autores']);
     fr.append('url_video', this.formRegisterProyect.value.url_video);
     fr.append('id_area', this.formRegisterProyect.value.id_area);
     fr.append('id_modality', this.formRegisterProyect.value.id_modality);
@@ -165,7 +174,10 @@ export class FormProyectComponent implements OnInit {
     fr.append('facebook', this.formRegisterProyect.value.facebook);
     fr.append('twitter', this.formRegisterProyect.value.project_name);
     fr.append('participation_description', this.formRegisterProyect.value.participation_description);
-    fr.append('image_ine', image_ine);
+    fr.append('project_image', image_ine);
+
+    console.log(fr);
+    
     // TODO: consume API
     if (!this.autors) {
       // modality 2 author

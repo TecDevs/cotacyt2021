@@ -13,7 +13,7 @@
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Imagen del proyecto<b style="color: red;">*</b></label>
-                    <input formControlName="project_image" type="file" class="form-control">
+                    <input formControlName="project_image" type="file" class="form-control" #project_image>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Nombre del proyecto<b style="color: red;">*</b></label>
@@ -29,25 +29,25 @@
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Sede:<b style="color: red;">*</b></label>
                     <select formControlName="id_sedes" class="form-control">
-                        <option *ngFor="let camp of campus" [value]= camp.idCampus>{{camp.campus}}</option>
+                        <option *ngFor="let camp of campus" [value]= camp.id_sedes>{{camp.sede}}</option>
                     </select>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Categoria:<b style="color: red;">*</b></label>
                     <select formControlName="id_category" class="form-control">
-                        <option *ngFor="let category of categories" [value]= category.idCategory>{{category.category}}</option>
+                        <option *ngFor="let category of categories" [value]= category.id_categorias>{{category.categoria}}</option>
                     </select>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Modalidad autores del proyecto:<b style="color: red;">*</b></label>
                     <select formControlName="id_modality" class="form-control" (change)="changeModality($event.target.value)">
-                        <option *ngFor="let modality of modalities" [value]= modality.idModality>{{modality.modality}}</option>
+                        <option *ngFor="let modality of modalities" [value]= modality.id_modalidades>{{modality.modalidad}}</option>
                     </select>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Área de conocimiento:<b style="color: red;">*</b></label>
                     <select formControlName="id_area" class="form-control">
-                        <option *ngFor="let area of areas" [value]= area.idAreas>{{area.area}}</option>
+                        <option *ngFor="let area of areas" [value]= area.id_areas>{{area.area}}</option>
                     </select>
                 </div>
                 <div class="form-group col-12">
@@ -128,7 +128,7 @@
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Adjuntar credencial de Elector<b style="color: red;">*</b></label>
-                    <input formControlName="image_ine" type="file" class="form-control">
+                    <input formControlName="image_ine" type="file" class="form-control" #image_ine>
                 </div>
                 <div class="form-group col-12">
                     <label>Descripción de su participación en el desarrollo del proyecto<b

@@ -11,6 +11,6 @@ export class FormProyectService {
   constructor(private http: HttpClient, private appService: AppService) { }
 
   registerProject( body: any ): Observable<any> {
-    return this.http.post( this.appService.API_URL + 'project', body );
+    return this.http.post( this.appService.API_URL + 'project/create-one-author', body );
 }
 }

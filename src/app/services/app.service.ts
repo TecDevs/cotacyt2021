@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class AppService {
 
   // TODO: api url
-  API_URL = 'http://localhost/APIS-CORAZAI-2.0/author/';
+  //API_URL = 'http://localhost/APIS-CORAZAI-2.0/author/';
+  API_URL = 'http://mante.hosting.acm.org/api-cecit-2021/';
   constructor() { }
 }

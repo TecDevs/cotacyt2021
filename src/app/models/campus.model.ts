@@ -1,4 +1,4 @@
 export interface CampusInterface {
-    idCampus: string;
-    campus: string;
+    id_sedes: string;
+    sede: string;
 }

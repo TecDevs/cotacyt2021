@@ -1,4 +1,4 @@
 export interface ModalityInterface {
-    idModality: string;
-    modality: string;
+    id_modalidades: string;
+    modalidad: string;
 }
