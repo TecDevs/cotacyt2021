@@ -22,16 +22,14 @@ import { UtilService } from '../../../services/util.service';
 
 export class FormProyectComponent implements OnInit {
 
-  
-
   formRegisterProyect: FormGroup;
   formSecondAuthor: FormGroup;
   autors = false;
-  @ViewChild("project_image", {
+  @ViewChild('project_image', {
     read: ElementRef
-  } ) project_image: ElementRef;
+  }) project_image: ElementRef;
 
-  @ViewChild("image_ine", {
+  @ViewChild('image_ine', {
     read: ElementRef
   }) image_ine: ElementRef;
 
@@ -39,8 +37,8 @@ export class FormProyectComponent implements OnInit {
   campus: CampusInterface[];
   modalities: ModalityInterface[];
   categories: CategoryInterface[];
-  
-  
+
+
   constructor(
     private fb: FormBuilder,
     private authService: FormProyectService,
@@ -49,7 +47,7 @@ export class FormProyectComponent implements OnInit {
     private categoryService: CategoryService,
     private modalityService: ModalityService,
     private utilService: UtilService,
-    
+
   ) {
 
     this.formRegisterProyect = this.fb.group({
@@ -87,9 +85,9 @@ export class FormProyectComponent implements OnInit {
       name_author: ['', [Validators.required, Validators.maxLength(30)]],
       last_name: ['', [Validators.required, Validators.maxLength(20)]],
       second_last_name: ['', [Validators.required, Validators.maxLength(20)]],
-      address: ['', [Validators.required], Validators.maxLength(80)],
-      suburb: ['', [Validators.required], Validators.maxLength(80)],
-      postal_code: ['', [Validators.required], Validators.maxLength(5)],
+      address: ['', [Validators.required, Validators.maxLength(80)]],
+      suburb: ['', [Validators.required, Validators.maxLength(80)]],
+      postal_code: ['', [Validators.required, Validators.maxLength(5)]],
       curp: ['', [Validators.required, Validators.maxLength(18)]],
       rfc: ['', [Validators.required, Validators.maxLength(13)]],
       phone_contact: ['', [Validators.required, Validators.maxLength(10)]],
@@ -100,12 +98,7 @@ export class FormProyectComponent implements OnInit {
       facebook: ['', [Validators.required, Validators.maxLength(60)]],
       twitter: ['', [Validators.required, Validators.maxLength(30)]],
     });
-
-
-
   }
-
-
 
   ngOnInit(): void {
     this.utilService._loading = true;
@@ -126,8 +119,6 @@ export class FormProyectComponent implements OnInit {
     }).add(() => this.utilService._loading = false);
   }
 
-
-
   changeModality(value: any): void {
     if (value === '1') {
       this.autors = false;
@@ -139,25 +130,21 @@ export class FormProyectComponent implements OnInit {
 
   registerProyect(file: FileList): void {
     console.log(this.formRegisterProyect.value);
-    
 
-
-    const project_image = this.project_image.nativeElement.files[0];
-    const image_ine = this.image_ine.nativeElement.files[0];
-
-
+    const projectImage = this.project_image.nativeElement.files[0];
+    const imageIne = this.image_ine.nativeElement.files[0];
     const fr: FormData = new FormData();
 
     fr.append('project_name', this.formRegisterProyect.value.project_name);
     fr.append('project_description', this.formRegisterProyect.value.project_description);
     fr.append('id_sedes', this.formRegisterProyect.value.id_sedes);
     fr.append('id_category', this.formRegisterProyect.value.id_category);
-    fr.append('author_id', JSON.parse(localStorage.getItem('autor-data'))['id_autores']);
+    fr.append('author_id', JSON.parse(localStorage.getItem('autor-data')).id_autores);
     fr.append('url_video', this.formRegisterProyect.value.url_video);
     fr.append('id_area', this.formRegisterProyect.value.id_area);
     fr.append('id_modality', this.formRegisterProyect.value.id_modality);
     fr.append('project_name', this.formRegisterProyect.value.project_name);
-    fr.append('project_image', project_image);
+    fr.append('project_image', projectImage);
     fr.append('adviser_name', this.formRegisterProyect.value.adviser_name);
     fr.append('last_name', this.formRegisterProyect.value.last_name);
     fr.append('second_last_name', this.formRegisterProyect.value.second_last_name);
@@ -174,10 +161,10 @@ export class FormProyectComponent implements OnInit {
     fr.append('facebook', this.formRegisterProyect.value.facebook);
     fr.append('twitter', this.formRegisterProyect.value.project_name);
     fr.append('participation_description', this.formRegisterProyect.value.participation_description);
-    fr.append('project_image', image_ine);
+    fr.append('project_image', imageIne);
 
     console.log(fr);
-    
+
     // TODO: consume API
     if (!this.autors) {
       // modality 2 author
@@ -192,22 +179,22 @@ export class FormProyectComponent implements OnInit {
         });
         switch (this.formRegisterProyect.value.id_category) {
           case 'PETIT':
-            window.open("https://drive.google.com/file/d/1U230peNB_6XEXcF2hWIFvonsOWkQp1eO/view?usp=sharing", "_blank");
+            window.open('https://drive.google.com/file/d/1U230peNB_6XEXcF2hWIFvonsOWkQp1eO/view?usp=sharing', '_blank');
             break;
           case 'KIDS':
-            window.open("https://drive.google.com/file/d/1gZ0RKrFM9euxNFjEohR7z6AAvO9eccYT/view?usp=sharing", "_blank");
+            window.open('https://drive.google.com/file/d/1gZ0RKrFM9euxNFjEohR7z6AAvO9eccYT/view?usp=sharing', '_blank');
             break;
           case 'JUVENIL':
-            window.open("https://drive.google.com/file/d/1SezhWNgY64atINHHRBl27R_ue6Etxgxe/view?usp=sharing", "_blank");
+            window.open('https://drive.google.com/file/d/1SezhWNgY64atINHHRBl27R_ue6Etxgxe/view?usp=sharing', '_blank');
             break;
           case 'MEDIA SUPERIOR':
-            window.open("https://drive.google.com/file/d/1y6_meM3CgML4ZEsMJrI5ROg6JjGuCTm4/view?usp=sharing", "_blank");
+            window.open('https://drive.google.com/file/d/1y6_meM3CgML4ZEsMJrI5ROg6JjGuCTm4/view?usp=sharing', '_blank');
             break;
           case 'SUPERIOR':
-            window.open("https://drive.google.com/file/d/16pHHUHS2k46i5PKMNHTacyEi-GxfyJEJ/view?usp=sharing", "_blank");
+            window.open('https://drive.google.com/file/d/16pHHUHS2k46i5PKMNHTacyEi-GxfyJEJ/view?usp=sharing', '_blank');
             break;
           case 'POSGRADO':
-            window.open("https://drive.google.com/file/d/1z_E9WPMvSCt82rBr6IANSE2Bkl_fNVgv/view?usp=sharing", "_blank");
+            window.open('https://drive.google.com/file/d/1z_E9WPMvSCt82rBr6IANSE2Bkl_fNVgv/view?usp=sharing', '_blank');
             break;
         }
       },

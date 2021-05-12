@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SignInService } from '../../services/sign-in.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { UtilService } from '../../../services/util.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -16,7 +17,8 @@ export class SignInComponent implements OnInit {
     private fb: FormBuilder,
     private sign: SignInService,
     private router: Router,
-    ) {
+    private utilService: UtilService,
+  ) {
     this.formSignIn = this.fb.group({
       // TODO: datos de login
       user: ['', [Validators.required, Validators.maxLength(20)]],
@@ -28,19 +30,18 @@ export class SignInComponent implements OnInit {
   }
 
   signIn(): void {
-    // TODO: consume API
-    this.sign.loginAuth( this.formSignIn.value ).subscribe(
+    this.utilService._loading = true;
+    this.sign.loginAuth(this.formSignIn.value).subscribe(
       data => {
         console.log(data);
-        
-        if( !data.error ) {
-            this.router.navigateByUrl('app/user/register-project');
-            localStorage.setItem('autor-data', JSON.stringify(data.data));
+        if (!data.error) {
+          this.router.navigateByUrl('app/user/register-project');
+          localStorage.setItem('autor-data', JSON.stringify(data.data));
         }
       },
       err => {
         console.log(err);
       }
-    );
+    ).add(() => this.utilService._loading = false);
   }
 }
