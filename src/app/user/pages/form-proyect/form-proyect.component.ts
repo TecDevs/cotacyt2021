@@ -2,6 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormProyectService } from '../../services/form-proyect.service';
 import Swal from 'sweetalert2';
+import { CampusService } from '../../../services/campus.service';
+import { AreasService } from '../../../services/areas.service';
+import { CategoryService } from '../../../services/category.service';
+import { ModalityService } from '../../../services/modality.service';
+import { AreaInterface } from '../../../models/area.model';
+import { CampusInterface } from '../../../models/campus.model';
+import { ModalityInterface } from '../../../models/modality.model';
+import { CategoryInterface } from '../../../models/category.model';
+import { forkJoin } from 'rxjs';
+import { UtilService } from '../../../services/util.service';
 
 @Component({
   selector: 'app-form-proyect',
@@ -13,11 +23,19 @@ export class FormProyectComponent implements OnInit {
   formRegisterProyect: FormGroup;
   formSecondAuthor: FormGroup;
   autors = false;
+  areas: AreaInterface[];
+  campus: CampusInterface[];
+  modalities: ModalityInterface[];
+  categories: CategoryInterface[];
   constructor(
     private fb: FormBuilder,
-    private authService: FormProyectService
-    ) 
-    
+    private authService: FormProyectService,
+    private campusService: CampusService,
+    private areaService: AreasService,
+    private categoryService: CategoryService,
+    private modalityService: ModalityService,
+    private utilService: UtilService,
+    )
     {
     this.formRegisterProyect = this.fb.group({
       // TODO: add form parameters
@@ -69,12 +87,25 @@ export class FormProyectComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-
-    
+    this.utilService._loading = true;
+    forkJoin({
+      allAreas: this.areaService.getAll(),
+      allModalities: this.modalityService.getAll(),
+      allCategories: this.categoryService.getAll(),
+      allCampus: this.campusService.getAll(),
+    }).subscribe(data => {
+      if (data.allAreas.error || data.allCampus.error || data.allCategories.error || data.allModalities.error) {
+        Swal.fire('Error', 'Ocurrio un error al cargar los datos', 'error');
+      } else {
+        this.areas = data.allAreas.data;
+        this.campus = data.allAreas.data;
+        this.modalities = data.allAreas.data;
+        this.categories = data.allAreas.data;
+      }
+    }).add (() => this.utilService._loading = false);
   }
 
   changeModality(value: any): void {
-    
     if (value === '1') {
       this.autors = false;
     } else {

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UtilService } from './services/util.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'cotacyt2021';
+  constructor(public utilService: UtilService) {}
 }

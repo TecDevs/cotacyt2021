@@ -29,46 +29,25 @@
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Sede:<b style="color: red;">*</b></label>
                     <select formControlName="id_sedes" class="form-control">
-                        <option>Nuevo laredo</option>
-                        <option>Reynosa</option>
-                        <option>Matamoros</option>
-                        <option>Victoria</option>
-                        <option>Madero</option>
-                        <option>El Mante</option>
+                        <option *ngFor="let camp of campus" [value]= camp.idCampus>{{camp.campus}}</option>
                     </select>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Categoria:<b style="color: red;">*</b></label>
                     <select formControlName="id_category" class="form-control">
-                        <option value="PETIT">PETIT</option>
-                        <option value="KIDS">KIDS</option>
-                        <option value="JUVENIL">JUVENIL</option>
-                        <option value="MEDIA SUPERIOR">MEDIA SUPERIOR</option>
-                        <option value="SUPERIOR">SUPERIOR</option>
-                        <option value="POSGRADO">POSGRADO</option>
+                        <option *ngFor="let category of categories" [value]= category.idCategory>{{category.category}}</option>
                     </select>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Modalidad autores del proyecto:<b style="color: red;">*</b></label>
                     <select formControlName="id_modality" class="form-control" (change)="changeModality($event.target.value)">
-                        <option value="1">Individual</option>
-                        <option value="2">2 Integrantes</option>
+                        <option *ngFor="let modality of modalities" [value]= modality.idModality>{{modality.modality}}</option>
                     </select>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Área de conocimiento:<b style="color: red;">*</b></label>
                     <select formControlName="id_area" class="form-control">
-                        <option>Agropecuarias y Alimentos</option>
-                        <option>Biología</option>
-                        <option>Ciencias de la Ingeniería</option>
-                        <option>Ciencias de los Materiales</option>
-                        <option>Mecatrónica</option>
-                        <option>Computación y Software</option>
-                        <option>Divulgación de la Ciencia</option>
-                        <option>Medio Ambiente</option>
-                        <option>Ciencias Exactas y Naturales</option>
-                        <option>Ciencias Sociales y Humanidades</option>
-                        <option>Medicina y Salud</option>
+                        <option *ngFor="let area of areas" [value]= area.idAreas>{{area.area}}</option>
                     </select>
                 </div>
                 <div class="form-group col-12">
