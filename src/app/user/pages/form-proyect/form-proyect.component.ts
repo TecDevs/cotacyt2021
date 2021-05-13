@@ -191,7 +191,7 @@ export class FormProyectComponent implements OnInit {
         },
         err => console.log(err)
       ).add(() => this.utilService._loading = false);
-    }
+    } else {
     this.authService.registerProject(fr).subscribe(
       data => {
         if (!data.error) {
@@ -213,6 +213,7 @@ export class FormProyectComponent implements OnInit {
         }
       }, error => console.log(error)
     ).add(() => this.utilService._loading = false);
+    }
   }
 
 
