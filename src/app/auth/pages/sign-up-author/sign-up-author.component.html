@@ -111,6 +111,7 @@
                         <div class="form-group col-lg-6 col-md-6 col-sm-6">
                             <label>Localidad donde vives<b style="color: red;">*</b></label>
                             <input formControlName="locality" type="text" class="form-control">
+                            <small class="form-text text-muted">Ej. Ejido, Congregación, Ciudad, etc.</small>
                             <small
                                 *ngIf="formAuthor.controls['locality'].invalid && (formAuthor.controls['locality'].dirty || formAuthor.controls['locality'].touched)"
                                 class="form-text" style="color: red;">Localidad invalida</small>
@@ -118,7 +119,6 @@
                         <div class="form-group col-lg-6 col-md-6 col-sm-6">
                             <label>Escuela o institución<b style="color: red;">*</b></label>
                             <input formControlName="school" type="text" class="form-control">
-                            <small class="form-text text-muted">Ej. Ejido, Congregación, Ciudad, etc.</small>
                             <small
                                 *ngIf="formAuthor.controls['school'].invalid && (formAuthor.controls['school'].dirty || formAuthor.controls['school'].touched)"
                                 class="form-text" style="color: red;">Escuela o institución invalida</small>

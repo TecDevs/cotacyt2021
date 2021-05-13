@@ -77,8 +77,8 @@ export class FormProyectComponent implements OnInit {
       city: ['', [Validators.required, Validators.maxLength(30)]],
       locality: ['', [Validators.required, , Validators.maxLength(30)]],
       school_institute: ['', [Validators.required, Validators.maxLength(100)]],
-      facebook: ['', [Validators.required, Validators.maxLength(50)]],
-      twitter: ['', [Validators.required, Validators.maxLength(30)]],
+      facebook: ['', [Validators.maxLength(50)]],
+      twitter: ['', [Validators.maxLength(30)]],
       participation_description: ['', [Validators.required, Validators.maxLength(1000)]],
       image_ine: ['', [Validators.required]],
     });
@@ -97,13 +97,16 @@ export class FormProyectComponent implements OnInit {
       city: ['', [Validators.required, Validators.maxLength(30)]],
       locality: ['', [Validators.required, Validators.maxLength(30)]],
       school: ['', [Validators.required, Validators.maxLength(100)]],
-      facebook: ['', [Validators.required, Validators.maxLength(60)]],
-      twitter: ['', [Validators.required, Validators.maxLength(30)]],
+      facebook: ['', [Validators.maxLength(60)]],
+      twitter: ['', [Validators.maxLength(30)]],
     });
   }
 
   ngOnInit(): void {
     this.utilService._loading = true;
+    if (localStorage.getItem('autor-terminate')) {
+      this.terminado = true;
+    }
     forkJoin({
       allAreas: this.areaService.getAll(),
       allModalities: this.modalityService.getAll(),
@@ -127,22 +130,18 @@ export class FormProyectComponent implements OnInit {
     } else {
       this.autors = true;
     }
-    console.log(this.autors);
   }
 
   registerProyect(file: FileList): void {
-    console.log(this.formRegisterProyect.value);
-
+    this.utilService._loading = true;
     const projectImage = this.project_image.nativeElement.files[0];
     const imageIne = this.image_ine.nativeElement.files[0];
     const fr: any = new FormData();
-
-
     fr.append('project_name', this.formRegisterProyect.value.project_name);
     fr.append('project_description', this.formRegisterProyect.value.project_description);
     fr.append('id_sedes', this.formRegisterProyect.value.id_sedes);
     fr.append('id_category', this.formRegisterProyect.value.id_category);
-    fr.append('author_id',this.formRegisterProyect.value.author_id);
+    fr.append('author_id', this.formRegisterProyect.value.author_id);
     fr.append('url_video', this.formRegisterProyect.value.url_video);
     fr.append('id_area', this.formRegisterProyect.value.id_area);
     fr.append('id_modality', this.formRegisterProyect.value.id_modality);
@@ -165,48 +164,59 @@ export class FormProyectComponent implements OnInit {
     fr.append('twitter', this.formRegisterProyect.value.project_name);
     fr.append('participation_description', this.formRegisterProyect.value.participation_description);
     fr.append('image_ine', imageIne);
-
-    console.log(fr);
-
     // TODO: consume API
     if (!this.autors) {
       // modality 2 author
       fr.append('second_author', JSON.stringify(this.formSecondAuthor.value));
       this.authService.registerProjectWithTwoAuthors(fr).subscribe(
         data => {
-          console.log(data);
-          if( !data.error ) {
+          if (!data.error) {
             Swal.fire({
+              title: 'Registro exitoso',
               icon: 'success',
-              text: 'Registro exitoso'
+              text: 'Se abrira un acrhivo el cual debes rellenar y subir para finalizar el registro'
+            }).then(() => {
+              this.returnPageDocument(this.formRegisterProyect.value.id_category);
+              this.formRegisterProyect.reset();
+              this.formSecondAuthor.reset();
+              this.terminado = true;
             });
-            this.returnPageDocument(this.formRegisterProyect.value.id_category);
+            localStorage.setItem('autor-terminate', 'true');
+          } else {
+            Swal.fire({
+              icon: 'warning',
+              text: data.data.message
+            });
           }
         },
-        err => {
-          console.log(err);
-          
-        }
-      );
-
+        err => console.log(err)
+      ).add(() => this.utilService._loading = false);
     }
     this.authService.registerProject(fr).subscribe(
       data => {
-        if( !data.error ) {
-          console.log(data);
+        if (!data.error) {
           Swal.fire({
+            title: 'Registro exitoso',
             icon: 'success',
-            text: 'Registro exitoso'
+            text: 'Se abrira un acrhivo el cual debes rellenar y subir para finalizar el registro'
+          }).then(() => {
+            this.returnPageDocument(this.formRegisterProyect.value.id_category);
+            this.formRegisterProyect.reset();
+            this.terminado = true;
           });
-          this.returnPageDocument(this.formRegisterProyect.value.id_category);
+          localStorage.setItem('autor-terminate', 'true');
+        } else {
+          Swal.fire({
+            icon: 'warning',
+            text: data.data.message
+          });
         }
-      },
-      error => console.log(error)
-    );
+      }, error => console.log(error)
+    ).add(() => this.utilService._loading = false);
   }
 
 
-  returnPageDocument(id: string) {
+  returnPageDocument(id: string): void {
     switch (id) {
       case '1':
         window.open('https://drive.google.com/file/d/1U230peNB_6XEXcF2hWIFvonsOWkQp1eO/view?usp=sharing', '_blank');

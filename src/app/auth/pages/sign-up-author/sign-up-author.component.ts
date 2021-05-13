@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SignUpAuthorService } from '../../services/sign-up-author.service';
 import Swal from 'sweetalert2';
 import { UtilService } from '../../../services/util.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up-author',
@@ -16,7 +17,8 @@ export class SignUpAuthorComponent implements OnInit {
     private fb: FormBuilder,
     private signAuth: SignUpAuthorService,
     private utilService: UtilService,
-    ) {
+    private router: Router,
+  ) {
     this.formAuthor = this.fb.group({
       // author data
       user_name: ['', [Validators.required, Validators.maxLength(10)]],
@@ -45,11 +47,13 @@ export class SignUpAuthorComponent implements OnInit {
     console.log(this.formAuthor.value);
     this.utilService._loading = true;
     // TODO: consume api
-    this.signAuth.registerAuth( this.formAuthor.value ).subscribe(
+    this.signAuth.registerAuth(this.formAuthor.value).subscribe(
       data => {
         console.log(data);
         if (!data.error) {
-          Swal.fire('Exito', 'Se registro correctamente', 'success');
+          Swal.fire('Exito', 'Se registro correctamente', 'success').then(() => {
+            this.router.navigateByUrl('auth/sign-in');
+          });
         } else {
           Swal.fire('Advertencia', data.data.message, 'warning');
         }

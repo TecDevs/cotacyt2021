@@ -1,4 +1,4 @@
-<div class="complete" *ngIf="false">
+<div class="complete" *ngIf="terminado">
     <h1>Proyecto ya registrado</h1>
     <span>sube el archivo para terminar</span>
 </div>
@@ -114,7 +114,7 @@
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Codigo postal<b style="color: red;">*</b></label>
-                    <input formControlName="postal_code" type="text" class="form-control">
+                    <input formControlName="postal_code" type="number" class="form-control">
                     <small
                         *ngIf="formRegisterProyect.controls['postal_code'].invalid && (formRegisterProyect.controls['postal_code'].dirty || formRegisterProyect.controls['postal_code'].touched)"
                         class="form-text" style="color: red;">Código postal de asesor invalido</small>
@@ -137,7 +137,7 @@
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Telefono de contacto<b style="color: red;">*</b></label>
-                    <input formControlName="phone_contact" type="text" class="form-control">
+                    <input formControlName="phone_contact" type="number" class="form-control">
                     <small
                         *ngIf="formRegisterProyect.controls['phone_contact'].invalid && (formRegisterProyect.controls['phone_contact'].dirty || formRegisterProyect.controls['phone_contact'].touched)"
                         class="form-text" style="color: red;">Telefono de asesor invalido</small>
@@ -159,6 +159,7 @@
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Localidad donde vives<b style="color: red;">*</b></label>
                     <input formControlName="locality" type="text" class="form-control">
+                    <small class="form-text text-muted">Ej. Ejido, Congregación, Ciudad, etc.</small>
                     <small
                         *ngIf="formRegisterProyect.controls['email'].invalid && (formRegisterProyect.controls['email'].dirty || formRegisterProyect.controls['email'].touched)"
                         class="form-text" style="color: red;">Correo invalido</small>
@@ -166,7 +167,6 @@
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Escuela o institución<b style="color: red;">*</b></label>
                     <input formControlName="school_institute" type="text" class="form-control">
-                    <small class="form-text text-muted">Ej. Ejido, Congregación, Ciudad, etc.</small>
                     <small
                         *ngIf="formRegisterProyect.controls['email'].invalid && (formRegisterProyect.controls['email'].dirty || formRegisterProyect.controls['email'].touched)"
                         class="form-text" style="color: red;">Correo de asesor invalido</small>
@@ -195,6 +195,8 @@
                         *ngIf="formRegisterProyect.controls['participation_description'].invalid && (formRegisterProyect.controls['participation_description'].dirty || formRegisterProyect.controls['participation_description'].touched)"
                         class="form-text" style="color: red;">Descripción de asesor invalida</small>
                 </div>
+                <button *ngIf="!autors" class="btn btn-success" (click)="registerProyect($event.target.files)"
+                    style="width: 200px;" [disabled]="formRegisterProyect.invalid">Registrar</button>
             </form>
         </div>
         <div *ngIf="autors" class="col-12 pl-5 pr-5 pt-2">
@@ -239,7 +241,7 @@
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
                     <label>Codigo postal<b style="color: red;">*</b></label>
-                    <input formControlName="postal_code" type="text" class="form-control">
+                    <input formControlName="postal_code" type="number" class="form-control">
                     <small
                         *ngIf="formSecondAuthor.controls['postal_code'].invalid && (formSecondAuthor.controls['postal_code'].dirty || formSecondAuthor.controls['postal_code'].touched)"
                         class="form-text" style="color: red;">Codigo postal invalido</small>
@@ -262,7 +264,7 @@
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
                     <label>Telefono de contacto<b style="color: red;">*</b></label>
-                    <input formControlName="phone_contact" type="text" class="form-control">
+                    <input formControlName="phone_contact" type="number" class="form-control">
                     <small
                         *ngIf="formSecondAuthor.controls['phone_contact'].invalid && (formSecondAuthor.controls['phone_contact'].dirty || formSecondAuthor.controls['phone_contact'].touched)"
                         class="form-text" style="color: red;">Telefono invalido</small>
@@ -284,6 +286,7 @@
                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
                     <label>Localidad donde vives<b style="color: red;">*</b></label>
                     <input formControlName="locality" type="text" class="form-control">
+                    <small class="form-text text-muted">Ej. Ejido, Congregación, Ciudad, etc.</small>
                     <small
                         *ngIf="formSecondAuthor.controls['locality'].invalid && (formSecondAuthor.controls['locality'].dirty || formSecondAuthor.controls['locality'].touched)"
                         class="form-text" style="color: red;">Localidad invalida</small>
@@ -291,7 +294,6 @@
                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
                     <label>Escuela o institución<b style="color: red;">*</b></label>
                     <input formControlName="school" type="text" class="form-control">
-                    <small class="form-text text-muted">Ej. Ejido, Congregación, Ciudad, etc.</small>
                     <small
                         *ngIf="formSecondAuthor.controls['school'].invalid && (formSecondAuthor.controls['school'].dirty || formSecondAuthor.controls['school'].touched)"
                         class="form-text" style="color: red;">Escuela o institución invalida</small>
@@ -307,8 +309,8 @@
                     <small class="form-text text-muted">Opcional.</small>
                 </div>
             </form>
+            <button class="btn btn-success" (click)="registerProyect($event.target.files)" style="width: 200px;"
+                [disabled]="formRegisterProyect.invalid && formSecondAuthor.invalid">Registrar</button>
         </div>
-        <button class="btn btn-success" (click)="registerProyect($event.target.files)"
-            style="width: 200px;">Registrar</button>
     </div>
 </div>
