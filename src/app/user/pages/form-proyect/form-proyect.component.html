@@ -22,7 +22,7 @@
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Nombre del proyecto<b style="color: red;">*</b></label>
                     <input formControlName="project_name" type="text" class="form-control">
-                    <small class="form-text text-muted">Maximo 60 caracteres.</small>
+                    <small class="form-text text-muted">Máximo 60 caracteres.</small>
                     <small
                         *ngIf="formRegisterProyect.controls['project_name'].invalid && (formRegisterProyect.controls['project_name'].dirty || formRegisterProyect.controls['project_name'].touched)"
                         class="form-text" style="color: red;">Nombre del proyecto invalido</small>
@@ -31,7 +31,7 @@
                     <label>Descripción del proyecto<b style="color: red;">*</b></label>
                     <textarea formControlName="project_description" type="text" class="form-control"
                         style="max-height: 200px; min-height: 100px;"> </textarea>
-                    <small class="form-text text-muted">Maximo 1000 caracteres.</small>
+                    <small class="form-text text-muted">Máximo 1000 caracteres.</small>
                     <small
                         *ngIf="formRegisterProyect.controls['project_description'].invalid && (formRegisterProyect.controls['project_description'].dirty || formRegisterProyect.controls['project_description'].touched)"
                         class="form-text" style="color: red;">Descripción del proyecto invalido</small>
