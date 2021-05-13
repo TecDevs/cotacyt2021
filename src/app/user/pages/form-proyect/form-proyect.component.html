@@ -195,21 +195,8 @@
         </div>
         <div *ngIf="autors" class="col-12 pl-5 pr-5 pt-2">
             <form class="row" [formGroup]="formSecondAuthor">
-                <div class="form-group col-lg-6 col-md-6 col-sm-6">
-                    <label>Nombre de usuario<b style="color: red;">*</b></label>
-                    <input formControlName="user_name" type="text" class="form-control">
-                    <small class="form-text text-muted">Máximo 10 caracteres.</small>
-                    <small
-                        *ngIf="formSecondAuthor.controls['user_name'].invalid && (formSecondAuthor.controls['user_name'].dirty || formSecondAuthor.controls['user_name'].touched)"
-                        class="form-text" style="color: red;">Usuario invalido</small>
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6">
-                    <label>Contraseña<b style="color: red;">*</b></label>
-                    <input formControlName="password" type="text" class="form-control">
-                    <small class="form-text text-muted">Máximo 20 caracteres.</small>
-                    <small
-                        *ngIf="formSecondAuthor.controls['password'].invalid && (formSecondAuthor.controls['password'].dirty || formSecondAuthor.controls['password'].touched)"
-                        class="form-text" style="color: red;">Contraseña invalida</small>
+                <div class="col-12">
+                    <h3 class="mb-4 mt-3">Datos del segundo autor</h3>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
                     <label>Nombre(s)<b style="color: red;">*</b></label>

@@ -13,4 +13,9 @@ export class FormProyectService {
   registerProject( body: any ): Observable<any> {
     return this.http.post( this.appService.API_URL + 'project/create-one-author', body );
 }
+
+registerProjectWithTwoAuthors( body: any ): Observable<any> {
+  return this.http.post( this.appService.API_URL + 'project/create-two-authors', body );
+}
+
 }
