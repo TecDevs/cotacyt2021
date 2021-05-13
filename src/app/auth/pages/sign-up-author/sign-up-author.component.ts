@@ -4,6 +4,7 @@ import { SignUpAuthorService } from '../../services/sign-up-author.service';
 import Swal from 'sweetalert2';
 import { UtilService } from '../../../services/util.service';
 import { Router } from '@angular/router';
+import { RegexService } from '../../../services/regex.service';
 
 @Component({
   selector: 'app-sign-up-author',
@@ -18,6 +19,7 @@ export class SignUpAuthorComponent implements OnInit {
     private signAuth: SignUpAuthorService,
     private utilService: UtilService,
     private router: Router,
+    private regexService: RegexService
   ) {
     this.formAuthor = this.fb.group({
       // author data
@@ -28,10 +30,10 @@ export class SignUpAuthorComponent implements OnInit {
       second_last_name: ['', [Validators.required, Validators.maxLength(20)]],
       address: ['', [Validators.required, Validators.maxLength(80)]],
       suburb: ['', [Validators.required, Validators.maxLength(80)]],
-      postal_code: ['', [Validators.required, Validators.maxLength(5)]],
-      curp: ['', [Validators.required, Validators.maxLength(18)]],
-      rfc: ['', [Validators.required, Validators.maxLength(13)]],
-      phone_contact: ['', [Validators.required, Validators.maxLength(10)]],
+      postal_code: ['', [Validators.required, Validators.pattern(this.regexService.regexPostalCode())]],
+      curp: ['', [Validators.required, Validators.pattern(this.regexService.regexCURP())]],
+      rfc: ['', [Validators.required, Validators.pattern(this.regexService.regexRFC())]],
+      phone_contact: ['', [Validators.required, Validators.pattern(this.regexService.regexPhone())]],
       email: ['', [Validators.required, Validators.maxLength(60), Validators.email]],
       city: ['', [Validators.required, Validators.maxLength(30)]],
       locality: ['', [Validators.required, Validators.maxLength(30)]],
@@ -44,15 +46,13 @@ export class SignUpAuthorComponent implements OnInit {
   ngOnInit(): void {
   }
   registerAuthor(): void {
-    console.log(this.formAuthor.value);
     this.utilService._loading = true;
     // TODO: consume api
     this.signAuth.registerAuth(this.formAuthor.value).subscribe(
       data => {
-        console.log(data);
         if (!data.error) {
           Swal.fire('Exito', 'Se registro correctamente', 'success').then(() => {
-            this.router.navigateByUrl('auth/sign-in');
+            this.router.navigateByUrl('login/sesion');
           });
         } else {
           Swal.fire('Advertencia', data.data.message, 'warning');

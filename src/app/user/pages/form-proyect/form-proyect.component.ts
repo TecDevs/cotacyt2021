@@ -13,6 +13,7 @@ import { ModalityInterface } from '../../../models/modality.model';
 import { CategoryInterface } from '../../../models/category.model';
 import { forkJoin } from 'rxjs';
 import { UtilService } from '../../../services/util.service';
+import { RegexService } from '../../../services/regex.service';
 
 @Component({
   selector: 'app-form-proyect',
@@ -48,6 +49,7 @@ export class FormProyectComponent implements OnInit {
     private categoryService: CategoryService,
     private modalityService: ModalityService,
     private utilService: UtilService,
+    private regexService: RegexService
 
   ) {
 
@@ -69,10 +71,10 @@ export class FormProyectComponent implements OnInit {
       second_last_name: ['', [Validators.required, Validators.maxLength(20)]],
       address: ['', [Validators.required, Validators.maxLength(80)]],
       suburb: ['', [Validators.required, Validators.maxLength(80)]],
-      postal_code: ['', [Validators.required, Validators.maxLength(5)]],
-      curp: ['', [Validators.required,Validators.minLength(18), Validators.maxLength(18)]],
-      rfc: ['', [Validators.required, Validators.minLength(13), Validators.maxLength(13)]],
-      phone_contact: ['', [Validators.required, Validators.maxLength(10)]],
+      postal_code: ['', [Validators.required, Validators.pattern(this.regexService.regexPostalCode())]],
+      curp: ['', [Validators.required, Validators.pattern(this.regexService.regexCURP())]],
+      rfc: ['', [Validators.required, Validators.pattern(this.regexService.regexRFC())]],
+      phone_contact: ['', [Validators.required, Validators.pattern(this.regexService.regexPhone())]],
       email: ['', [Validators.required, Validators.maxLength(60), Validators.email]],
       city: ['', [Validators.required, Validators.maxLength(30)]],
       locality: ['', [Validators.required, , Validators.maxLength(30)]],
@@ -89,10 +91,10 @@ export class FormProyectComponent implements OnInit {
       second_last_name: ['', [Validators.required, Validators.maxLength(20)]],
       address: ['', [Validators.required, Validators.maxLength(80)]],
       suburb: ['', [Validators.required, Validators.maxLength(80)]],
-      postal_code: ['', [Validators.required, Validators.maxLength(5)]],
-      curp: ['', [Validators.required,Validators.minLength(18), Validators.maxLength(18)]],
-      rfc: ['', [Validators.required, Validators.minLength(13), Validators.maxLength(13)]],
-      phone_contact: ['', [Validators.required, Validators.maxLength(10)]],
+      postal_code: ['', [Validators.required, Validators.pattern(this.regexService.regexPostalCode())]],
+      curp: ['', [Validators.required, Validators.pattern(this.regexService.regexCURP())]],
+      rfc: ['', [Validators.required, Validators.pattern(this.regexService.regexRFC())]],
+      phone_contact: ['', [Validators.required, Validators.pattern(this.regexService.regexPhone())]],
       email: ['', [Validators.required, Validators.maxLength(60), Validators.email]],
       city: ['', [Validators.required, Validators.maxLength(30)]],
       locality: ['', [Validators.required, Validators.maxLength(30)]],
@@ -192,27 +194,27 @@ export class FormProyectComponent implements OnInit {
         err => console.log(err)
       ).add(() => this.utilService._loading = false);
     } else {
-    this.authService.registerProject(fr).subscribe(
-      data => {
-        if (!data.error) {
-          Swal.fire({
-            title: 'Registro exitoso',
-            icon: 'success',
-            text: 'Se abrira un acrhivo el cual debes rellenar y subir para finalizar el registro'
-          }).then(() => {
-            this.returnPageDocument(this.formRegisterProyect.value.id_category);
-            this.formRegisterProyect.reset();
-            this.terminado = true;
-          });
-          localStorage.setItem('autor-terminate', 'true');
-        } else {
-          Swal.fire({
-            icon: 'warning',
-            text: data.data.message
-          });
-        }
-      }, error => console.log(error)
-    ).add(() => this.utilService._loading = false);
+      this.authService.registerProject(fr).subscribe(
+        data => {
+          if (!data.error) {
+            Swal.fire({
+              title: 'Registro exitoso',
+              icon: 'success',
+              text: 'Se abrira un acrhivo el cual debes rellenar y subir para finalizar el registro'
+            }).then(() => {
+              this.returnPageDocument(this.formRegisterProyect.value.id_category);
+              this.formRegisterProyect.reset();
+              this.terminado = true;
+            });
+            localStorage.setItem('autor-terminate', 'true');
+          } else {
+            Swal.fire({
+              icon: 'warning',
+              text: data.data.message
+            });
+          }
+        }, error => console.log(error)
+      ).add(() => this.utilService._loading = false);
     }
   }
 

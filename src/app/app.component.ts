@@ -15,7 +15,7 @@ export class AppComponent implements OnInit{
   }
   ngOnInit(): void {
     if (this.userData) {
-      this.router.navigateByUrl('app/user/register-project');
+      this.router.navigateByUrl('principal/usuario/registrar-proyecto');
     }
   }
 }

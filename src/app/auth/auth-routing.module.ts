@@ -8,16 +8,16 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'sign-up-author',
+        path: 'registro-autor',
         component: SignUpAuthorComponent,
       },
       {
-        path: 'sign-in',
+        path: 'sesion',
         component: SignInComponent
       },
       {
         path: '**',
-        redirectTo: 'sign-in',
+        redirectTo: 'sesion',
       }
     ]
   }

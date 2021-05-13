@@ -35,7 +35,7 @@ export class SignInComponent implements OnInit {
       data => {
         console.log(data);
         if (!data.error) {
-          this.router.navigateByUrl('app/user/register-project');
+          this.router.navigateByUrl('principal/usuario/registrar-proyecto');
           localStorage.setItem('autor-data', JSON.stringify(data.data));
         } else {
           Swal.fire('Advetencia', data.data.message, 'warning');

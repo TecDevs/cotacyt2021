@@ -5,26 +5,26 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 
 const routes: Routes = [
   {
-    path: 'auth',
+    path: 'login',
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
   },
   {
-    path: 'app',
+    path: 'principal',
     component: NavbarComponent,
     children: [
       {
-        path: 'user',
+        path: 'usuario',
         loadChildren: () => import('./user/user.module').then(m => m.UserModule)
       },
       {
         path: '**',
-        redirectTo: 'user'
+        redirectTo: 'usuario'
       }
     ]
   },
   {
     path: '**',
-    redirectTo: 'app',
+    redirectTo: 'login',
   }
 ];
 

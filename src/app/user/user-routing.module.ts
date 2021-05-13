@@ -7,12 +7,12 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'register-project',
+        path: 'registrar-proyecto',
         component: FormProyectComponent,
       },
       {
         path: '**',
-        redirectTo: 'register-proyect'
+        redirectTo: 'registrar-proyecto'
       }
     ]
   }
