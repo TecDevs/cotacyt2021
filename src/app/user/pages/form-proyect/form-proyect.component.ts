@@ -25,6 +25,7 @@ export class FormProyectComponent implements OnInit {
   formRegisterProyect: FormGroup;
   formSecondAuthor: FormGroup;
   autors = false;
+  terminado = false;
   @ViewChild('project_image', {
     read: ElementRef
   }) project_image: ElementRef;
@@ -200,13 +201,7 @@ export class FormProyectComponent implements OnInit {
           this.returnPageDocument(this.formRegisterProyect.value.id_category);
         }
       },
-      error => {
-        console.log(error);
-        Swal.fire({
-          icon: 'warning',
-          text: 'Registro inconcluso'
-        });
-      }
+      error => console.log(error)
     );
   }
 
