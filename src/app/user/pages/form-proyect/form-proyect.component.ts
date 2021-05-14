@@ -105,7 +105,9 @@ export class FormProyectComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.utilService._loading = true;
+    setTimeout( () => {
+      this.utilService._loading = true;
+    })
     if (localStorage.getItem('autor-terminate')) {
       this.terminado = true;
     }
