@@ -33,7 +33,6 @@ export class SignInComponent implements OnInit {
     this.utilService._loading = true;
     this.sign.loginAuth(this.formSignIn.value).subscribe(
       data => {
-        console.log(data);
         if (!data.error) {
           this.router.navigateByUrl('principal/usuario/registrar-proyecto');
           localStorage.setItem('autor-data', JSON.stringify(data.data));
