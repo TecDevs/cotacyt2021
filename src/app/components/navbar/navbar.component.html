@@ -4,9 +4,9 @@
     </div>
 
 
-    <div class="ml-5">
-        <form [formGroup]="formRegisterProyect">
-            <label for="files" class="btn btn-success" ><span><i class="fas fa-upload">&nbsp; &nbsp;</i></span>Subir Archivo</label>
+    <div class="ml-2">
+        <form [formGroup]="formRegisterProyect" class="mt-2">
+            <label [hidden]="terminado" for="files" class="btn btn-success" ><span><i class="fas fa-upload">&nbsp; &nbsp;</i></span>Subir Archivo</label>
             <input id="files" formControlName="register_form" accept=".pdf" style="visibility:hidden; display: none;" type="file" #document />
             &nbsp;
             <button class="btn btn-success mb-2" (click)="uploadDocument($event.target.files)" style="height: 40px; width: 50px" [disabled]="terminado">
