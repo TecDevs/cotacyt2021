@@ -163,7 +163,7 @@ export class FormProyectComponent implements OnInit {
     fr.append('email', this.formRegisterProyect.value.email);
     fr.append('city', this.formRegisterProyect.value.city);
     fr.append('locality', this.formRegisterProyect.value.locality);
-    fr.append('school_institute', this.formRegisterProyect.value.school);
+    fr.append('school_institute', this.formRegisterProyect.value.school_institute);
     fr.append('facebook', this.formRegisterProyect.value.facebook);
     fr.append('twitter', this.formRegisterProyect.value.project_name);
     fr.append('participation_description', this.formRegisterProyect.value.participation_description);
@@ -178,7 +178,7 @@ export class FormProyectComponent implements OnInit {
             Swal.fire({
               title: 'Registro exitoso',
               icon: 'success',
-              text: 'Se abrira un acrhivo el cual debes rellenar y subir para finalizar el registro'
+              text: 'Se abrira un arhivo el cual debes rellenar y subir para finalizar el registro'
             }).then(() => {
               this.returnPageDocument(this.formRegisterProyect.value.id_category);
               this.formRegisterProyect.reset();
