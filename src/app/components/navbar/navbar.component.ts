@@ -61,11 +61,12 @@ export class NavbarComponent implements OnInit {
               Swal.fire({
                 icon: 'success',
                 text: 'Documento registrado exitosamente!'
+              }).then( () => {
+                localStorage.setItem('button', 'true')
+                localStorage.removeItem('autor-data');
+                this.router.navigateByUrl('login/sesion');
               });
             }
-            localStorage.setItem('button', 'true')
-            localStorage.removeItem('autor-data');
-            this.router.navigateByUrl('login/sesion');
           },
           err => {
               console.log(err);   
