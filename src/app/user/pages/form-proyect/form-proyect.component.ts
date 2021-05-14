@@ -127,10 +127,10 @@ export class FormProyectComponent implements OnInit {
   }
 
   changeModality(value: any): void {
-    if (value === '1') {
-      this.autors = false;
-    } else {
+    if (value === '2') {
       this.autors = true;
+    } else {
+      this.autors = false;
     }
   }
 
@@ -167,7 +167,7 @@ export class FormProyectComponent implements OnInit {
     fr.append('participation_description', this.formRegisterProyect.value.participation_description);
     fr.append('image_ine', imageIne);
     // TODO: consume API
-    if (!this.autors) {
+    if (this.autors) {
       // modality 2 author
       fr.append('second_author', JSON.stringify(this.formSecondAuthor.value));
       this.authService.registerProjectWithTwoAuthors(fr).subscribe(
@@ -200,7 +200,7 @@ export class FormProyectComponent implements OnInit {
             Swal.fire({
               title: 'Registro exitoso',
               icon: 'success',
-              text: 'Se abrira un acrhivo el cual debes rellenar y subir para finalizar el registro'
+              text: 'Se abrira un archivo el cual debes rellenar y subir para finalizar el registro'
             }).then(() => {
               this.returnPageDocument(this.formRegisterProyect.value.id_category);
               this.formRegisterProyect.reset();
