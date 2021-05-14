@@ -50,31 +50,35 @@ export class NavbarComponent implements OnInit {
       const register_form = this.document.nativeElement.files[0];
       const author_id = JSON.parse(localStorage.getItem('autor-data')).id_autores;
 
-      console.log(author_id);
-      console.log(register_form);
-
-      const fr: any = new FormData();
-      fr.append('register_form', register_form);
-      fr.append('author_id', author_id);
-
-      this.upload.upload(fr).subscribe(
-        data => {
-          if( !data.error ) {
-            Swal.fire({
-              icon: 'success',
-              text: 'Documento registrado exitosamente!'
-            });
+      if( register_form ) {
+        const fr: any = new FormData();
+        fr.append('register_form', register_form);
+        fr.append('author_id', author_id);
+  
+        this.upload.upload(fr).subscribe(
+          data => {
+            if( !data.error ) {
+              Swal.fire({
+                icon: 'success',
+                text: 'Documento registrado exitosamente!'
+              });
+            }
+            localStorage.setItem('button', 'true')
+            localStorage.removeItem('autor-data');
+            this.router.navigateByUrl('login/sesion');
+          },
+          err => {
+              console.log(err);   
           }
-          localStorage.setItem('button', 'true')
-          localStorage.removeItem('autor-data');
-          this.router.navigateByUrl('login/sesion');
-        },
-        err => {
-            console.log(err);
-            
-        }
-      ).add(() => this.utilService._loading = false);
+        ).add(() => this.utilService._loading = false);
 
+      } else {
+        this.utilService._loading = false;
+        Swal.fire({
+          icon: 'warning',
+          text: 'Asegurate de seleccionar un archivo primero',
+        });
+
+    }
   }
-
 }
