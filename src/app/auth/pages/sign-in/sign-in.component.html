@@ -30,6 +30,7 @@
                                 <input type="password" class="form-control" id="password" formControlName="password"
                                     placeholder="Contraseña">
                             </div>
+                            <label class="mt-2">¿No tienes una cuenta? Regístrate <a routerLink="/login/registro-autor" (click)="pageRegister()"><span>aquí</span></a></label>
                         </div>
                         <button class="btn btn-primary boton-iniciar mt-3" (click) = "signIn()" [disabled]= "formSignIn.invalid">Iniciar
                             Sesión</button>

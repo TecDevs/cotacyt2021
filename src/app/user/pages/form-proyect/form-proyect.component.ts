@@ -140,7 +140,7 @@ export class FormProyectComponent implements OnInit {
     this.utilService._loading = true;
     const projectImage = this.project_image.nativeElement.files[0];
     const imageIne = this.image_ine.nativeElement.files[0];
-    const fr: any = new FormData();
+    const fr: FormData = new FormData();
     fr.append('project_name', this.formRegisterProyect.value.project_name);
     fr.append('project_description', this.formRegisterProyect.value.project_description);
     fr.append('id_sedes', this.formRegisterProyect.value.id_sedes);
@@ -171,9 +171,21 @@ export class FormProyectComponent implements OnInit {
     // TODO: consume API
     if (this.autors) {
       // modality 2 author
-      fr.append('second_author', JSON.stringify(this.formSecondAuthor.value));
+      //console.log(this.formSecondAuthor.value);
+      //console.log(this.formRegisterProyect.value);
+      
+      
+      for(let data in this.formSecondAuthor.value){
+          fr.append(`second_author[${data}]`,this.formSecondAuthor.value[data]);
+      }
+      var object = {};
+      fr.forEach((value, key) => object[key] = value);
+      var json = JSON.stringify(object);
+      console.log(object);
       this.authService.registerProjectWithTwoAuthors(fr).subscribe(
+
         data => {
+          console.log(data);
           if (!data.error) {
             Swal.fire({
               title: 'Registro exitoso',
@@ -184,6 +196,8 @@ export class FormProyectComponent implements OnInit {
               this.formRegisterProyect.reset();
               this.formSecondAuthor.reset();
               this.terminado = true;
+              localStorage.setItem('buttons-disabled', 'si');
+              window.location.reload();
             });
             localStorage.setItem('autor-terminate', 'true');
           } else {
@@ -207,6 +221,8 @@ export class FormProyectComponent implements OnInit {
               this.returnPageDocument(this.formRegisterProyect.value.id_category);
               this.formRegisterProyect.reset();
               this.terminado = true;
+              localStorage.setItem('buttons-disabled', 'si');
+              window.location.reload();
             });
             localStorage.setItem('autor-terminate', 'true');
           } else {
