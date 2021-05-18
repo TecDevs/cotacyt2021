@@ -23,7 +23,7 @@
                         </div>
                         <div class="form-group col-lg-6 col-md-6 col-sm-6">
                             <label>Contraseña<b style="color: red;">*</b></label>
-                            <input formControlName="password" type="text" class="form-control">
+                            <input formControlName="password" type="password" class="form-control">
                             <small class="form-text text-muted">Máximo 20 caracteres</small>
                             <small
                                 *ngIf="formAuthor.controls['password'].invalid && (formAuthor.controls['password'].dirty || formAuthor.controls['password'].touched)"
@@ -96,7 +96,7 @@
                         </div>
                         <div class="form-group col-lg-6 col-md-6 col-sm-6">
                             <label>Correo electrónico<b style="color: red;">*</b></label>
-                            <input formControlName="email" type="text" class="form-control">
+                            <input formControlName="email" type="email" class="form-control">
                             <small
                                 *ngIf="formAuthor.controls['email'].invalid && (formAuthor.controls['email'].dirty || formAuthor.controls['email'].touched)"
                                 class="form-text" style="color: red;">Correo inválido</small>

@@ -190,9 +190,8 @@ export class FormProyectComponent implements OnInit {
             Swal.fire({
               title: 'Registro exitoso',
               icon: 'success',
-              text: 'Se abrira un arhivo el cual debes rellenar y subir para finalizar el registro'
+              text: 'Solo falta subir el formato de registro para concluir el registro'
             }).then(() => {
-              this.returnPageDocument(this.formRegisterProyect.value.id_category);
               this.formRegisterProyect.reset();
               this.formSecondAuthor.reset();
               this.terminado = true;
@@ -216,9 +215,8 @@ export class FormProyectComponent implements OnInit {
             Swal.fire({
               title: 'Registro exitoso',
               icon: 'success',
-              text: 'Se abrira un archivo el cual debes rellenar y subir para finalizar el registro'
+              text: 'Solo falta subir el formato de registro para concluir el proceso'
             }).then(() => {
-              this.returnPageDocument(this.formRegisterProyect.value.id_category);
               this.formRegisterProyect.reset();
               this.terminado = true;
               localStorage.setItem('buttons-disabled', 'si');
@@ -237,27 +235,35 @@ export class FormProyectComponent implements OnInit {
   }
 
 
-  returnPageDocument(id: string): void {
-    switch (id) {
-      case '1':
-        window.open('https://drive.google.com/file/d/1U230peNB_6XEXcF2hWIFvonsOWkQp1eO/view?usp=sharing', '_blank');
-        break;
-      case '2':
-        window.open('https://drive.google.com/file/d/1gZ0RKrFM9euxNFjEohR7z6AAvO9eccYT/view?usp=sharing', '_blank');
-        break;
-      case '3':
-        window.open('https://drive.google.com/file/d/1SezhWNgY64atINHHRBl27R_ue6Etxgxe/view?usp=sharing', '_blank');
-        break;
-      case '4':
-        window.open('https://drive.google.com/file/d/1y6_meM3CgML4ZEsMJrI5ROg6JjGuCTm4/view?usp=sharing', '_blank');
-        break;
-      case '5':
-        window.open('https://drive.google.com/file/d/16pHHUHS2k46i5PKMNHTacyEi-GxfyJEJ/view?usp=sharing', '_blank');
-        break;
-      case '6':
-        window.open('https://drive.google.com/file/d/1z_E9WPMvSCt82rBr6IANSE2Bkl_fNVgv/view?usp=sharing', '_blank');
-        break;
-    }
+  returnPageDocument(value: any): void {
+    Swal.fire({
+      title:'Formato de registro',
+      icon:'info',
+      text:'Se abrira otra pagina para que descargue el formato de la categoria',
+      showConfirmButton:true,
+      confirmButtonText:'Aceptar',
+    }).then(() => {
+      switch (value) {
+        case '1':
+          window.open('https://drive.google.com/file/d/1U230peNB_6XEXcF2hWIFvonsOWkQp1eO/view?usp=sharing', '_blank');
+          break;
+        case '2':
+          window.open('https://drive.google.com/file/d/1gZ0RKrFM9euxNFjEohR7z6AAvO9eccYT/view?usp=sharing', '_blank');
+          break;
+        case '3':
+          window.open('https://drive.google.com/file/d/1SezhWNgY64atINHHRBl27R_ue6Etxgxe/view?usp=sharing', '_blank');
+          break;
+        case '4':
+          window.open('https://drive.google.com/file/d/1y6_meM3CgML4ZEsMJrI5ROg6JjGuCTm4/view?usp=sharing', '_blank');
+          break;
+        case '5':
+          window.open('https://drive.google.com/file/d/16pHHUHS2k46i5PKMNHTacyEi-GxfyJEJ/view?usp=sharing', '_blank');
+          break;
+        case '6':
+          window.open('https://drive.google.com/file/d/1z_E9WPMvSCt82rBr6IANSE2Bkl_fNVgv/view?usp=sharing', '_blank');
+          break;
+      }
+    }); 
   }
 
 }

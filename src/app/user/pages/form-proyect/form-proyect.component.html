@@ -44,7 +44,7 @@
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Categoría:<b style="color: red;">*</b></label>
-                    <select formControlName="id_category" class="form-control">
+                    <select formControlName="id_category" class="form-control" (change)="returnPageDocument($event.target.value)">
                         <option *ngFor="let category of categories" [value]=category.id_categorias>
                             {{category.categoria}}</option>
                     </select>
