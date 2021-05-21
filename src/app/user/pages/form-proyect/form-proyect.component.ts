@@ -14,6 +14,7 @@ import { CategoryInterface } from '../../../models/category.model';
 import { forkJoin } from 'rxjs';
 import { UtilService } from '../../../services/util.service';
 import { RegexService } from '../../../services/regex.service';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-form-proyect',
@@ -187,6 +188,8 @@ export class FormProyectComponent implements OnInit {
         data => {
           console.log(data);
           if (!data.error) {
+            localStorage.setItem('info', JSON.stringify(this.formRegisterProyect.value))
+            localStorage.setItem('info-2', JSON.stringify(this.formSecondAuthor.value))
             Swal.fire({
               title: 'Registro exitoso',
               icon: 'success',

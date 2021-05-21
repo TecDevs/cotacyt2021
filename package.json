@@ -22,6 +22,7 @@
     "bootstrap": "^5.0.0",
     "file-saver": "^2.0.5",
     "html-docx-js": "^0.3.1",
+    "jspdf": "^2.3.1",
     "rxjs": "~6.6.0",
     "sweetalert2": "^10.16.7",
     "tslib": "^2.0.0",
