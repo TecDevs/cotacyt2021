@@ -21,7 +21,9 @@ export class NavbarComponent implements OnInit {
   }) document: ElementRef;
 
   terminado = false;
+  btnDisabled = false;
   formRegisterProyect: FormGroup;
+
 
   constructor(
     private upload: UploadDocument,
@@ -42,13 +44,15 @@ export class NavbarComponent implements OnInit {
     if( localStorage.getItem('button') ) {
         this.terminado = true;
     }
-    
+    if( localStorage.getItem('buttons-disabled'))
+        this.btnDisabled = true;
   }
 
   uploadDocument(file: FileList) {
       this.utilService._loading = true;
       const register_form = this.document.nativeElement.files[0];
       const author_id = JSON.parse(localStorage.getItem('autor-data')).id_autores;
+
 
       if( register_form ) {
         const fr: any = new FormData();

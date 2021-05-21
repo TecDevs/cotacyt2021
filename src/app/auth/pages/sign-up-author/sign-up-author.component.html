@@ -1,14 +1,14 @@
 <div class="container-fluid">
-    <div class="row justify-content-center align-items-center mt-4">
-        <div class="col-10 d-flex justify-content-center align-items-center">
+    <div class="row justify-content-center align-items-center pt-4">
+        <div class="col-12 col-md-10 d-flex justify-content-center align-items-center">
             <nav class="navbar">
                 <img src="../../../../assets/logotam.png" alt="" width="100px">
             </nav>
             <div class="row" style="margin-top: 80px;">
-                <div class="col-12">
+                <div class="col-12 pl-5 pr-5 pt-2">
                     <h1>Registro de autor</h1>
                 </div>
-                <div class="col-12 mt-2">
+                <div class="col-12 pl-5 pr-5 pt-2">
                     <h5>Los datos con <b style="color: red;">*</b> son obligatorios</h5>
                 </div>
                 <div class="col-12 pl-5 pr-5 pt-2">
@@ -23,7 +23,7 @@
                         </div>
                         <div class="form-group col-lg-6 col-md-6 col-sm-6">
                             <label>Contraseña<b style="color: red;">*</b></label>
-                            <input formControlName="password" type="text" class="form-control">
+                            <input formControlName="password" type="password" class="form-control">
                             <small class="form-text text-muted">Máximo 20 caracteres</small>
                             <small
                                 *ngIf="formAuthor.controls['password'].invalid && (formAuthor.controls['password'].dirty || formAuthor.controls['password'].touched)"
@@ -69,7 +69,7 @@
                             <input formControlName="postal_code" type="number" class="form-control">
                             <small
                                 *ngIf="formAuthor.controls['postal_code'].invalid && (formAuthor.controls['postal_code'].dirty || formAuthor.controls['postal_code'].touched)"
-                                class="form-text" style="color: red;">Codigo postal inválido</small>
+                                class="form-text" style="color: red;">Código postal inválido</small>
                         </div>
                         <div class="form-group col-lg-6 col-md-6 col-sm-6">
                             <label>CURP<b style="color: red;">*</b></label>
@@ -78,25 +78,25 @@
                                     target="_blank">aquí</a></small>
                             <small
                                 *ngIf="formAuthor.controls['curp'].invalid && (formAuthor.controls['curp'].dirty || formAuthor.controls['curp'].touched)"
-                                class="form-text" style="color: red;">CURP invalido, asegurate de tener MAYÚSCULAS.</small>
+                                class="form-text" style="color: red;">CURP inválida, asegurate de tener las MAYÚSCULAS activadas</small>
                         </div>
                         <div class="form-group col-lg-6 col-md-6 col-sm-6">
                             <label>RFC<b style="color: red;">*</b></label>
                             <input formControlName="rfc" type="text" class="form-control">
                             <small
                                 *ngIf="formAuthor.controls['rfc'].invalid && (formAuthor.controls['rfc'].dirty || formAuthor.controls['rfc'].touched)"
-                                class="form-text" style="color: red;">RFC invalido, asegurate de tener MAYÚSCULAS.</small>
+                                class="form-text" style="color: red;">RFC inválido, asegurate de tener las MAYÚSCULAS activadas</small>
                         </div>
                         <div class="form-group col-lg-6 col-md-6 col-sm-6">
                             <label>Teléfono de contacto<b style="color: red;">*</b></label>
                             <input formControlName="phone_contact" type="number" class="form-control">
                             <small
                                 *ngIf="formAuthor.controls['phone_contact'].invalid && (formAuthor.controls['phone_contact'].dirty || formAuthor.controls['phone_contact'].touched)"
-                                class="form-text" style="color: red;">Telefono inválido</small>
+                                class="form-text" style="color: red;">Teléfono inválido</small>
                         </div>
                         <div class="form-group col-lg-6 col-md-6 col-sm-6">
                             <label>Correo electrónico<b style="color: red;">*</b></label>
-                            <input formControlName="email" type="text" class="form-control">
+                            <input formControlName="email" type="email" class="form-control">
                             <small
                                 *ngIf="formAuthor.controls['email'].invalid && (formAuthor.controls['email'].dirty || formAuthor.controls['email'].touched)"
                                 class="form-text" style="color: red;">Correo inválido</small>
@@ -109,7 +109,7 @@
                                 class="form-text" style="color: red;">Municipio inválido</small>
                         </div>
                         <div class="form-group col-lg-6 col-md-6 col-sm-6">
-                            <label>Localidad donde vives<b style="color: red;">*</b></label>
+                            <label>Localidad<b style="color: red;">*</b></label>
                             <input formControlName="locality" type="text" class="form-control">
                             <small class="form-text text-muted">Ej. Ejido, Congregación, Ciudad, etc</small>
                             <small
@@ -134,7 +134,7 @@
                             <small class="form-text text-muted">Opcional</small>
                         </div>
                     </form>
-                    <button class="btn btn-success mb-3" style="width: 200px; font-size: 18px;"
+                    <button class="btn btn-success mb-5" style="width: 200px; font-size: 18px;"
                         (click)="registerAuthor()" [disabled]="formAuthor.invalid">Registrar</button>
                 </div>
             </div>

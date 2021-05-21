@@ -55,7 +55,7 @@ export class SignUpAuthorComponent implements OnInit {
             this.router.navigateByUrl('login/sesion');
           });
         } else {
-          Swal.fire('Advertencia', data.data.message, 'warning');
+          Swal.fire('Advertencia', 'Usuario duplicado, intenta con otro', 'warning');
         }
       },
       err => {
