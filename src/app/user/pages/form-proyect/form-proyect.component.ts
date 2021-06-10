@@ -215,6 +215,8 @@ export class FormProyectComponent implements OnInit {
       this.authService.registerProject(fr).subscribe(
         data => {
           if (!data.error) {
+            localStorage.setItem('info', JSON.stringify(this.formRegisterProyect.value));
+            localStorage.setItem('info-2', JSON.stringify(this.formSecondAuthor.value))
             Swal.fire({
               title: 'Registro exitoso',
               icon: 'success',
