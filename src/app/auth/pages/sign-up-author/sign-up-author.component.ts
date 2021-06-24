@@ -47,7 +47,6 @@ export class SignUpAuthorComponent implements OnInit {
   }
   registerAuthor(): void {
     this.utilService._loading = true;
-    // TODO: consume api
     this.signAuth.registerAuth(this.formAuthor.value).subscribe(
       data => {
         if (!data.error) {
@@ -62,6 +61,12 @@ export class SignUpAuthorComponent implements OnInit {
         console.log(err);
       }
     ).add(() => this.utilService._loading = false);
+  }
+  curpUpperCase(): void {
+    this.formAuthor.get('curp').setValue(this.formAuthor.get('curp').value.toUpperCase());
+  }
+  rfcUpperCase(): void {
+    this.formAuthor.get('rfc').setValue(this.formAuthor.get('rfc').value.toUpperCase());
   }
 
 }

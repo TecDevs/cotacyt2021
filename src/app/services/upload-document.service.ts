@@ -13,6 +13,9 @@ export class UploadDocument {
   constructor(private http: HttpClient, private appService: AppService) { }
 
   upload(body: any): Observable<any> {
-    return this.http.post( this.appService.API_URL +'project/upload-register-form', body);
+    return this.http.post( this.appService.API_URL + 'project/upload-register-form', body, {
+      reportProgress: true,
+      observe: 'events',
+    });
   }
 }

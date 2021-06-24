@@ -106,9 +106,9 @@ export class FormProyectComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    setTimeout( () => {
+    setTimeout(() => {
       this.utilService._loading = true;
-    })
+    });
     if (localStorage.getItem('autor-terminate')) {
       this.terminado = true;
     }
@@ -171,29 +171,23 @@ export class FormProyectComponent implements OnInit {
     fr.append('image_ine', imageIne);
     // TODO: consume API
     if (this.autors) {
-      // modality 2 author
-      //console.log(this.formSecondAuthor.value);
-      //console.log(this.formRegisterProyect.value);
-      
-      
-      for(let data in this.formSecondAuthor.value){
-          fr.append(`second_author[${data}]`,this.formSecondAuthor.value[data]);
+      for (let data in this.formSecondAuthor.value) {
+        fr.append(`second_author[${data}]`, this.formSecondAuthor.value[data]);
       }
       var object = {};
       fr.forEach((value, key) => object[key] = value);
       var json = JSON.stringify(object);
       console.log(object);
       this.authService.registerProjectWithTwoAuthors(fr).subscribe(
-
         data => {
           console.log(data);
           if (!data.error) {
-            localStorage.setItem('info', JSON.stringify(this.formRegisterProyect.value))
-            localStorage.setItem('info-2', JSON.stringify(this.formSecondAuthor.value))
+            localStorage.setItem('info', JSON.stringify(this.formRegisterProyect.value));
+            localStorage.setItem('info-2', JSON.stringify(this.formSecondAuthor.value));
             Swal.fire({
               title: 'Registro exitoso',
               icon: 'success',
-              text: 'Solo falta subir el formato de registro para concluir el registro'
+              text: 'Solo falta subir el formato de registro (pdf) para concluir el registro'
             }).then(() => {
               this.formRegisterProyect.reset();
               this.formSecondAuthor.reset();
@@ -216,7 +210,7 @@ export class FormProyectComponent implements OnInit {
         data => {
           if (!data.error) {
             localStorage.setItem('info', JSON.stringify(this.formRegisterProyect.value));
-            localStorage.setItem('info-2', JSON.stringify(this.formSecondAuthor.value))
+            localStorage.setItem('info-2', JSON.stringify(this.formSecondAuthor.value));
             Swal.fire({
               title: 'Registro exitoso',
               icon: 'success',
@@ -238,15 +232,26 @@ export class FormProyectComponent implements OnInit {
       ).add(() => this.utilService._loading = false);
     }
   }
-
+  curpUpperCaseSecondAuthor(): void {
+    this.formSecondAuthor.get('curp').setValue(this.formSecondAuthor.get('curp').value.toUpperCase());
+  }
+  rfcUpperCaseSecondAuthor(): void {
+    this.formSecondAuthor.get('rfc').setValue(this.formSecondAuthor.get('rfc').value.toUpperCase());
+  }
+  curpUpperCaseRegisterProyect(): void {
+    this.formRegisterProyect.get('curp').setValue(this.formRegisterProyect.get('curp').value.toUpperCase());
+  }
+  rfcUpperCaseRegisterProyect(): void {
+    this.formRegisterProyect.get('rfc').setValue(this.formRegisterProyect.get('rfc').value.toUpperCase());
+  }
 
   returnPageDocument(value: any): void {
     Swal.fire({
-      title:'Formato de registro',
-      icon:'info',
-      text:'Se abrira otra pagina para que descargue el formato de la categoria',
-      showConfirmButton:true,
-      confirmButtonText:'Aceptar',
+      title: 'Formato de registro',
+      icon: 'info',
+      text: 'Se abrira otra pagina para que descargue el formato de la categoria',
+      showConfirmButton: true,
+      confirmButtonText: 'Aceptar',
     }).then(() => {
       switch (value) {
         case '1':
@@ -268,7 +273,7 @@ export class FormProyectComponent implements OnInit {
           window.open('https://drive.google.com/file/d/1z_E9WPMvSCt82rBr6IANSE2Bkl_fNVgv/view?usp=sharing', '_blank');
           break;
       }
-    }); 
+    });
   }
 
 }

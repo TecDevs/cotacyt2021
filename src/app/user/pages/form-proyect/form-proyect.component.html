@@ -121,16 +121,16 @@
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>CURP<b style="color: red;">*</b></label>
-                    <input formControlName="curp" type="text" class="form-control">
+                    <input style="text-transform:uppercase" (keyup)="curpUpperCaseRegisterProyect()" formControlName="curp" type="text" class="form-control">
                     <small class="form-text text-muted">Consulta tu CURP <a href="https://www.gob.mx/curp/"
                             target="_blank">aquí</a></small>
                     <small
                         *ngIf="formRegisterProyect.controls['curp'].invalid && (formRegisterProyect.controls['curp'].dirty || formRegisterProyect.controls['curp'].touched)"
-                        class="form-text" style="color: red;">CURP inválida, asegurate de tener las MAYÚSCULAS activadas</small>
+                        class="form-text" style="color: red;">CURP inválida</small>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>RFC<b style="color: red;">*</b></label>
-                    <input formControlName="rfc" type="text" class="form-control">
+                    <input style="text-transform:uppercase" (keyup)="rfcUpperCaseRegisterProyect()" formControlName="rfc" type="text" class="form-control">
                     <small
                         *ngIf="formRegisterProyect.controls['rfc'].invalid && (formRegisterProyect.controls['rfc'].dirty || formRegisterProyect.controls['rfc'].touched)"
                         class="form-text" style="color: red;">RFC inválido, asegurate de tener las MAYÚSCULAS activadas</small>
@@ -248,7 +248,7 @@
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
                     <label>CURP<b style="color: red;">*</b></label>
-                    <input formControlName="curp" type="text" class="form-control">
+                    <input style="text-transform:uppercase" (keyup)="curpUpperCaseSecondAuthor()" formControlName="curp" type="text" class="form-control">
                     <small class="form-text text-muted">Consulta tu CURP <a href="https://www.gob.mx/curp/"
                             target="_blank">aquí</a></small>
                     <small
@@ -257,7 +257,7 @@
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
                     <label>RFC<b style="color: red;">*</b></label>
-                    <input formControlName="rfc" type="text" class="form-control">
+                    <input style="text-transform:uppercase" (keyup)="rfcUpperCaseSecondAuthor()" formControlName="rfc" type="text" class="form-control">
                     <small
                         *ngIf="formSecondAuthor.controls['rfc'].invalid && (formSecondAuthor.controls['rfc'].dirty || formSecondAuthor.controls['rfc'].touched)"
                         class="form-text" style="color: red;">RFC inválido, asegurate de tener las MAYÚSCULAS activadas</small>

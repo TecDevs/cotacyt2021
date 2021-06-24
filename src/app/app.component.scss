@@ -4,7 +4,14 @@
     width: 100%;
     height: 100vh;
     overflow: hidden;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(189, 171, 171, 0.5);
+}
+.loading-progress{
+    z-index: 100000;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .img-loading{
@@ -14,7 +21,29 @@
     transform: translate(-50%, -50%);
     animation: animate infinite alternate 600ms;
 }
-
+.progress {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    width: 300px;
+    transform: translate(-50%, -50%);
+}
+.progress-bar {
+    background-color: rgb(0, 100, 167);
+}
+.text {
+    position: absolute;
+    top: 68%;
+    left: 50%;
+    width: 400px;
+    transform: translate(-50%, -50%);
+    font-size: 28px;
+    font-weight: bold;
+    background-color: rgb(0, 100, 167);
+    border-radius: 5px;
+    color: white;
+    text-align: center;
+}
 @keyframes animate{
     from{
         width: 10%;

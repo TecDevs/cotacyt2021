@@ -1,4 +1,11 @@
 <div *ngIf="utilService.loading" class="loading">
     <img class="img-loading" src="../assets/logotam.png" alt="">
 </div>
+<div *ngIf="utilService.loadingProgress" class="loading-progress">
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" [style]="'width:' + utilService.progress + '%'" [aria-valuenow]="utilService.progress" aria-valuemin="0"
+            aria-valuemax="100">{{utilService.progress}}%</div>
+    </div>
+    <div class="text"> Subiendo tu archivo...</div>
+</div>
 <router-outlet></router-outlet>

@@ -8,6 +8,8 @@ export class UtilService {
 
   public loading = false;
   public admin = true;
+  public loadingProgress = false;
+  public progress = 0;
 
   constructor() { }
 
