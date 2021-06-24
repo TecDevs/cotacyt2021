@@ -15,6 +15,7 @@ import { forkJoin } from 'rxjs';
 import { UtilService } from '../../../services/util.service';
 import { RegexService } from '../../../services/regex.service';
 import jsPDF from 'jspdf';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-form-proyect',
@@ -139,6 +140,7 @@ export class FormProyectComponent implements OnInit {
 
   registerProyect(file: FileList): void {
     this.utilService._loading = true;
+    this.utilService.loadingProgress = true;
     const projectImage = this.project_image.nativeElement.files[0];
     const imageIne = this.image_ine.nativeElement.files[0];
     const fr: FormData = new FormData();
@@ -180,56 +182,75 @@ export class FormProyectComponent implements OnInit {
       console.log(object);
       this.authService.registerProjectWithTwoAuthors(fr).subscribe(
         data => {
-          console.log(data);
-          if (!data.error) {
-            localStorage.setItem('info', JSON.stringify(this.formRegisterProyect.value));
-            localStorage.setItem('info-2', JSON.stringify(this.formSecondAuthor.value));
-            Swal.fire({
-              title: 'Registro exitoso',
-              icon: 'success',
-              text: 'Solo falta subir el formato de registro (pdf) para concluir el registro'
-            }).then(() => {
-              this.formRegisterProyect.reset();
-              this.formSecondAuthor.reset();
-              this.terminado = true;
-              localStorage.setItem('buttons-disabled', 'si');
-              window.location.reload();
-            });
-            localStorage.setItem('autor-terminate', 'true');
-          } else {
-            Swal.fire({
-              icon: 'warning',
-              text: data.data.message
-            });
+          if (data.type === HttpEventType.UploadProgress) {
+            const total = data.total;
+            this.utilService.progress = Math.round((100 * data.loaded) / total);
+          }
+          if (data.type === HttpEventType.Response) {
+            const response = data.body;
+            if (!response.error) {
+              localStorage.setItem('info', JSON.stringify(this.formRegisterProyect.value));
+              localStorage.setItem('info-2', JSON.stringify(this.formSecondAuthor.value));
+              Swal.fire({
+                title: 'Registro exitoso',
+                icon: 'success',
+                text: 'Solo falta subir el formato de registro (pdf) para concluir el registro'
+              }).then(() => {
+                this.formRegisterProyect.reset();
+                this.formSecondAuthor.reset();
+                this.terminado = true;
+                localStorage.setItem('buttons-disabled', 'si');
+                window.location.reload();
+              });
+              localStorage.setItem('autor-terminate', 'true');
+            } else {
+              Swal.fire({
+                icon: 'warning',
+                text: response.message
+              });
+            }
           }
         },
         err => console.log(err)
-      ).add(() => this.utilService._loading = false);
+      ).add(() => {
+        this.utilService._loading = false;
+        this.utilService.loadingProgress = false;
+      });
     } else {
       this.authService.registerProject(fr).subscribe(
         data => {
-          if (!data.error) {
-            localStorage.setItem('info', JSON.stringify(this.formRegisterProyect.value));
-            localStorage.setItem('info-2', JSON.stringify(this.formSecondAuthor.value));
-            Swal.fire({
-              title: 'Registro exitoso',
-              icon: 'success',
-              text: 'Solo falta subir el formato de registro para concluir el proceso'
-            }).then(() => {
-              this.formRegisterProyect.reset();
-              this.terminado = true;
-              localStorage.setItem('buttons-disabled', 'si');
-              window.location.reload();
-            });
-            localStorage.setItem('autor-terminate', 'true');
-          } else {
-            Swal.fire({
-              icon: 'warning',
-              text: data.data.message
-            });
+          if (data.type === HttpEventType.UploadProgress) {
+            const total = data.total;
+            this.utilService.progress = Math.round((100 * data.loaded) / total);
+          }
+          if (data.type === HttpEventType.Response) {
+            const response = data.body;
+            if (!response.error) {
+              localStorage.setItem('info', JSON.stringify(this.formRegisterProyect.value));
+              localStorage.setItem('info-2', JSON.stringify(this.formSecondAuthor.value));
+              Swal.fire({
+                title: 'Registro exitoso',
+                icon: 'success',
+                text: 'Solo falta subir el formato de registro para concluir el proceso'
+              }).then(() => {
+                this.formRegisterProyect.reset();
+                this.terminado = true;
+                localStorage.setItem('buttons-disabled', 'si');
+                window.location.reload();
+              });
+              localStorage.setItem('autor-terminate', 'true');
+            } else {
+              Swal.fire({
+                icon: 'warning',
+                text: response.message
+              });
+            }
           }
         }, error => console.log(error)
-      ).add(() => this.utilService._loading = false);
+      ).add(() => {
+        this.utilService._loading = false;
+        this.utilService.loadingProgress = false;
+      });
     }
   }
   curpUpperCaseSecondAuthor(): void {

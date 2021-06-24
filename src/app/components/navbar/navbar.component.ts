@@ -91,6 +91,7 @@ export class NavbarComponent implements OnInit {
 
     } else {
       this.utilService._loading = false;
+      this.utilService.loadingProgress = false;
       Swal.fire({
         icon: 'warning',
         text: 'Asegurate de seleccionar un archivo primero',
