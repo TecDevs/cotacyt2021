@@ -16,6 +16,7 @@ import { UtilService } from '../../../services/util.service';
 import { RegexService } from '../../../services/regex.service';
 import jsPDF from 'jspdf';
 import { HttpEventType } from '@angular/common/http';
+import { LevelEnglishService } from '../../../services/level-english.service';
 
 @Component({
   selector: 'app-form-proyect',
@@ -41,8 +42,7 @@ export class FormProyectComponent implements OnInit {
   campus: CampusInterface[];
   modalities: ModalityInterface[];
   categories: CategoryInterface[];
-
-
+  levelsEnglish: any;
   constructor(
     private fb: FormBuilder,
     private authService: FormProyectService,
@@ -51,8 +51,8 @@ export class FormProyectComponent implements OnInit {
     private categoryService: CategoryService,
     private modalityService: ModalityService,
     private utilService: UtilService,
-    private regexService: RegexService
-
+    private regexService: RegexService,
+    private levelEnglishService: LevelEnglishService
   ) {
 
     this.formRegisterProyect = this.fb.group({
@@ -101,12 +101,14 @@ export class FormProyectComponent implements OnInit {
       city: ['', [Validators.required, Validators.maxLength(30)]],
       locality: ['', [Validators.required, Validators.maxLength(30)]],
       school: ['', [Validators.required, Validators.maxLength(100)]],
+      levelEnglish: ['', [Validators.required]],
       facebook: ['', [Validators.maxLength(60)]],
       twitter: ['', [Validators.maxLength(30)]],
     });
   }
 
   ngOnInit(): void {
+    this.levelsEnglish = this.levelEnglishService.getLevelsEnglish();
     setTimeout(() => {
       this.utilService._loading = true;
     });

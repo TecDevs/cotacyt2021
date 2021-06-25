@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { UtilService } from '../../../services/util.service';
 import { Router } from '@angular/router';
 import { RegexService } from '../../../services/regex.service';
+import { LevelEnglishService } from '../../../services/level-english.service';
 
 @Component({
   selector: 'app-sign-up-author',
@@ -14,12 +15,14 @@ import { RegexService } from '../../../services/regex.service';
 export class SignUpAuthorComponent implements OnInit {
 
   formAuthor: FormGroup;
+  levelsEnglish: any;
   constructor(
     private fb: FormBuilder,
     private signAuth: SignUpAuthorService,
     private utilService: UtilService,
     private router: Router,
-    private regexService: RegexService
+    private regexService: RegexService,
+    private levelEnglishService: LevelEnglishService
   ) {
     this.formAuthor = this.fb.group({
       // author data
@@ -38,12 +41,14 @@ export class SignUpAuthorComponent implements OnInit {
       city: ['', [Validators.required, Validators.maxLength(30)]],
       locality: ['', [Validators.required, Validators.maxLength(30)]],
       school: ['', [Validators.required, Validators.maxLength(100)]],
+      levelEnglish: ['', [Validators.required]],
       facebook: ['', [Validators.maxLength(60)]],
       twitter: ['', [Validators.maxLength(30)]],
     });
   }
 
   ngOnInit(): void {
+    this.levelsEnglish = this.levelEnglishService.getLevelsEnglish();
   }
   registerAuthor(): void {
     this.utilService._loading = true;

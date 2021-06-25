@@ -123,6 +123,13 @@
                                 *ngIf="formAuthor.controls['school'].invalid && (formAuthor.controls['school'].dirty || formAuthor.controls['school'].touched)"
                                 class="form-text" style="color: red;">Escuela o institución inválida</small>
                         </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                            <label>Nivel de íngles:<b style="color: red;">*</b></label>
+                            <select formControlName="levelEnglish" class="form-control">
+                                <option *ngFor="let level of levelsEnglish" [value]=level.idLevel>
+                                    {{level.level}}</option>
+                            </select>
+                        </div>
                         <div class="form-group col-lg-6 col-md-6 col-sm-6">
                             <label>Facebook</label>
                             <input formControlName="facebook" type="text" class="form-control">
