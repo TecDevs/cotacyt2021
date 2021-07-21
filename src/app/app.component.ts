@@ -14,8 +14,5 @@ export class AppComponent implements OnInit{
     this.userData = JSON.parse(localStorage.getItem('autor-data'));
   }
   ngOnInit(): void {
-    if (this.userData) {
-      this.router.navigateByUrl('principal/usuario/registrar-proyecto');
-    }
   }
 }

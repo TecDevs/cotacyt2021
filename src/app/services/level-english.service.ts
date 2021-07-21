@@ -11,7 +11,7 @@ export class LevelEnglishService {
 
   constructor(private httt: HttpClient, private appService: AppService) { }
 
-  getLevelsEnglish() {
+  getLevelsEnglish(): any {
     return [
       {idLevel: 0, level: '0% - 40%'},
       {idLevel: 1, level: '41% - 60%'},

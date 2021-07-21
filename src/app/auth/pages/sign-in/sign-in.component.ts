@@ -38,7 +38,7 @@ export class SignInComponent implements OnInit {
     setTimeout(() => {
       this.utilService._loading = false;
     }, 1000);
-    //this.router.navigateByUrl('/login/registro-autor');
+    // this.router.navigateByUrl('/login/registro-autor');
     // transition(() =>
     //   {
     //     return this.utilService._loading = true;
@@ -53,7 +53,6 @@ export class SignInComponent implements OnInit {
         if (!data.error) {
           this.router.navigateByUrl('principal/usuario/registrar-proyecto');
           localStorage.setItem('autor-data', JSON.stringify(data.data));
-          
         } else {
           Swal.fire('Advetencia', data.data.message, 'warning');
         }
