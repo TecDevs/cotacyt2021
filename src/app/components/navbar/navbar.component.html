@@ -6,13 +6,19 @@
 
     <div class="ml-2" *ngIf="btnDisabled">
         <form [formGroup]="formRegisterProyect" class="mt-2">
-            <label [hidden]="terminado" for="files" class="btn btn-success" ><span><i class="fas fa-upload">&nbsp; &nbsp;</i></span>Subir Archivo</label>
+            <label [hidden]="terminado" for="files" class="btn btn-success" ><span><i class="fas fa-upload">&nbsp; &nbsp;</i></span>Cargar archivo</label>
             <input id="files" formControlName="register_form" accept=".pdf" style="visibility:hidden; display: none;" type="file" #document />
             &nbsp;
-            <button class="btn btn-success mb-2" (click)="uploadDocument($event.target.files)" style="height: 40px; width: 50px" [disabled]="terminado">
-                <span><i class="fas fa-check"></i></span>
+            <button class="btn btn-success mb-2" (click)="uploadDocument($event.target.files)" style="height: 40px;" [disabled]="terminado">
+                <span>Subir<i class=" mx-2 fas fa-check"></i></span>
             </button>
         </form>
+    </div>
+    <div class="ml-2">
+        <button class="btn btn-success" (click)="closeSession()">
+            Cerrar sesión
+            <i class="fas fa-times mx-1"></i>
+        </button>
     </div>
 
 </nav>

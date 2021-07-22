@@ -158,6 +158,13 @@ export class NavbarComponent implements OnInit {
       pdf.text(JSON.parse(localStorage.getItem('info-2')).name_author + ' ' + JSON.parse(localStorage.getItem('info-2')).last_name + ' ' + JSON.parse(localStorage.getItem('info-2')).second_last_name, 3.35, 5.7);
       pdf.save('acuse proyecto');
     }
-
+  }
+  closeSession(): void {
+    this.utilService._loading = true;
+    setTimeout(() => {
+      this.utilService._loading = false;
+      localStorage.removeItem('autor-data');
+      this.router.navigateByUrl('/login/sesion');
+    }, 1000);
   }
 }
