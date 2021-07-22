@@ -74,6 +74,7 @@ export class NavbarComponent implements OnInit {
                 text: 'Documento registrado exitosamente!'
               }).then(() => {
                 localStorage.setItem('button', 'true');
+                localStorage.removeItem('autor-data');
                 this.router.navigateByUrl('login/sesion');
               });
               localStorage.removeItem('autor-data');
