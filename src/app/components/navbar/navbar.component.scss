@@ -9,6 +9,11 @@
     top: 0;
     z-index: 1;
 }
+.item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .nav-links {
     display: flex;
     list-style: none;

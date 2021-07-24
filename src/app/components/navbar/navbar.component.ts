@@ -7,6 +7,7 @@ import { UtilService } from '../../services/util.service';
 import { Router } from '@angular/router';
 import jsPDF from 'jspdf';
 import { HttpEventType } from '@angular/common/http';
+import { Autor } from '../../models/autor.model';
 
 
 @Component({
@@ -24,8 +25,7 @@ export class NavbarComponent implements OnInit {
   terminado = false;
   btnDisabled = false;
   formRegisterProyect: FormGroup;
-
-
+  autorData: Autor;
   constructor(
     private upload: UploadDocument,
     private fb: FormBuilder,
@@ -39,10 +39,11 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (localStorage.getItem('button')) {
+    this.autorData = JSON.parse(localStorage.getItem('autor-data'));
+    if (localStorage.getItem(`button-${this.autorData.id_autores}`)) {
       this.terminado = true;
     }
-    if (localStorage.getItem('buttons-disabled')) {
+    if (localStorage.getItem(`buttons-disabled-${this.autorData.id_autores}`)) {
       this.btnDisabled = true;
     }
   }
@@ -50,13 +51,13 @@ export class NavbarComponent implements OnInit {
   uploadDocument(file: FileList): void {
     this.utilService._loading = true;
     this.utilService.loadingProgress = true;
-    const register_form = this.document.nativeElement.files[0];
-    const author_id = JSON.parse(localStorage.getItem('autor-data')).id_autores;
+    const registerForm = this.document.nativeElement.files[0];
+    const authorId = this.autorData.id_autores;
 
-    if (register_form) {
+    if (registerForm) {
       const fr: any = new FormData();
-      fr.append('register_form', register_form);
-      fr.append('author_id', author_id);
+      fr.append('register_form', registerForm);
+      fr.append('author_id', authorId);
 
       this.upload.upload(fr).subscribe(
         data => {
@@ -73,7 +74,7 @@ export class NavbarComponent implements OnInit {
                 icon: 'success',
                 text: 'Documento registrado exitosamente!'
               }).then(() => {
-                localStorage.setItem('button', 'true');
+                localStorage.setItem(`button-${this.autorData.id_autores}`, 'true');
                 localStorage.removeItem('autor-data');
                 this.router.navigateByUrl('login/sesion');
               });
@@ -108,7 +109,7 @@ export class NavbarComponent implements OnInit {
     const hour = fecha.getHours();
     const minutes = fecha.getMinutes();
 
-    switch (JSON.parse(localStorage.getItem('info')).id_area) {
+    switch (JSON.parse(localStorage.getItem(`info-${this.autorData.id_autores}`)).id_area) {
       case '1':
         area = 'Ciencias exactas y naturales';
         break;
@@ -143,21 +144,22 @@ export class NavbarComponent implements OnInit {
         area = 'Computación y software';
         break;
     }
-
-    console.log(JSON.parse(localStorage.getItem('info')).id_area);
+    const info = JSON.parse(localStorage.getItem(`info-${this.autorData.id_autores}`));
+    const info2 = JSON.parse(localStorage.getItem(`info-2-${this.autorData.id_autores}`));
     const pdf = new jsPDF('p', 'in', 'letter');
+    const width = pdf.internal.pageSize.getWidth();
     pdf.addImage('../assets/Acuse.jpg', 'jpg', 0, 0, 8.6, 11).setFontSize(14).setTextColor('#646464');
-    pdf.text(hour.toString() + '' + minutes.toString(), 1.2, 2.42).setFontSize(10).setTextColor('#646464');
-    pdf.text(JSON.parse(localStorage.getItem('info')).project_name, 0.47, 3.75);
-    pdf.text(area, 3.4, 4.5);
-    pdf.text(JSON.parse(localStorage.getItem('autor-data')).nombre + ' ' + JSON.parse(localStorage.getItem('autor-data')).ape_pat + ' ' + JSON.parse(localStorage.getItem('autor-data')).ape_mat, 3.35, 5.5);
-    pdf.text(JSON.parse(localStorage.getItem('info')).adviser_name + ' ' + JSON.parse(localStorage.getItem('info')).last_name + ' ' + JSON.parse(localStorage.getItem('info')).second_last_name, 3.4, 6.7).setFontSize(8);
+    pdf.text(`${hour.toString()}${minutes.toString()}`, 1.2, 2.42).setFontSize(10).setTextColor('#646464');
+    pdf.text(info.project_name, 0.47, 3.75);
+    pdf.text(area, width / 2, 4.5, {align: 'center'});
+    pdf.text(`${this.autorData.nombre} ${this.autorData.ape_pat} ${this.autorData.ape_mat}`, width / 2, 5.5, {align: 'center'});
+    pdf.text(`${info.adviser_name} ${info.last_name} ${info.second_last_name}`, width / 2, 6.7, {align: 'center'}).setFontSize(8);
     pdf.text(fecha.toString(), 0.75, 7.72).setFontSize(10).setTextColor('#646464');
-    if (JSON.parse(localStorage.getItem('info-2')).name_author === '') {
-      pdf.save('acuse proyecto');
+    if (info2.name_author === '') {
+      pdf.save(`acuse proyecto-${info.project_name}`);
     } else {
-      pdf.text(JSON.parse(localStorage.getItem('info-2')).name_author + ' ' + JSON.parse(localStorage.getItem('info-2')).last_name + ' ' + JSON.parse(localStorage.getItem('info-2')).second_last_name, 3.35, 5.7);
-      pdf.save('acuse proyecto');
+      pdf.text(`${info2.name_author} ${info2.last_name} ${info2.second_last_name}`, width / 2, 5.7, {align: 'center'});
+      pdf.save(`acuse proyecto-${info.project_name}`);
     }
   }
   closeSession(): void {

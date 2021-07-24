@@ -17,6 +17,7 @@ import { RegexService } from '../../../services/regex.service';
 import jsPDF from 'jspdf';
 import { HttpEventType } from '@angular/common/http';
 import { LevelEnglishService } from '../../../services/level-english.service';
+import { Autor } from '../../../models/autor.model';
 
 @Component({
   selector: 'app-form-proyect',
@@ -30,6 +31,7 @@ export class FormProyectComponent implements OnInit {
   formSecondAuthor: FormGroup;
   autors = false;
   terminado = false;
+  autorData: Autor;
   @ViewChild('project_image', {
     read: ElementRef
   }) project_image: ElementRef;
@@ -112,7 +114,8 @@ export class FormProyectComponent implements OnInit {
     setTimeout(() => {
       this.utilService._loading = true;
     });
-    if (localStorage.getItem('autor-terminate')) {
+    this.autorData = JSON.parse(localStorage.getItem('autor-data'));
+    if (localStorage.getItem(`autor-terminate-${this.autorData.id_autores}`)) {
       this.terminado = true;
     }
     forkJoin({
@@ -181,7 +184,6 @@ export class FormProyectComponent implements OnInit {
       var object = {};
       fr.forEach((value, key) => object[key] = value);
       var json = JSON.stringify(object);
-      console.log(object);
       this.authService.registerProjectWithTwoAuthors(fr).subscribe(
         data => {
           if (data.type === HttpEventType.UploadProgress) {
@@ -191,8 +193,8 @@ export class FormProyectComponent implements OnInit {
           if (data.type === HttpEventType.Response) {
             const response = data.body;
             if (!response.error) {
-              localStorage.setItem('info', JSON.stringify(this.formRegisterProyect.value));
-              localStorage.setItem('info-2', JSON.stringify(this.formSecondAuthor.value));
+              localStorage.setItem(`info-${this.autorData.id_autores}`, JSON.stringify(this.formRegisterProyect.value));
+              localStorage.setItem(`info-2-${this.autorData.id_autores}`, JSON.stringify(this.formSecondAuthor.value));
               Swal.fire({
                 title: 'Registro exitoso',
                 icon: 'success',
@@ -201,10 +203,10 @@ export class FormProyectComponent implements OnInit {
                 this.formRegisterProyect.reset();
                 this.formSecondAuthor.reset();
                 this.terminado = true;
-                localStorage.setItem('buttons-disabled', 'si');
+                localStorage.setItem(`buttons-disabled-${this.autorData.id_autores}`, 'si');
                 window.location.reload();
               });
-              localStorage.setItem('autor-terminate', 'true');
+              localStorage.setItem(`autor-terminate-${this.autorData.id_autores}`, 'true');
             } else {
               Swal.fire({
                 icon: 'warning',
@@ -237,10 +239,10 @@ export class FormProyectComponent implements OnInit {
               }).then(() => {
                 this.formRegisterProyect.reset();
                 this.terminado = true;
-                localStorage.setItem('buttons-disabled', 'si');
+                localStorage.setItem(`buttons-disabled-${this.autorData.id_autores}`, 'si');
                 window.location.reload();
               });
-              localStorage.setItem('autor-terminate', 'true');
+              localStorage.setItem(`autor-terminate-${this.autorData.id_autores}`, 'true');
             } else {
               Swal.fire({
                 icon: 'warning',
