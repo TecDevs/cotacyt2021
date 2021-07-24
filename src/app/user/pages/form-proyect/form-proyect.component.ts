@@ -230,8 +230,8 @@ export class FormProyectComponent implements OnInit {
           if (data.type === HttpEventType.Response) {
             const response = data.body;
             if (!response.error) {
-              localStorage.setItem('info', JSON.stringify(this.formRegisterProyect.value));
-              localStorage.setItem('info-2', JSON.stringify(this.formSecondAuthor.value));
+              localStorage.setItem(`info-${this.autorData.id_autores}`, JSON.stringify(this.formRegisterProyect.value));
+              localStorage.setItem(`info-2-${this.autorData.id_autores}`, JSON.stringify(this.formSecondAuthor.value));
               Swal.fire({
                 title: 'Registro exitoso',
                 icon: 'success',
