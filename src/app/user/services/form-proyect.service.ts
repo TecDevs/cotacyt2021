@@ -24,4 +24,8 @@ registerProjectWithTwoAuthors( body: any ): Observable<any> {
   } );
 }
 
+chargeDataFormProject(idAutor: string): Observable<any> {
+  return this.http.post(this.appService.API_URL + 'project/get-project-info', {author_id: idAutor});
+}
+
 }
