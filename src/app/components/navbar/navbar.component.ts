@@ -58,38 +58,50 @@ export class NavbarComponent implements OnInit {
       const fr: any = new FormData();
       fr.append('register_form', registerForm);
       fr.append('author_id', authorId);
-
-      this.upload.upload(fr).subscribe(
-        data => {
-          if (data.type === HttpEventType.UploadProgress) {
-            const total = data.total;
-            this.utilService.progress = Math.round((100 * data.loaded) / total);
-          }
-          if (data.type === HttpEventType.Response) {
-            console.log(data.body);
-            const response = data.body;
-            if (!response.error) {
-              this.downloadPDF();
-              Swal.fire({
-                icon: 'success',
-                text: 'Documento registrado exitosamente!'
-              }).then(() => {
-                localStorage.setItem(`button-${this.autorData.id_autores}`, 'true');
-                localStorage.removeItem('autor-data');
-                this.router.navigateByUrl('login/sesion');
-              });
-              localStorage.removeItem('autor-data');
+      console.log(registerForm.size);
+      if(registerForm.size <= 2000000){
+        console.log(registerForm.size);
+        this.upload.upload(fr).subscribe(
+          data => {
+            if (data.type === HttpEventType.UploadProgress) {
+              const total = data.total;
+              this.utilService.progress = Math.round((100 * data.loaded) / total);
             }
+            if (data.type === HttpEventType.Response) {
+              console.log(data.body);
+              const response = data.body;
+              if (!response.error) {
+                this.downloadPDF();
+                Swal.fire({
+                  icon: 'success',
+                  text: 'Documento registrado exitosamente!'
+                }).then(() => {
+                  localStorage.setItem(`button-${this.autorData.id_autores}`, 'true');
+                  localStorage.removeItem('autor-data');
+                  this.router.navigateByUrl('login/sesion');
+                });
+                localStorage.removeItem('autor-data');
+              }
+            }
+          },
+          err => {
+            Swal.fire('Ocurrio un error', 'Recuerda que debes subir un archivo de tipo pdf', 'error');
+            console.log(err);
           }
-        },
-        err => {
-          Swal.fire('Ocurrio un error', 'Recuerda que debes subir un archivo de tipo pdf', 'error');
-          console.log(err);
-        }
-      ).add(() => {
+        ).add(() => {
+          this.utilService._loading = false;
+          this.utilService.loadingProgress = false;
+        });
+      } else {
         this.utilService._loading = false;
         this.utilService.loadingProgress = false;
-      });
+        Swal.fire({
+          icon: 'warning',
+          title: 'Limite de archivo excedido',
+          text: 'Debe ser un archivo menor a 2MB'
+        });
+      }
+      
 
     } else {
       this.utilService._loading = false;
@@ -105,6 +117,7 @@ export class NavbarComponent implements OnInit {
   downloadPDF(): void {
 
     let area = '';
+    let category = '';
     const fecha: Date = new Date();
     const hour = fecha.getHours();
     const minutes = fecha.getMinutes();
@@ -144,14 +157,40 @@ export class NavbarComponent implements OnInit {
         area = 'Computación y software';
         break;
     }
+
+    switch (JSON.parse(localStorage.getItem(`info-${this.autorData.id_autores}`)).id_category) {
+      case '1':
+        category = 'Petit';
+        break;
+      case '2':
+        category = 'Kids';
+        break;
+      case '3':
+        category = 'Juvenil';
+        break;
+      case '4':
+        category = 'Media Superior';
+        break;
+      case '5':
+        category = 'Superior';
+        break;
+      case '6':
+        category = 'Posgrado';
+        break;
+    }
     const info = JSON.parse(localStorage.getItem(`info-${this.autorData.id_autores}`));
     const info2 = JSON.parse(localStorage.getItem(`info-2-${this.autorData.id_autores}`));
     const pdf = new jsPDF('p', 'in', 'letter');
     const width = pdf.internal.pageSize.getWidth();
+
+    
+
     pdf.addImage('../assets/Acuse.jpg', 'jpg', 0, 0, 8.6, 11).setFontSize(14).setTextColor('#646464');
     pdf.text(`${hour.toString()}${minutes.toString()}`, 1.2, 2.42).setFontSize(10).setTextColor('#646464');
     pdf.text(info.project_name, 0.47, 3.75);
-    pdf.text(area, width / 2, 4.5, {align: 'center'});
+    pdf.text(area, width / 2, 4.5, {align: 'center'}).setFont('Poppins','900').setFontSize(11).setTextColor('#646464');
+    pdf.text('Categoría', 0.47, 4.29).setFont('normal', '400').setFontSize(10).setTextColor('#646464');
+    pdf.text(category, 0.47, 4.5);
     pdf.text(`${this.autorData.nombre} ${this.autorData.ape_pat} ${this.autorData.ape_mat}`, width / 2, 5.5, {align: 'center'});
     pdf.text(`${info.adviser_name} ${info.last_name} ${info.second_last_name}`, width / 2, 6.7, {align: 'center'}).setFontSize(8);
     pdf.text(fecha.toString(), 0.75, 7.72).setFontSize(10).setTextColor('#646464');

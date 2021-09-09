@@ -280,22 +280,22 @@ export class FormProyectComponent implements OnInit {
     }).then(() => {
       switch (value) {
         case '1':
-          window.open('https://drive.google.com/file/d/1U230peNB_6XEXcF2hWIFvonsOWkQp1eO/view?usp=sharing', '_blank');
+          window.open('https://drive.google.com/file/d/12acLfdQW3UQuuYPSqij5t4_J4hTMB5xj/view?usp=sharing', '_blank');
           break;
         case '2':
-          window.open('https://drive.google.com/file/d/1gZ0RKrFM9euxNFjEohR7z6AAvO9eccYT/view?usp=sharing', '_blank');
+          window.open('https://drive.google.com/file/d/1V5txZenYiT6ipsyJjxt8wQKQshBNmCD7/view?usp=sharing', '_blank');
           break;
         case '3':
-          window.open('https://drive.google.com/file/d/1SezhWNgY64atINHHRBl27R_ue6Etxgxe/view?usp=sharing', '_blank');
+          window.open('https://drive.google.com/file/d/1YXLQOP6HqDB0PG_2BqIr0uezWM9swF7K/view?usp=sharing', '_blank');
           break;
         case '4':
-          window.open('https://drive.google.com/file/d/1y6_meM3CgML4ZEsMJrI5ROg6JjGuCTm4/view?usp=sharing', '_blank');
+          window.open('https://drive.google.com/file/d/1xWB-iedPxXY1idoR7wBT1QzFHHapmc0x/view?usp=sharing', '_blank');
           break;
         case '5':
-          window.open('https://drive.google.com/file/d/16pHHUHS2k46i5PKMNHTacyEi-GxfyJEJ/view?usp=sharing', '_blank');
+          window.open('https://drive.google.com/file/d/19ao939UW_IAJFaENw7orUEpdtCiHvlvR/view?usp=sharing', '_blank');
           break;
         case '6':
-          window.open('https://drive.google.com/file/d/1z_E9WPMvSCt82rBr6IANSE2Bkl_fNVgv/view?usp=sharing', '_blank');
+          window.open('https://drive.google.com/file/d/1OtQZUBrBWJCFh078e02lzBpMK88YI4Fx/view?usp=sharing', '_blank');
           break;
       }
     });
