@@ -3,8 +3,10 @@
     <div class="item">
         <div class="ml-2" *ngIf="btnDisabled">
             <form [formGroup]="formRegisterProyect" class="mt-2">
-                <label [hidden]="terminado" for="files" class="btn btn-success" ><span><i class="fas fa-upload">&nbsp; &nbsp;</i></span>Cargar archivo</label>
-                <input id="files" formControlName="register_form" accept=".pdf" style="visibility:hidden; display: none;" type="file" #document />
+                <label [hidden]="terminado" for="files" class="btn btn-success" ><span><i class="fas fa-upload">&nbsp; &nbsp;</i></span>
+                    {{fileName ? 'Archivo: ' + fileNameSelected : 'Cargar Archivo'}}
+                </label>
+                <input (change)="fileChange($event)" id="files" formControlName="register_form" accept=".pdf" style="visibility:hidden; display: none;" type="file" #document />
                 &nbsp;
                 <button class="btn btn-success mb-2" (click)="uploadDocument($event.target.files)" style="height: 40px;" [disabled]="terminado">
                     <span>Subir<i class=" mx-2 fas fa-check"></i></span>

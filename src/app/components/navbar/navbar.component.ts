@@ -24,6 +24,8 @@ export class NavbarComponent implements OnInit {
 
   terminado = false;
   btnDisabled = false;
+  fileName = false;
+  fileNameSelected = 'Cargar archivo';
   formRegisterProyect: FormGroup;
   autorData: Autor;
   constructor(
@@ -47,20 +49,67 @@ export class NavbarComponent implements OnInit {
       this.btnDisabled = true;
     }
   }
-
+  fileChange(ev: any): void {
+    if (ev.target.files.length > 0) {
+      this.fileName = true;
+      this.fileNameSelected = ev.target.files[0].name;
+    }
+  }
   uploadDocument(file: FileList): void {
-    this.utilService._loading = true;
-    this.utilService.loadingProgress = true;
     const registerForm = this.document.nativeElement.files[0];
+    console.log(registerForm);
     const authorId = this.autorData.id_autores;
-
+    const info2 = JSON.parse(localStorage.getItem(`info-2-${this.autorData.id_autores}`));
+    const modality = JSON.parse(localStorage.getItem('project-modality-' + this.autorData.id_autores));
     if (registerForm) {
-      const fr: any = new FormData();
-      fr.append('register_form', registerForm);
-      fr.append('author_id', authorId);
-      console.log(registerForm.size);
-      if(registerForm.size <= 2000000){
-        console.log(registerForm.size);
+      console.log('ola');
+      if (modality === 2) {
+        if (!info2) {
+          Swal.fire('Advertencia', 'Asegurate de llenar todos los campos del segundo autor', 'warning');
+        } else {
+          this.utilService._loading = true;
+          this.utilService.loadingProgress = true;
+          const fr: any = new FormData();
+          fr.append('register_form', registerForm);
+          fr.append('author_id', authorId);
+          this.upload.upload(fr).subscribe(
+            data => {
+              if (data.type === HttpEventType.UploadProgress) {
+                const total = data.total;
+                this.utilService.progress = Math.round((100 * data.loaded) / total);
+              }
+              if (data.type === HttpEventType.Response) {
+                console.log(data.body);
+                const response = data.body;
+                if (!response.error) {
+                  this.downloadPDF();
+                  Swal.fire({
+                    icon: 'success',
+                    text: 'Documento registrado exitosamente!'
+                  }).then(() => {
+                    localStorage.setItem(`button-${this.autorData.id_autores}`, 'true');
+                    localStorage.removeItem('autor-data');
+                    this.router.navigateByUrl('login/sesion');
+                  });
+                  localStorage.removeItem('autor-data');
+                }
+              }
+            },
+            err => {
+              Swal.fire('Ocurrio un error', 'Recuerda que debes subir un archivo de tipo pdf', 'error');
+              console.log(err);
+            }
+          ).add(() => {
+            this.utilService._loading = false;
+            this.utilService.loadingProgress = false;
+          });
+        }
+      } else {
+        this.utilService._loading = true;
+        this.utilService.loadingProgress = true;
+        const fr: any = new FormData();
+        fr.append('register_form', registerForm);
+        fr.append('author_id', authorId);
         this.upload.upload(fr).subscribe(
           data => {
             if (data.type === HttpEventType.UploadProgress) {
@@ -92,17 +141,7 @@ export class NavbarComponent implements OnInit {
           this.utilService._loading = false;
           this.utilService.loadingProgress = false;
         });
-      } else {
-        this.utilService._loading = false;
-        this.utilService.loadingProgress = false;
-        Swal.fire({
-          icon: 'warning',
-          title: 'Limite de archivo excedido',
-          text: 'Debe ser un archivo menor a 2MB'
-        });
       }
-      
-
     } else {
       this.utilService._loading = false;
       this.utilService.loadingProgress = false;
@@ -110,12 +149,10 @@ export class NavbarComponent implements OnInit {
         icon: 'warning',
         text: 'Asegurate de seleccionar un archivo primero',
       });
-
     }
   }
 
   downloadPDF(): void {
-
     let area = '';
     let category = '';
     const fecha: Date = new Date();
@@ -188,16 +225,14 @@ export class NavbarComponent implements OnInit {
     pdf.addImage('../assets/Acuse.jpg', 'jpg', 0, 0, 8.6, 11).setFontSize(14).setTextColor('#646464');
     pdf.text(`${hour.toString()}${minutes.toString()}`, 1.2, 2.42).setFontSize(10).setTextColor('#646464');
     pdf.text(info.project_name, 0.47, 3.75);
-    pdf.text(area, width / 2, 4.5, {align: 'center'}).setFont('Poppins','900').setFontSize(11).setTextColor('#646464');
-    pdf.text('Categoría', 0.47, 4.29).setFont('normal', '400').setFontSize(10).setTextColor('#646464');
-    pdf.text(category, 0.47, 4.5);
-    pdf.text(`${this.autorData.nombre} ${this.autorData.ape_pat} ${this.autorData.ape_mat}`, width / 2, 5.5, {align: 'center'});
-    pdf.text(`${info.adviser_name} ${info.last_name} ${info.second_last_name}`, width / 2, 6.7, {align: 'center'}).setFontSize(8);
+    pdf.text(area, width / 2, 4.5, { align: 'center' });
+    pdf.text(`${this.autorData.nombre} ${this.autorData.ape_pat} ${this.autorData.ape_mat}`, width / 2, 5.5, { align: 'center' });
+    pdf.text(`${info.adviser_name} ${info.last_name} ${info.second_last_name}`, width / 2, 6.7, { align: 'center' }).setFontSize(8);
     pdf.text(fecha.toString(), 0.75, 7.72).setFontSize(10).setTextColor('#646464');
-    if (info2.name_author === '') {
+    if (!info2) {
       pdf.save(`acuse proyecto-${info.project_name}`);
     } else {
-      pdf.text(`${info2.name_author} ${info2.last_name} ${info2.second_last_name}`, width / 2, 5.7, {align: 'center'});
+      pdf.text(`${info2.name_author} ${info2.last_name} ${info2.second_last_name}`, width / 2, 5.7, { align: 'center' });
       pdf.save(`acuse proyecto-${info.project_name}`);
     }
   }
