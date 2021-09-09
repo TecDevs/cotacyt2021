@@ -190,7 +190,7 @@
                     <input type="file" (change)="uploadAdviserIneImg($event.target.files)" class="form-control" #image_ine>
                     <div *ngIf="proyectData">
                         <a *ngIf="proyectData.img_ine_asesor" href="{{'https://mante.hosting.acm.org/api-cecit-2021/uploads' + proyectData.img_ine_asesor}}" target="_blank" class="form-text" style="color: blue;">Ver imagen actual</a>
-                        <small *ngIf="proyectData.img_ine_asesor === ''" class="form-text" style="color: red;">Ninguna imagen guardada</small>
+                        <small *ngIf="proyectData.img_ine_asesor === '' || proyectData.img_ine_asesor === null" class="form-text" style="color: red;">Ninguna imagen guardada</small>
                     </div>
                 </div>
                 <div class="form-group col-12">

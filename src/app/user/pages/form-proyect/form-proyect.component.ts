@@ -249,7 +249,7 @@ export class FormProyectComponent implements OnInit {
           });
       }
     } else {
-      Swal.fire('Advertencia', 'Primero guarda la información del asesor', 'warning');
+      Swal.fire('Advertencia', 'Primero guarda la CURP del asesor', 'warning');
     }
   }
   registerProyect(file: FileList): void {
@@ -279,7 +279,7 @@ export class FormProyectComponent implements OnInit {
     fr.append('locality', this.formRegisterProyect.value.locality);
     fr.append('school_institute', this.formRegisterProyect.value.school_institute);
     fr.append('facebook', this.formRegisterProyect.value.facebook);
-    fr.append('twitter', this.formRegisterProyect.value.project_name);
+    fr.append('twitter', this.formRegisterProyect.value.twitter);
     fr.append('participation_description', this.formRegisterProyect.value.participation_description);
     if (this.autors) {
       Object.keys(this.formSecondAuthor.value).forEach(data => {
