@@ -62,6 +62,11 @@ export class FormProyectComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (localStorage.getItem(`button-${this.autorData.id_autores}`)) {
+      this.terminado = true;
+    } else {
+      this.terminado = false;
+    }
     this.levelsEnglish = this.levelEnglishService.getLevelsEnglish();
     setTimeout(() => {
       this.utilService._loading = true;
