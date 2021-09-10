@@ -1,11 +1,29 @@
 <nav class="navbar">
     <img src="../../../assets/logotam.png" alt="" width="100px">
-    <ul class="nav-links">
-        <li><a href="#">opciones</a></li>
-        <li><a href="#">opciones</a></li>
-        <li><a href="#">opciones</a></li>
-    </ul>
-    <div class="" style="color: white;"><i class="fas fa-chevron-down"></i></div>
+    <div class="item">
+        <div class="ml-2" *ngIf="btnDisabled">
+            <form [formGroup]="formRegisterProyect" class="mt-2">
+                <label [hidden]="terminado" for="files" class="btn btn-success" ><span><i class="fas fa-upload">&nbsp; &nbsp;</i></span>
+                    {{fileName ? 'Archivo: ' + fileNameSelected : 'Cargar Archivo'}}
+                </label>
+                <input (change)="fileChange($event)" id="files" formControlName="register_form" accept=".pdf" style="visibility:hidden; display: none;" type="file" #document />
+                &nbsp;
+                <button class="btn btn-success mb-2" (click)="uploadDocument($event.target.files)" style="height: 40px;" [disabled]="terminado">
+                    <span>Subir<i class=" mx-2 fas fa-check"></i></span>
+                </button>
+            </form>
+        </div>
+        <button *ngIf="terminado" class="btn btn-success mx-2" (click)="downloadPDF()">
+            Descargar acuse
+        </button>
+    </div>
+    <div class="ml-2">
+        <button class="btn btn-success" (click)="closeSession()">
+            Cerrar sesión
+            <i class="fas fa-times mx-1"></i>
+        </button>
+    </div>
+
 </nav>
 <div class="container pading">
     <router-outlet></router-outlet>
