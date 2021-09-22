@@ -20,7 +20,7 @@
                     <input type="file" (change)="uploadProjectImg($event.target.files)" class="form-control" #project_image>
                     <div *ngIf="proyectData">
                         <a *ngIf="proyectData.imagen_proyecto" href="{{'https://mante.hosting.acm.org/api-cecit-2021/uploads' + proyectData.imagen_proyecto}}" target="_blank" class="form-text" style="color: blue;">Ver imagen actual</a>
-                        <small *ngIf="proyectData.imagen_proyecto === ''" class="form-text" style="color: red;">Ninguna imagen guardada</small>
+                        <small *ngIf="proyectData.imagen_proyecto === null || proyectData.imagen_proyecto === ''" class="form-text" style="color: red;">Ninguna imagen guardada</small>
                     </div>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
