@@ -97,251 +97,45 @@ export class FormProyectComponent implements OnInit {
   buildFormsAndChargeDataIfExist(): void {
     this.formRegisterProyect = this.fb.group({
       project_id: ['-1'],
-      project_name: [
-        '',
-        [
-          Validators.maxLength(60),
-          Validators.minLength(2),
-          Validators.required,
-        ],
-      ],
-      project_description: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(1000),
-        ],
-      ],
+      project_name: ['', [Validators.maxLength(60), Validators.minLength(2), Validators.required]],
+      project_description: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(1000)]],
       id_sedes: ['1', Validators.required],
       author_id: [this.autorData.id_autores],
       id_category: ['1', Validators.required],
       url_video: ['', Validators.required],
       id_area: ['1', Validators.required],
       id_modality: ['1', Validators.required],
-      adviser_name: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(30),
-          Validators.minLength(2),
-        ],
-      ],
-      last_name: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(20),
-          Validators.minLength(2),
-        ],
-      ],
-      second_last_name: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(20),
-          Validators.minLength(2),
-        ],
-      ],
-      address: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(80),
-          Validators.minLength(2),
-        ],
-      ],
-      suburb: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(80),
-          Validators.minLength(2),
-        ],
-      ],
-      postal_code: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(this.regexService.regexPostalCode()),
-          Validators.minLength(2),
-        ],
-      ],
-      curp: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(this.regexService.regexCURP()),
-          Validators.minLength(2),
-        ],
-      ],
-      rfc: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(this.regexService.regexRFC()),
-          Validators.minLength(2),
-        ],
-      ],
-      phone_contact: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(this.regexService.regexPhone()),
-          Validators.minLength(2),
-        ],
-      ],
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(60),
-          Validators.email,
-          Validators.minLength(2),
-        ],
-      ],
-      city: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(30),
-          Validators.minLength(2),
-        ],
-      ],
-      locality: [
-        '',
-        [
-          Validators.required,
-          ,
-          Validators.maxLength(30),
-          Validators.minLength(2),
-        ],
-      ],
-      school_institute: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(100),
-          Validators.minLength(2),
-        ],
-      ],
+      adviser_name: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(2)]],
+      last_name: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(2)]],
+      second_last_name: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(2)]],
+      address: ['', [Validators.required, Validators.maxLength(80), Validators.minLength(2)]],
+      suburb: ['', [Validators.required, Validators.maxLength(80), Validators.minLength(2)]],
+      postal_code: ['', [Validators.required, Validators.pattern(this.regexService.regexPostalCode()), Validators.minLength(2)]],
+      curp: ['', [Validators.required, Validators.pattern(this.regexService.regexCURP()), Validators.minLength(2)]],
+      rfc: ['', [Validators.required, Validators.pattern(this.regexService.regexRFC()), Validators.minLength(2)]],
+      phone_contact: ['', [Validators.required, Validators.pattern(this.regexService.regexPhone()), Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.maxLength(60), Validators.email, Validators.minLength(2)]],
+      city: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(2)]],
+      locality: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(2)]],
+      school_institute: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(2)]],
       facebook: ['', [Validators.maxLength(50), Validators.minLength(2)]],
       twitter: ['', [Validators.maxLength(30), Validators.minLength(2)]],
-      participation_description: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(1000),
-          Validators.minLength(2),
-        ],
-      ],
+      participation_description: ['', [Validators.required, Validators.maxLength(1000), Validators.minLength(2)]],
     });
     this.formSecondAuthor = this.fb.group({
-      name_author: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(30),
-          Validators.minLength(2),
-        ],
-      ],
-      last_name: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(20),
-          Validators.minLength(2),
-        ],
-      ],
-      second_last_name: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(20),
-          Validators.minLength(2),
-        ],
-      ],
-      address: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(80),
-          Validators.minLength(2),
-        ],
-      ],
-      suburb: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(80),
-          Validators.minLength(2),
-        ],
-      ],
-      postal_code: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(this.regexService.regexPostalCode()),
-          Validators.minLength(2),
-        ],
-      ],
-      curp: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(this.regexService.regexCURP()),
-          Validators.minLength(2),
-        ],
-      ],
-      rfc: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(this.regexService.regexRFC()),
-          Validators.minLength(2),
-        ],
-      ],
-      phone_contact: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(this.regexService.regexPhone()),
-          Validators.minLength(2),
-        ],
-      ],
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(60),
-          Validators.email,
-          Validators.minLength(2),
-        ],
-      ],
-      city: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(30),
-          Validators.minLength(2),
-        ],
-      ],
-      locality: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(30),
-          Validators.minLength(2),
-        ],
-      ],
-      school: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(100),
-          Validators.minLength(2),
-        ],
-      ],
+      name_author: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(2)]],
+      last_name: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(2)]],
+      second_last_name: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(2)]],
+      address: ['', [Validators.required, Validators.maxLength(80), Validators.minLength(2)]],
+      suburb: ['', [Validators.required, Validators.maxLength(80), Validators.minLength(2)]],
+      postal_code: ['', [Validators.required, Validators.pattern(this.regexService.regexPostalCode()), Validators.minLength(2)]],
+      curp: ['', [Validators.required, Validators.pattern(this.regexService.regexCURP()), Validators.minLength(2)]],
+      rfc: ['', [Validators.required, Validators.pattern(this.regexService.regexRFC()), Validators.minLength(2)]],
+      phone_contact: ['', [Validators.required, Validators.pattern(this.regexService.regexPhone()), Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.maxLength(60), Validators.email, Validators.minLength(2)]],
+      city: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(2)]],
+      locality: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(2)]],
+      school: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(2)]],
       levelEnglish: ['', [Validators.required]],
       facebook: ['', [Validators.maxLength(60), Validators.minLength(2)]],
       twitter: ['', [Validators.maxLength(30), Validators.minLength(2)]],
@@ -640,7 +434,7 @@ export class FormProyectComponent implements OnInit {
           icon: 'warning',
           title: 'Advertencia',
           text: 'Debes ingresar la CURP del segundo autor para poder guardar la informacion',
-        });  
+        });
       } else {
         Object.keys(this.formSecondAuthor.value).forEach((data) => {
           fr.append(
@@ -703,49 +497,58 @@ export class FormProyectComponent implements OnInit {
           });
       }
     } else {
-      const object = {};
-      fr.forEach((value, key) => (object[key] = value));
-      console.log(object);
-      this.formProyectService
-        .registerProject(fr)
-        .subscribe(
-          (data) => {
-            if (!data.error) {
-              if (this.formRegisterProyect.valid) {
-                localStorage.setItem(
-                  `info-${this.autorData.id_autores}`,
-                  JSON.stringify(this.formRegisterProyect.value)
-                );
-                Swal.fire({
-                  title: 'Registro exitoso',
-                  icon: 'success',
-                  text: 'Solo falta subir el formato de registro para concluir el proceso',
-                }).then(() => {
+      // const object = {};
+      // fr.forEach((value, key) => (object[key] = value));
+      // console.log(object);
+      if (this.formRegisterProyect.value.curp !== '') {
+        this.formProyectService
+          .registerProject(fr)
+          .subscribe(
+            (data) => {
+              if (!data.error) {
+                if (this.formRegisterProyect.valid) {
                   localStorage.setItem(
-                    `buttons-disabled-${this.autorData.id_autores}`,
-                    'si'
+                    `info-${this.autorData.id_autores}`,
+                    JSON.stringify(this.formRegisterProyect.value)
                   );
-                  window.location.reload();
-                });
+                  Swal.fire({
+                    title: 'Registro exitoso',
+                    icon: 'success',
+                    text: 'Solo falta subir el formato de registro para concluir el proceso',
+                  }).then(() => {
+                    localStorage.setItem(
+                      `buttons-disabled-${this.autorData.id_autores}`,
+                      'si'
+                    );
+                    window.location.reload();
+                  });
+                } else {
+                  Swal.fire({
+                    title: 'Exito',
+                    icon: 'success',
+                    text: 'La información se guardo correctamente',
+                  });
+                }
               } else {
                 Swal.fire({
-                  title: 'Exito',
-                  icon: 'success',
-                  text: 'La información se guardo correctamente',
+                  icon: 'warning',
+                  text: data.message,
                 });
               }
-            } else {
-              Swal.fire({
-                icon: 'warning',
-                text: data.message,
-              });
-            }
-          },
-          (error) => console.log(error)
-        )
-        .add(() => {
-          this.utilService._loading = false;
-        });
+            },
+            (error) => console.log(error)
+          )
+          .add(() => {
+            this.utilService._loading = false;
+          });
+      } else {
+        this.utilService._loading = false;
+        Swal.fire(
+          'Advertencia',
+          'Para que se guarde correctamente la información, debes de colocar primero la CURP de tu asesor',
+          'warning'
+        );
+      }
     }
   }
   curpUpperCaseSecondAuthor(): void {
@@ -768,7 +571,6 @@ export class FormProyectComponent implements OnInit {
       .get('rfc')
       .setValue(this.formRegisterProyect.get('rfc').value.toUpperCase());
   }
-
   returnPageDocument(value: any): void {
     Swal.fire({
       title: 'Formato de registro',
