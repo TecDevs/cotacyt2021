@@ -500,55 +500,46 @@ export class FormProyectComponent implements OnInit {
       // const object = {};
       // fr.forEach((value, key) => (object[key] = value));
       // console.log(object);
-      if (this.formRegisterProyect.value.curp !== '') {
-        this.formProyectService
-          .registerProject(fr)
-          .subscribe(
-            (data) => {
-              if (!data.error) {
-                if (this.formRegisterProyect.valid) {
+      this.formProyectService
+        .registerProject(fr)
+        .subscribe(
+          (data) => {
+            if (!data.error) {
+              if (this.formRegisterProyect.valid) {
+                localStorage.setItem(
+                  `info-${this.autorData.id_autores}`,
+                  JSON.stringify(this.formRegisterProyect.value)
+                );
+                Swal.fire({
+                  title: 'Registro exitoso',
+                  icon: 'success',
+                  text: 'Solo falta subir el formato de registro para concluir el proceso',
+                }).then(() => {
                   localStorage.setItem(
-                    `info-${this.autorData.id_autores}`,
-                    JSON.stringify(this.formRegisterProyect.value)
+                    `buttons-disabled-${this.autorData.id_autores}`,
+                    'si'
                   );
-                  Swal.fire({
-                    title: 'Registro exitoso',
-                    icon: 'success',
-                    text: 'Solo falta subir el formato de registro para concluir el proceso',
-                  }).then(() => {
-                    localStorage.setItem(
-                      `buttons-disabled-${this.autorData.id_autores}`,
-                      'si'
-                    );
-                    window.location.reload();
-                  });
-                } else {
-                  Swal.fire({
-                    title: 'Exito',
-                    icon: 'success',
-                    text: 'La información se guardo correctamente',
-                  });
-                }
+                  window.location.reload();
+                });
               } else {
                 Swal.fire({
-                  icon: 'warning',
-                  text: data.message,
+                  title: 'Exito',
+                  icon: 'success',
+                  text: 'La información se guardo correctamente',
                 });
               }
-            },
-            (error) => console.log(error)
-          )
-          .add(() => {
-            this.utilService._loading = false;
-          });
-      } else {
-        this.utilService._loading = false;
-        Swal.fire(
-          'Advertencia',
-          'Para que se guarde correctamente la información, debes de colocar primero la CURP de tu asesor',
-          'warning'
-        );
-      }
+            } else {
+              Swal.fire({
+                icon: 'warning',
+                text: data.message,
+              });
+            }
+          },
+          (error) => console.log(error)
+        )
+        .add(() => {
+          this.utilService._loading = false;
+        });
     }
   }
   curpUpperCaseSecondAuthor(): void {
