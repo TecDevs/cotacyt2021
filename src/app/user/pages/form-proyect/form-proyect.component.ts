@@ -321,7 +321,10 @@ export class FormProyectComponent implements OnInit {
             const response = data.body;
             console.log(response);
             if (!response.error) {
-              Swal.fire('Exito', 'Se subio la imagen correctamente', 'success');
+              Swal.fire('Exito', 'Se subio la imagen correctamente', 'success')
+                .then(()=>{
+                  window.location.reload();
+                });
             }
             this.formProyectService
               .chargeDataFormProject(this.autorData.id_autores)
@@ -363,7 +366,9 @@ export class FormProyectComponent implements OnInit {
                   'Exito',
                   'Se subio la imagen correctamente',
                   'success'
-                );
+                ).then(()=>{
+                  window.location.reload();
+                });
               }
               this.formProyectService
                 .chargeDataFormProject(this.autorData.id_autores)
@@ -433,7 +438,7 @@ export class FormProyectComponent implements OnInit {
         Swal.fire({
           icon: 'warning',
           title: 'Advertencia',
-          text: 'Debes ingresar la CURP del segundo autor para poder guardar la informacion',
+          text: 'Debes ingresar la CURP del segundo autor para que se guarde la informacion',
         });
       } else {
         Object.keys(this.formSecondAuthor.value).forEach((data) => {
@@ -482,6 +487,8 @@ export class FormProyectComponent implements OnInit {
                   title: 'Exito',
                   icon: 'success',
                   text: 'La información se guardo correctamente',
+                }).then(() => {
+                  window.location.reload();
                 });
               } else {
                 Swal.fire({
