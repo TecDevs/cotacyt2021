@@ -97,251 +97,45 @@ export class FormProyectComponent implements OnInit {
   buildFormsAndChargeDataIfExist(): void {
     this.formRegisterProyect = this.fb.group({
       project_id: ['-1'],
-      project_name: [
-        '',
-        [
-          Validators.maxLength(60),
-          Validators.minLength(2),
-          Validators.required,
-        ],
-      ],
-      project_description: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(1000),
-        ],
-      ],
+      project_name: ['', [Validators.maxLength(60), Validators.minLength(2), Validators.required]],
+      project_description: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(1000)]],
       id_sedes: ['1', Validators.required],
       author_id: [this.autorData.id_autores],
       id_category: ['1', Validators.required],
       url_video: ['', Validators.required],
       id_area: ['1', Validators.required],
       id_modality: ['1', Validators.required],
-      adviser_name: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(30),
-          Validators.minLength(2),
-        ],
-      ],
-      last_name: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(20),
-          Validators.minLength(2),
-        ],
-      ],
-      second_last_name: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(20),
-          Validators.minLength(2),
-        ],
-      ],
-      address: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(80),
-          Validators.minLength(2),
-        ],
-      ],
-      suburb: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(80),
-          Validators.minLength(2),
-        ],
-      ],
-      postal_code: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(this.regexService.regexPostalCode()),
-          Validators.minLength(2),
-        ],
-      ],
-      curp: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(this.regexService.regexCURP()),
-          Validators.minLength(2),
-        ],
-      ],
-      rfc: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(this.regexService.regexRFC()),
-          Validators.minLength(2),
-        ],
-      ],
-      phone_contact: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(this.regexService.regexPhone()),
-          Validators.minLength(2),
-        ],
-      ],
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(60),
-          Validators.email,
-          Validators.minLength(2),
-        ],
-      ],
-      city: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(30),
-          Validators.minLength(2),
-        ],
-      ],
-      locality: [
-        '',
-        [
-          Validators.required,
-          ,
-          Validators.maxLength(30),
-          Validators.minLength(2),
-        ],
-      ],
-      school_institute: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(100),
-          Validators.minLength(2),
-        ],
-      ],
+      adviser_name: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(2)]],
+      last_name: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(2)]],
+      second_last_name: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(2)]],
+      address: ['', [Validators.required, Validators.maxLength(80), Validators.minLength(2)]],
+      suburb: ['', [Validators.required, Validators.maxLength(80), Validators.minLength(2)]],
+      postal_code: ['', [Validators.required, Validators.pattern(this.regexService.regexPostalCode()), Validators.minLength(2)]],
+      curp: ['', [Validators.required, Validators.pattern(this.regexService.regexCURP()), Validators.minLength(2)]],
+      rfc: ['', [Validators.required, Validators.pattern(this.regexService.regexRFC()), Validators.minLength(2)]],
+      phone_contact: ['', [Validators.required, Validators.pattern(this.regexService.regexPhone()), Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.maxLength(60), Validators.email, Validators.minLength(2)]],
+      city: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(2)]],
+      locality: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(2)]],
+      school_institute: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(2)]],
       facebook: ['', [Validators.maxLength(50), Validators.minLength(2)]],
       twitter: ['', [Validators.maxLength(30), Validators.minLength(2)]],
-      participation_description: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(1000),
-          Validators.minLength(2),
-        ],
-      ],
+      participation_description: ['', [Validators.required, Validators.maxLength(1000), Validators.minLength(2)]],
     });
     this.formSecondAuthor = this.fb.group({
-      name_author: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(30),
-          Validators.minLength(2),
-        ],
-      ],
-      last_name: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(20),
-          Validators.minLength(2),
-        ],
-      ],
-      second_last_name: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(20),
-          Validators.minLength(2),
-        ],
-      ],
-      address: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(80),
-          Validators.minLength(2),
-        ],
-      ],
-      suburb: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(80),
-          Validators.minLength(2),
-        ],
-      ],
-      postal_code: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(this.regexService.regexPostalCode()),
-          Validators.minLength(2),
-        ],
-      ],
-      curp: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(this.regexService.regexCURP()),
-          Validators.minLength(2),
-        ],
-      ],
-      rfc: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(this.regexService.regexRFC()),
-          Validators.minLength(2),
-        ],
-      ],
-      phone_contact: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(this.regexService.regexPhone()),
-          Validators.minLength(2),
-        ],
-      ],
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(60),
-          Validators.email,
-          Validators.minLength(2),
-        ],
-      ],
-      city: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(30),
-          Validators.minLength(2),
-        ],
-      ],
-      locality: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(30),
-          Validators.minLength(2),
-        ],
-      ],
-      school: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(100),
-          Validators.minLength(2),
-        ],
-      ],
+      name_author: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(2)]],
+      last_name: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(2)]],
+      second_last_name: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(2)]],
+      address: ['', [Validators.required, Validators.maxLength(80), Validators.minLength(2)]],
+      suburb: ['', [Validators.required, Validators.maxLength(80), Validators.minLength(2)]],
+      postal_code: ['', [Validators.required, Validators.pattern(this.regexService.regexPostalCode()), Validators.minLength(2)]],
+      curp: ['', [Validators.required, Validators.pattern(this.regexService.regexCURP()), Validators.minLength(2)]],
+      rfc: ['', [Validators.required, Validators.pattern(this.regexService.regexRFC()), Validators.minLength(2)]],
+      phone_contact: ['', [Validators.required, Validators.pattern(this.regexService.regexPhone()), Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.maxLength(60), Validators.email, Validators.minLength(2)]],
+      city: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(2)]],
+      locality: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(2)]],
+      school: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(2)]],
       levelEnglish: ['', [Validators.required]],
       facebook: ['', [Validators.maxLength(60), Validators.minLength(2)]],
       twitter: ['', [Validators.maxLength(30), Validators.minLength(2)]],
@@ -640,7 +434,7 @@ export class FormProyectComponent implements OnInit {
           icon: 'warning',
           title: 'Advertencia',
           text: 'Debes ingresar la CURP del segundo autor para poder guardar la informacion',
-        });  
+        });
       } else {
         Object.keys(this.formSecondAuthor.value).forEach((data) => {
           fr.append(
@@ -703,9 +497,9 @@ export class FormProyectComponent implements OnInit {
           });
       }
     } else {
-      const object = {};
-      fr.forEach((value, key) => (object[key] = value));
-      console.log(object);
+      // const object = {};
+      // fr.forEach((value, key) => (object[key] = value));
+      // console.log(object);
       this.formProyectService
         .registerProject(fr)
         .subscribe(
@@ -768,7 +562,6 @@ export class FormProyectComponent implements OnInit {
       .get('rfc')
       .setValue(this.formRegisterProyect.get('rfc').value.toUpperCase());
   }
-
   returnPageDocument(value: any): void {
     Swal.fire({
       title: 'Formato de registro',

@@ -82,7 +82,7 @@ export class NavbarComponent implements OnInit {
                 console.log(data.body);
                 const response = data.body;
                 if (!response.error) {
-                  this.downloadPDF();
+                  this.downloadPDF('');
                   Swal.fire({
                     icon: 'success',
                     text: 'Documento registrado exitosamente!'
@@ -118,13 +118,15 @@ export class NavbarComponent implements OnInit {
             }
             if (data.type === HttpEventType.Response) {
               console.log(data.body);
+              console.log(data.body.data.folio);
               const response = data.body;
               if (!response.error) {
-                this.downloadPDF();
+                
                 Swal.fire({
                   icon: 'success',
                   text: 'Documento registrado exitosamente!'
                 }).then(() => {
+                  this.downloadPDF(data.body.data.folio);
                   localStorage.setItem(`button-${this.autorData.id_autores}`, 'true');
                   localStorage.removeItem('autor-data');
                   this.router.navigateByUrl('login/sesion');
@@ -152,8 +154,9 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  downloadPDF(): void {
+  downloadPDF(folio: string): void {
     let area = '';
+    let category = '';
     const fecha: Date = new Date();
     const hour = fecha.getHours();
     const minutes = fecha.getMinutes();
@@ -193,12 +196,36 @@ export class NavbarComponent implements OnInit {
         area = 'Computación y software';
         break;
     }
+
+    switch (JSON.parse(localStorage.getItem(`info-${this.autorData.id_autores}`)).id_category) {
+      case '1':
+        category = 'Petit';
+        break;
+      case '2':
+        category = 'Kids';
+        break;
+      case '3':
+        category = 'Juvenil';
+        break;
+      case '4':
+        category = 'Media Superior';
+        break;
+      case '5':
+        category = 'Superior';
+        break;
+      case '6':
+        category = 'Posgrado';
+        break;
+    }
     const info = JSON.parse(localStorage.getItem(`info-${this.autorData.id_autores}`));
     const info2 = JSON.parse(localStorage.getItem(`info-2-${this.autorData.id_autores}`));
     const pdf = new jsPDF('p', 'in', 'letter');
     const width = pdf.internal.pageSize.getWidth();
+
+    
+
     pdf.addImage('../assets/Acuse.jpg', 'jpg', 0, 0, 8.6, 11).setFontSize(14).setTextColor('#646464');
-    pdf.text(`${hour.toString()}${minutes.toString()}`, 1.2, 2.42).setFontSize(10).setTextColor('#646464');
+    pdf.text(folio, 1.2, 2.42).setFontSize(10).setTextColor('#646464');
     pdf.text(info.project_name, 0.47, 3.75);
     pdf.text(area, width / 2, 4.5, { align: 'center' });
     pdf.text(`${this.autorData.nombre} ${this.autorData.ape_pat} ${this.autorData.ape_mat}`, width / 2, 5.5, { align: 'center' });

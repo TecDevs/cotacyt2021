@@ -20,7 +20,7 @@
                     <input type="file" (change)="uploadProjectImg($event.target.files)" class="form-control" #project_image>
                     <div *ngIf="proyectData">
                         <a *ngIf="proyectData.imagen_proyecto" href="{{'https://mante.hosting.acm.org/api-cecit-2021/uploads' + proyectData.imagen_proyecto}}" target="_blank" class="form-text" style="color: blue;">Ver imagen actual</a>
-                        <small *ngIf="proyectData.imagen_proyecto === ''" class="form-text" style="color: red;">Ninguna imagen guardada</small>
+                        <small *ngIf="proyectData.imagen_proyecto === null || proyectData.imagen_proyecto === ''" class="form-text" style="color: red;">Ninguna imagen guardada</small>
                     </div>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
@@ -80,6 +80,9 @@
             <form class="row" [formGroup]="formRegisterProyect">
                 <div class="col-12">
                     <h3 class="mb-4 mt-3">Datos generales del asesor</h3>
+                </div>
+                <div class="col-12">
+                    <h6 style="color: red; font-size:small" class="mb-4">Para que se guarden correctamente los datos del asesor, asegurate de ingresar la CURP</h6>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Nombre(s)<b style="color: red;">*</b></label>
