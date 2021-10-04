@@ -322,7 +322,7 @@ export class FormProyectComponent implements OnInit {
             console.log(response);
             if (!response.error) {
               Swal.fire('Exito', 'Se subio la imagen correctamente', 'success')
-                .then(()=>{
+                .then(() => {
                   window.location.reload();
                 });
             }
@@ -366,7 +366,7 @@ export class FormProyectComponent implements OnInit {
                   'Exito',
                   'Se subio la imagen correctamente',
                   'success'
-                ).then(()=>{
+                ).then(() => {
                   window.location.reload();
                 });
               }
@@ -482,14 +482,15 @@ export class FormProyectComponent implements OnInit {
                     );
                     window.location.reload();
                   });
+                } else {
+                  Swal.fire({
+                    title: 'Exito',
+                    icon: 'success',
+                    text: 'La información se guardo correctamente',
+                  }).then(() => {
+                    window.location.reload();
+                  });
                 }
-                Swal.fire({
-                  title: 'Exito',
-                  icon: 'success',
-                  text: 'La información se guardo correctamente',
-                }).then(() => {
-                  window.location.reload();
-                });
               } else {
                 Swal.fire({
                   icon: 'warning',
