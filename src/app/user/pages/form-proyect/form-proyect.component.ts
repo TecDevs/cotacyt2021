@@ -323,8 +323,11 @@ export class FormProyectComponent implements OnInit {
             if (!response.error) {
               Swal.fire('Exito', 'Se subio la imagen correctamente', 'success')
                 .then(() => {
+                  this.registerProyect();
                   window.location.reload();
                 });
+            } else {
+              Swal.fire('Error', 'Hubo un error al subir la imagen', 'error');
             }
             this.formProyectService
               .chargeDataFormProject(this.autorData.id_autores)
@@ -367,6 +370,7 @@ export class FormProyectComponent implements OnInit {
                   'Se subio la imagen correctamente',
                   'success'
                 ).then(() => {
+                  this.registerProyect();
                   window.location.reload();
                 });
               }
@@ -391,7 +395,7 @@ export class FormProyectComponent implements OnInit {
       );
     }
   }
-  registerProyect(file: FileList): void {
+  registerProyect(): void {
     this.utilService._loading = true;
     const fr: FormData = new FormData();
     fr.append('project_id', this.formRegisterProyect.value.project_id);
