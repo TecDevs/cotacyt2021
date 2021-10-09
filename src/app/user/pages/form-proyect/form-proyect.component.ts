@@ -345,6 +345,8 @@ export class FormProyectComponent implements OnInit {
   }
   uploadAdviserIneImg(files: File[]): void {
     const imageIne = this.imageIne.nativeElement.files[0];
+    console.log(this.autorData.id_autores);
+    const autorID = this.autorData.id_autores;
     if (this.formRegisterProyect.value.curp !== '') {
       if (imageIne) {
         this.utilService._loading = true;
@@ -352,6 +354,7 @@ export class FormProyectComponent implements OnInit {
         const fr: FormData = new FormData();
         fr.append('curp', this.formRegisterProyect.value.curp);
         fr.append('image_ine', imageIne);
+        fr.append('author_id', autorID);
         this.formProyectService
           .uploadAdviserImgIne(fr)
           .subscribe((data) => {
