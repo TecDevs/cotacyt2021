@@ -226,7 +226,7 @@ export class FormProyectComponent implements OnInit {
           this.formRegisterProyect
             .get('participation_description')
             .setValue(this.proyectData.descripcion_asesor);
-          if (this.proyectData.id_modalidades === '2') {
+          if (this.proyectData.id_modalidades === '2' || this.proyectData.id_modalidades === 2) {
             this.autors = true;
             if (this.proyectData.segundo_autor !== false) {
               this.formSecondAuthor
