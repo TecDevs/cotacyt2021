@@ -17,7 +17,7 @@
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Imagen del proyecto<b style="color: red;">*</b></label>
-                    <input type="file" (change)="uploadProjectImg($event.target.files)" class="form-control" #project_image accept="image/*,.pdf">
+                    <input type="file" (change)="uploadProjectImg($event.target.files)" class="form-control" #project_image accept="image/*">
                     <div *ngIf="proyectData">
                         <a *ngIf="proyectData.imagen_proyecto" href="{{'https://mante.hosting.acm.org/api-cecit-2021/uploads' + proyectData.imagen_proyecto}}" target="_blank" class="form-text" style="color: blue;">Ver imagen actual</a>
                         <small *ngIf="proyectData.imagen_proyecto === null || proyectData.imagen_proyecto === ''" class="form-text" style="color: red;">Ninguna imagen guardada</small>
@@ -191,7 +191,7 @@
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Adjuntar credencial de elector<b style="color: red;">*</b></label>
-                    <input type="file" (change)="uploadAdviserIneImg($event.target.files)" class="form-control" #image_ine>
+                    <input accept="image/*" type="file" (change)="uploadAdviserIneImg($event.target.files)" class="form-control" #image_ine>
                     <div *ngIf="proyectData">
                         <a *ngIf="proyectData.img_ine_asesor" href="{{'https://mante.hosting.acm.org/api-cecit-2021/uploads' + proyectData.img_ine_asesor}}" target="_blank" class="form-text" style="color: blue;">Ver imagen actual</a>
                         <small *ngIf="proyectData.img_ine_asesor === '' || proyectData.img_ine_asesor === null" class="form-text" style="color: red;">Ninguna imagen guardada</small>

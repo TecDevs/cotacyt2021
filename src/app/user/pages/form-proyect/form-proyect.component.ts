@@ -31,7 +31,9 @@ export class FormProyectComponent implements OnInit {
   terminado = false;
   autorData: Autor;
   proyectData: any;
+  maxSizeImage = 4000000;
   catActual = '1';
+  imgValidation = false;
   @ViewChild('project_image', {
     read: ElementRef,
   })
@@ -307,78 +309,31 @@ export class FormProyectComponent implements OnInit {
   uploadProjectImg(files: File[]): void {
     const projectImage = this.projectImage.nativeElement.files[0];
     if (projectImage) {
-      console.log(projectImage);
-      this.utilService._loading = true;
-      this.utilService.loadingProgress = true;
-      const fr: FormData = new FormData();
-      fr.append('author_id', this.autorData.id_autores);
-      fr.append('project_image', projectImage);
-      this.formProyectService
-        .uploadProjectImage(fr)
-        .subscribe((data) => {
-          if (data.type === HttpEventType.UploadProgress) {
-            const total = data.total;
-            this.utilService.progress = Math.round((100 * data.loaded) / total);
-          }
-          if (data.type === HttpEventType.Response) {
-            const response = data.body;
-            console.log(response);
-            if (!response.error) {
-              Swal.fire('Exito', 'Se subio la imagen correctamente', 'success')
-                .then(() => {
-                  this.registerProyect();
-                  window.location.reload();
-                });
-            } else {
-              Swal.fire('Error', 'Hubo un error al subir la imagen', 'error');
-            }
-            this.formProyectService
-              .chargeDataFormProject(this.autorData.id_autores)
-              .subscribe(
-                (res) => (this.proyectData = res.data),
-                (err) => console.log(err)
-              );
-          }
-        })
-        .add(() => {
-          this.utilService._loading = false;
-          this.utilService.loadingProgress = false;
-        });
-    }
-  }
-  uploadAdviserIneImg(files: File[]): void {
-    const imageIne = this.imageIne.nativeElement.files[0];
-    console.log(this.autorData.id_autores);
-    const autorID = this.autorData.id_autores;
-    if (this.formRegisterProyect.value.curp !== '') {
-      if (imageIne) {
+      if (projectImage.size < this.maxSizeImage) {
+        console.log(projectImage);
         this.utilService._loading = true;
         this.utilService.loadingProgress = true;
         const fr: FormData = new FormData();
-        fr.append('curp', this.formRegisterProyect.value.curp);
-        fr.append('image_ine', imageIne);
-        fr.append('author_id', autorID);
+        fr.append('author_id', this.autorData.id_autores);
+        fr.append('project_image', projectImage);
         this.formProyectService
-          .uploadAdviserImgIne(fr)
+          .uploadProjectImage(fr)
           .subscribe((data) => {
             if (data.type === HttpEventType.UploadProgress) {
               const total = data.total;
-              this.utilService.progress = Math.round(
-                (100 * data.loaded) / total
-              );
+              this.utilService.progress = Math.round((100 * data.loaded) / total);
             }
             if (data.type === HttpEventType.Response) {
               const response = data.body;
               console.log(response);
               if (!response.error) {
-                Swal.fire(
-                  'Exito',
-                  'Se subio la imagen correctamente',
-                  'success'
-                ).then(() => {
-                  this.registerProyect();
-                  window.location.reload();
-                });
+                Swal.fire('Exito', 'Se subio la imagen correctamente', 'success')
+                  .then(() => {
+                    this.registerProyect();
+                    window.location.reload();
+                  });
+              } else {
+                Swal.fire('Error', 'Hubo un error al subir la imagen', 'error');
               }
               this.formProyectService
                 .chargeDataFormProject(this.autorData.id_autores)
@@ -392,6 +347,69 @@ export class FormProyectComponent implements OnInit {
             this.utilService._loading = false;
             this.utilService.loadingProgress = false;
           });
+      } else {
+        Swal.fire(
+          'Error no se subio la imagen',
+          `${this.maxSizeImage / 1000000} MB es el tamaño máximo, intenta con otra imagen`,
+          'warning'
+        );
+      }
+    }
+  }
+  uploadAdviserIneImg(files: File[]): void {
+    const imageIne = this.imageIne.nativeElement.files[0];
+    console.log(this.autorData.id_autores);
+    const autorID = this.autorData.id_autores;
+    if (this.formRegisterProyect.value.curp !== '') {
+      if (imageIne) {
+        if (imageIne.size < this.maxSizeImage) {
+          this.utilService._loading = true;
+          this.utilService.loadingProgress = true;
+          const fr: FormData = new FormData();
+          fr.append('curp', this.formRegisterProyect.value.curp);
+          fr.append('image_ine', imageIne);
+          fr.append('author_id', autorID);
+          this.formProyectService
+            .uploadAdviserImgIne(fr)
+            .subscribe((data) => {
+              if (data.type === HttpEventType.UploadProgress) {
+                const total = data.total;
+                this.utilService.progress = Math.round(
+                  (100 * data.loaded) / total
+                );
+              }
+              if (data.type === HttpEventType.Response) {
+                const response = data.body;
+                console.log(response);
+                if (!response.error) {
+                  Swal.fire(
+                    'Exito',
+                    'Se subio la imagen correctamente',
+                    'success'
+                  ).then(() => {
+                    this.registerProyect();
+                    window.location.reload();
+                  });
+                }
+                this.formProyectService
+                  .chargeDataFormProject(this.autorData.id_autores)
+                  .subscribe(
+                    (res) => (this.proyectData = res.data),
+                    (err) => console.log(err)
+                  );
+              }
+            })
+            .add(() => {
+              this.utilService._loading = false;
+              this.utilService.loadingProgress = false;
+            });
+        } else {
+          Swal.fire(
+            'Error no se subio la imagen',
+            `${this.maxSizeImage / 1000000} MB es el tamaño máximo, intenta con otra imagen`,
+            'warning'
+          );
+        }
       }
     } else {
       Swal.fire(
