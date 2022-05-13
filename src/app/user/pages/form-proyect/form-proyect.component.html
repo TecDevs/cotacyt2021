@@ -52,7 +52,7 @@
                         <option *ngFor="let category of categories" [value]=category.id_categorias>
                             {{category.categoria}}</option>
                     </select>
-                    <small class="form-text" style="color: blue;">Seleccione una categoría para poder visualizar el documento</small>
+                    <small class="form-text" style="color: blue; cursor: pointer;" (click)="downloadDocument()">Descargar formato de reporte</small>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-12">
                     <label>Modalidad autores del proyecto:<b style="color: red;">*</b></label>

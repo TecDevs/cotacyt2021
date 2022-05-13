@@ -31,6 +31,7 @@ export class FormProyectComponent implements OnInit {
   terminado = false;
   autorData: Autor;
   proyectData: any;
+  catActual = '1';
   @ViewChild('project_image', {
     read: ElementRef,
   })
@@ -172,6 +173,7 @@ export class FormProyectComponent implements OnInit {
           this.formRegisterProyect
             .get('id_category')
             .setValue(this.proyectData.id_categorias);
+          this.catActual = this.proyectData.id_categorias;
           this.formRegisterProyect
             .get('url_video')
             .setValue(this.proyectData.url_proyecto);
@@ -296,6 +298,7 @@ export class FormProyectComponent implements OnInit {
   }
   changeModality(value: any): void {
     if (value === '2') {
+      // TODO: validar si los datos estan completos
       this.autors = true;
     } else {
       this.autors = false;
@@ -578,6 +581,9 @@ export class FormProyectComponent implements OnInit {
       .setValue(this.formRegisterProyect.get('rfc').value.toUpperCase());
   }
   returnPageDocument(value: any): void {
+    this.catActual = value;
+  }
+  downloadDocument(): void {
     Swal.fire({
       title: 'Formato de registro',
       icon: 'info',
@@ -585,7 +591,7 @@ export class FormProyectComponent implements OnInit {
       showConfirmButton: true,
       confirmButtonText: 'Aceptar',
     }).then(() => {
-      switch (value) {
+      switch (this.catActual) {
         case '1':
           window.open(
             'https://docs.google.com/document/d/12acLfdQW3UQuuYPSqij5t4_J4hTMB5xj/edit?usp=sharing&ouid=111804800657131288654&rtpof=true&sd=true',
