@@ -154,6 +154,10 @@ export class FormProyectComponent implements OnInit {
       )
       .add(() => {
         if (this.proyectData.id_proyectos) {
+          if (this.proyectData.imagen_proyecto !== null && this.proyectData.img_ine_asesor !== null) {
+            localStorage.setItem(`image-validation${this.proyectData.id_proyectos}`, 'si');
+            this.imgValidation = true;
+          }
           this.formRegisterProyect
             .get('project_id')
             .setValue(this.proyectData.id_proyectos);
@@ -489,7 +493,7 @@ export class FormProyectComponent implements OnInit {
                 );
                 if (
                   this.formRegisterProyect.valid &&
-                  this.formSecondAuthor.valid
+                  this.formSecondAuthor.valid && this.imgValidation
                 ) {
                   localStorage.setItem(
                     `info-${this.autorData.id_autores}`,
@@ -541,7 +545,7 @@ export class FormProyectComponent implements OnInit {
         .subscribe(
           (data) => {
             if (!data.error) {
-              if (this.formRegisterProyect.valid) {
+              if (this.formRegisterProyect.valid && this.imgValidation ) {
                 localStorage.setItem(
                   `info-${this.autorData.id_autores}`,
                   JSON.stringify(this.formRegisterProyect.value)
