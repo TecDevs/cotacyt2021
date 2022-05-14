@@ -423,6 +423,23 @@ export class FormProyectComponent implements OnInit {
       );
     }
   }
+
+  confirmationData() {
+    Swal.fire({
+      title: 'Estas seguro que la informacion ingresada es correcta?',
+      text: "Al confirmar no podras editar la informacion",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: "CANCELAR",
+      confirmButtonText: 'CONFIRMAR'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.confirmUpdate();
+      }
+    });
+  }
   registerProyect(): void {
     this.utilService._loading = true;
     const fr: FormData = new FormData();
@@ -550,6 +567,12 @@ export class FormProyectComponent implements OnInit {
                   `info-${this.autorData.id_autores}`,
                   JSON.stringify(this.formRegisterProyect.value)
                 );
+                
+                this.confirmationData();
+                /* localStorage.setItem(
+                  `info-${this.autorData.id_autores}`,
+                  JSON.stringify(this.formRegisterProyect.value)
+                );
                 Swal.fire({
                   title: 'Registro exitoso',
                   icon: 'success',
@@ -560,7 +583,7 @@ export class FormProyectComponent implements OnInit {
                     'si'
                   );
                   window.location.reload();
-                });
+                }); */
               } else {
                 Swal.fire({
                   title: 'Exito',
@@ -581,6 +604,21 @@ export class FormProyectComponent implements OnInit {
           this.utilService._loading = false;
         });
     }
+  }
+
+  confirmUpdate(){
+    
+    Swal.fire({
+      title: 'Registro exitoso',
+      icon: 'success',
+      text: 'Solo falta subir el formato de registro para concluir el proceso',
+    }).then(() => {
+      localStorage.setItem(
+        `buttons-disabled-${this.autorData.id_autores}`,
+        'si'
+      );
+      window.location.reload();
+    });
   }
   curpUpperCaseSecondAuthor(): void {
     this.formSecondAuthor
