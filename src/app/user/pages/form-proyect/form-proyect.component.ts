@@ -29,6 +29,7 @@ export class FormProyectComponent implements OnInit {
   formSecondAuthor: FormGroup;
   autors = false;
   terminado = false;
+  terminado2 = false;
   autorData: Autor;
   proyectData: any;
   maxSizeImage = 4000000;
@@ -65,6 +66,11 @@ export class FormProyectComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let valor = localStorage.getItem("display-blocked");
+    if(valor == "yes") {
+      this.terminado2 = true;
+    }
+
     if (localStorage.getItem(`button-${this.autorData.id_autores}`)) {
       this.terminado = true;
     } else {
@@ -424,6 +430,7 @@ export class FormProyectComponent implements OnInit {
     }
   }
 
+
   confirmationData() {
     Swal.fire({
       title: 'Estas seguro que la informacion ingresada es correcta?',
@@ -436,6 +443,10 @@ export class FormProyectComponent implements OnInit {
       confirmButtonText: 'CONFIRMAR'
     }).then((result) => {
       if (result.isConfirmed) {
+        localStorage.setItem(
+          `display-blocked`,
+          "yes"
+        );
         this.confirmUpdate();
       }
     });
@@ -618,6 +629,7 @@ export class FormProyectComponent implements OnInit {
         'si'
       );
       window.location.reload();
+      
     });
   }
   curpUpperCaseSecondAuthor(): void {

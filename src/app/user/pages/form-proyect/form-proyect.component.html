@@ -1,8 +1,14 @@
 <div class="complete" *ngIf="terminado">
     <h1>Proyecto ya registrado</h1>
-    <span>Ya no se pueden realizar mas cambios</span>
+    <span>Ya no se pueden realizar más cambios</span>
 </div>
-<div class="container-fluid">
+
+<div class="complete" *ngIf="terminado2">
+    <h1>Proyecto ya registrado</h1>
+    <span>Ya no se pueden realizar más cambios</span>
+</div>
+
+<div class="container-fluid" id="displayMain">
     <div class="row mb-4">
         <div class="col-12 pl-5 pr-5 pt-2 ">
             <h1 class="text-xs-center">Registro del proyecto</h1>
@@ -345,4 +351,10 @@
             </form>
         </div>
     </div>
+</div>
+
+
+
+<div style="display: none;" id="dev">
+    <h1>HOLAAAAAAAAAAAAAAA</h1>
 </div>
