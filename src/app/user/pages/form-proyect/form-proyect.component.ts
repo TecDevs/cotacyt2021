@@ -34,6 +34,7 @@ export class FormProyectComponent implements OnInit {
   proyectData: any;
   maxSizeImage = 4000000;
   catActual = '1';
+  categorySelected = "petit";
   imgValidation = false;
   @ViewChild('project_image', {
     read: ElementRef,
@@ -653,9 +654,30 @@ export class FormProyectComponent implements OnInit {
       .setValue(this.formRegisterProyect.get('rfc').value.toUpperCase());
   }
   returnPageDocument(value: any): void {
-    this.catActual = value;
+    switch(value){
+      case '1':
+        this.categorySelected = "petit";
+        break;
+      case '2':
+        this.categorySelected = "kids";
+        break;
+      case '3':
+        this.categorySelected = "juvenil";
+        break;
+      case '4':
+        this.categorySelected = "mediasuperior";
+        break;
+      case '5':
+        this.categorySelected = "superior";
+        break;
+      case '6':
+        this.categorySelected = "posgrado";
+        break;
+    }
+    
   }
   downloadDocument(): void {
+    console.log("holaaa");
     Swal.fire({
       title: 'Formato de registro',
       icon: 'info',
@@ -665,16 +687,10 @@ export class FormProyectComponent implements OnInit {
     }).then(() => {
       switch (this.catActual) {
         case '1':
-          window.open(
-            'https://docs.google.com/document/d/12acLfdQW3UQuuYPSqij5t4_J4hTMB5xj/edit?usp=sharing&ouid=111804800657131288654&rtpof=true&sd=true',
-            '_blank'
-          );
+          this.categorySelected = "petit";
           break;
         case '2':
-          window.open(
-            'https://docs.google.com/document/d/1V5txZenYiT6ipsyJjxt8wQKQshBNmCD7/edit?usp=sharing&ouid=111804800657131288654&rtpof=true&sd=true',
-            '_blank'
-          );
+          this.categorySelected = "kids";
           break;
         case '3':
           window.open(

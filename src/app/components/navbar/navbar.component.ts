@@ -238,7 +238,7 @@ export class NavbarComponent implements OnInit {
 
     
 
-    pdf.addImage('../assets/Acuse.jpg', 'jpg', 0, 0, 8.6, 11).setFontSize(14).setTextColor('#646464');
+    pdf.addImage('../assets/resources/general/Acuse.jpg', 'jpg', 0, 0, 8.6, 11).setFontSize(14).setTextColor('#646464');
     pdf.text(folio, 1.2, 2.42).setFontSize(10).setTextColor('#646464');
     pdf.text(info.project_name, 0.47, 3.75);
     pdf.text(area, width / 2, 4.5, { align: 'center' });
