@@ -29,8 +29,13 @@ export class FormProyectComponent implements OnInit {
   formSecondAuthor: FormGroup;
   autors = false;
   terminado = false;
+  terminado2 = false;
   autorData: Autor;
   proyectData: any;
+  maxSizeImage = 4000000;
+  catActual = '1';
+  categorySelected = "petit";
+  imgValidation = false;
   @ViewChild('project_image', {
     read: ElementRef,
   })
@@ -62,6 +67,11 @@ export class FormProyectComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let valor = localStorage.getItem("display-blocked");
+    if(valor == "yes") {
+      this.terminado2 = true;
+    }
+
     if (localStorage.getItem(`button-${this.autorData.id_autores}`)) {
       this.terminado = true;
     } else {
@@ -151,6 +161,10 @@ export class FormProyectComponent implements OnInit {
       )
       .add(() => {
         if (this.proyectData.id_proyectos) {
+          if (this.proyectData.imagen_proyecto !== null && this.proyectData.img_ine_asesor !== null) {
+            localStorage.setItem(`image-validation${this.proyectData.id_proyectos}`, 'si');
+            this.imgValidation = true;
+          }
           this.formRegisterProyect
             .get('project_id')
             .setValue(this.proyectData.id_proyectos);
@@ -172,6 +186,7 @@ export class FormProyectComponent implements OnInit {
           this.formRegisterProyect
             .get('id_category')
             .setValue(this.proyectData.id_categorias);
+          this.catActual = this.proyectData.id_categorias;
           this.formRegisterProyect
             .get('url_video')
             .setValue(this.proyectData.url_proyecto);
@@ -226,7 +241,7 @@ export class FormProyectComponent implements OnInit {
           this.formRegisterProyect
             .get('participation_description')
             .setValue(this.proyectData.descripcion_asesor);
-          if (this.proyectData.id_modalidades === '2') {
+          if (this.proyectData.id_modalidades === '2' || this.proyectData.id_modalidades === 2) {
             this.autors = true;
             if (this.proyectData.segundo_autor !== false) {
               this.formSecondAuthor
@@ -296,6 +311,7 @@ export class FormProyectComponent implements OnInit {
   }
   changeModality(value: any): void {
     if (value === '2') {
+      // TODO: validar si los datos estan completos
       this.autors = true;
     } else {
       this.autors = false;
@@ -304,66 +320,31 @@ export class FormProyectComponent implements OnInit {
   uploadProjectImg(files: File[]): void {
     const projectImage = this.projectImage.nativeElement.files[0];
     if (projectImage) {
-      console.log(projectImage);
-      this.utilService._loading = true;
-      this.utilService.loadingProgress = true;
-      const fr: FormData = new FormData();
-      fr.append('author_id', this.autorData.id_autores);
-      fr.append('project_image', projectImage);
-      this.formProyectService
-        .uploadProjectImage(fr)
-        .subscribe((data) => {
-          if (data.type === HttpEventType.UploadProgress) {
-            const total = data.total;
-            this.utilService.progress = Math.round((100 * data.loaded) / total);
-          }
-          if (data.type === HttpEventType.Response) {
-            const response = data.body;
-            console.log(response);
-            if (!response.error) {
-              Swal.fire('Exito', 'Se subio la imagen correctamente', 'success');
-            }
-            this.formProyectService
-              .chargeDataFormProject(this.autorData.id_autores)
-              .subscribe(
-                (res) => (this.proyectData = res.data),
-                (err) => console.log(err)
-              );
-          }
-        })
-        .add(() => {
-          this.utilService._loading = false;
-          this.utilService.loadingProgress = false;
-        });
-    }
-  }
-  uploadAdviserIneImg(files: File[]): void {
-    const imageIne = this.imageIne.nativeElement.files[0];
-    if (this.formRegisterProyect.value.curp !== '') {
-      if (imageIne) {
+      if (projectImage.size < this.maxSizeImage) {
+        console.log(projectImage);
         this.utilService._loading = true;
         this.utilService.loadingProgress = true;
         const fr: FormData = new FormData();
-        fr.append('curp', this.formRegisterProyect.value.curp);
-        fr.append('image_ine', imageIne);
+        fr.append('author_id', this.autorData.id_autores);
+        fr.append('project_image', projectImage);
         this.formProyectService
-          .uploadAdviserImgIne(fr)
+          .uploadProjectImage(fr)
           .subscribe((data) => {
             if (data.type === HttpEventType.UploadProgress) {
               const total = data.total;
-              this.utilService.progress = Math.round(
-                (100 * data.loaded) / total
-              );
+              this.utilService.progress = Math.round((100 * data.loaded) / total);
             }
             if (data.type === HttpEventType.Response) {
               const response = data.body;
               console.log(response);
               if (!response.error) {
-                Swal.fire(
-                  'Exito',
-                  'Se subio la imagen correctamente',
-                  'success'
-                );
+                Swal.fire('Exito', 'Se subio la imagen correctamente', 'success')
+                  .then(() => {
+                    this.registerProyect();
+                    window.location.reload();
+                  });
+              } else {
+                Swal.fire('Error', 'Hubo un error al subir la imagen', 'error');
               }
               this.formProyectService
                 .chargeDataFormProject(this.autorData.id_autores)
@@ -377,6 +358,69 @@ export class FormProyectComponent implements OnInit {
             this.utilService._loading = false;
             this.utilService.loadingProgress = false;
           });
+      } else {
+        Swal.fire(
+          'Error no se subio la imagen',
+          `${this.maxSizeImage / 1000000} MB es el tamaño máximo, intenta con otra imagen`,
+          'warning'
+        );
+      }
+    }
+  }
+  uploadAdviserIneImg(files: File[]): void {
+    const imageIne = this.imageIne.nativeElement.files[0];
+    console.log(this.autorData.id_autores);
+    const autorID = this.autorData.id_autores;
+    if (this.formRegisterProyect.value.curp !== '') {
+      if (imageIne) {
+        if (imageIne.size < this.maxSizeImage) {
+          this.utilService._loading = true;
+          this.utilService.loadingProgress = true;
+          const fr: FormData = new FormData();
+          fr.append('curp', this.formRegisterProyect.value.curp);
+          fr.append('image_ine', imageIne);
+          fr.append('author_id', autorID);
+          this.formProyectService
+            .uploadAdviserImgIne(fr)
+            .subscribe((data) => {
+              if (data.type === HttpEventType.UploadProgress) {
+                const total = data.total;
+                this.utilService.progress = Math.round(
+                  (100 * data.loaded) / total
+                );
+              }
+              if (data.type === HttpEventType.Response) {
+                const response = data.body;
+                console.log(response);
+                if (!response.error) {
+                  Swal.fire(
+                    'Exito',
+                    'Se subio la imagen correctamente',
+                    'success'
+                  ).then(() => {
+                    this.registerProyect();
+                    window.location.reload();
+                  });
+                }
+                this.formProyectService
+                  .chargeDataFormProject(this.autorData.id_autores)
+                  .subscribe(
+                    (res) => (this.proyectData = res.data),
+                    (err) => console.log(err)
+                  );
+              }
+            })
+            .add(() => {
+              this.utilService._loading = false;
+              this.utilService.loadingProgress = false;
+            });
+        } else {
+          Swal.fire(
+            'Error no se subio la imagen',
+            `${this.maxSizeImage / 1000000} MB es el tamaño máximo, intenta con otra imagen`,
+            'warning'
+          );
+        }
       }
     } else {
       Swal.fire(
@@ -386,7 +430,29 @@ export class FormProyectComponent implements OnInit {
       );
     }
   }
-  registerProyect(file: FileList): void {
+
+
+  confirmationData() {
+    Swal.fire({
+      title: 'Estas seguro que la informacion ingresada es correcta?',
+      text: "Al confirmar no podras editar la informacion",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: "CANCELAR",
+      confirmButtonText: 'CONFIRMAR'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.setItem(
+          `display-blocked`,
+          "yes"
+        );
+        this.confirmUpdate();
+      }
+    });
+  }
+  registerProyect(): void {
     this.utilService._loading = true;
     const fr: FormData = new FormData();
     fr.append('project_id', this.formRegisterProyect.value.project_id);
@@ -433,7 +499,7 @@ export class FormProyectComponent implements OnInit {
         Swal.fire({
           icon: 'warning',
           title: 'Advertencia',
-          text: 'Debes ingresar la CURP del segundo autor para poder guardar la informacion',
+          text: 'Debes ingresar la CURP del segundo autor para que se guarde la informacion',
         });
       } else {
         Object.keys(this.formSecondAuthor.value).forEach((data) => {
@@ -456,7 +522,7 @@ export class FormProyectComponent implements OnInit {
                 );
                 if (
                   this.formRegisterProyect.valid &&
-                  this.formSecondAuthor.valid
+                  this.formSecondAuthor.valid && this.imgValidation
                 ) {
                   localStorage.setItem(
                     `info-${this.autorData.id_autores}`,
@@ -477,12 +543,15 @@ export class FormProyectComponent implements OnInit {
                     );
                     window.location.reload();
                   });
+                } else {
+                  Swal.fire({
+                    title: 'Exito',
+                    icon: 'success',
+                    text: 'La información se guardo correctamente',
+                  }).then(() => {
+                    window.location.reload();
+                  });
                 }
-                Swal.fire({
-                  title: 'Exito',
-                  icon: 'success',
-                  text: 'La información se guardo correctamente',
-                });
               } else {
                 Swal.fire({
                   icon: 'warning',
@@ -505,8 +574,14 @@ export class FormProyectComponent implements OnInit {
         .subscribe(
           (data) => {
             if (!data.error) {
-              if (this.formRegisterProyect.valid) {
+              if (this.formRegisterProyect.valid && this.imgValidation ) {
                 localStorage.setItem(
+                  `info-${this.autorData.id_autores}`,
+                  JSON.stringify(this.formRegisterProyect.value)
+                );
+                
+                this.confirmationData();
+                /* localStorage.setItem(
                   `info-${this.autorData.id_autores}`,
                   JSON.stringify(this.formRegisterProyect.value)
                 );
@@ -520,7 +595,7 @@ export class FormProyectComponent implements OnInit {
                     'si'
                   );
                   window.location.reload();
-                });
+                }); */
               } else {
                 Swal.fire({
                   title: 'Exito',
@@ -541,6 +616,22 @@ export class FormProyectComponent implements OnInit {
           this.utilService._loading = false;
         });
     }
+  }
+
+  confirmUpdate(){
+    
+    Swal.fire({
+      title: 'Registro exitoso',
+      icon: 'success',
+      text: 'Solo falta subir el formato de registro para concluir el proceso',
+    }).then(() => {
+      localStorage.setItem(
+        `buttons-disabled-${this.autorData.id_autores}`,
+        'si'
+      );
+      window.location.reload();
+      
+    });
   }
   curpUpperCaseSecondAuthor(): void {
     this.formSecondAuthor
@@ -563,6 +654,30 @@ export class FormProyectComponent implements OnInit {
       .setValue(this.formRegisterProyect.get('rfc').value.toUpperCase());
   }
   returnPageDocument(value: any): void {
+    switch(value){
+      case '1':
+        this.categorySelected = "petit";
+        break;
+      case '2':
+        this.categorySelected = "kids";
+        break;
+      case '3':
+        this.categorySelected = "juvenil";
+        break;
+      case '4':
+        this.categorySelected = "mediasuperior";
+        break;
+      case '5':
+        this.categorySelected = "superior";
+        break;
+      case '6':
+        this.categorySelected = "posgrado";
+        break;
+    }
+    
+  }
+  downloadDocument(): void {
+    console.log("holaaa");
     Swal.fire({
       title: 'Formato de registro',
       icon: 'info',
@@ -570,40 +685,34 @@ export class FormProyectComponent implements OnInit {
       showConfirmButton: true,
       confirmButtonText: 'Aceptar',
     }).then(() => {
-      switch (value) {
+      switch (this.catActual) {
         case '1':
-          window.open(
-            'https://drive.google.com/file/d/1U230peNB_6XEXcF2hWIFvonsOWkQp1eO/view?usp=sharing',
-            '_blank'
-          );
+          this.categorySelected = "petit";
           break;
         case '2':
-          window.open(
-            'https://drive.google.com/file/d/1gZ0RKrFM9euxNFjEohR7z6AAvO9eccYT/view?usp=sharing',
-            '_blank'
-          );
+          this.categorySelected = "kids";
           break;
         case '3':
           window.open(
-            'https://drive.google.com/file/d/1SezhWNgY64atINHHRBl27R_ue6Etxgxe/view?usp=sharing',
+            'https://docs.google.com/document/d/1YXLQOP6HqDB0PG_2BqIr0uezWM9swF7K/edit?usp=sharing&ouid=111804800657131288654&rtpof=true&sd=true',
             '_blank'
           );
           break;
         case '4':
           window.open(
-            'https://drive.google.com/file/d/1y6_meM3CgML4ZEsMJrI5ROg6JjGuCTm4/view?usp=sharing',
+            'https://docs.google.com/document/d/1xWB-iedPxXY1idoR7wBT1QzFHHapmc0x/edit?usp=sharing&ouid=111804800657131288654&rtpof=true&sd=true',
             '_blank'
           );
           break;
         case '5':
           window.open(
-            'https://drive.google.com/file/d/16pHHUHS2k46i5PKMNHTacyEi-GxfyJEJ/view?usp=sharing',
+            'https://docs.google.com/document/d/19ao939UW_IAJFaENw7orUEpdtCiHvlvR/edit?usp=sharing&ouid=111804800657131288654&rtpof=true&sd=true',
             '_blank'
           );
           break;
         case '6':
           window.open(
-            'https://drive.google.com/file/d/1z_E9WPMvSCt82rBr6IANSE2Bkl_fNVgv/view?usp=sharing',
+            'https://docs.google.com/document/d/1OtQZUBrBWJCFh078e02lzBpMK88YI4Fx/edit?usp=sharing&ouid=111804800657131288654&rtpof=true&sd=true',
             '_blank'
           );
           break;

@@ -1,5 +1,5 @@
 <nav class="navbar">
-    <img src="../../../assets/logotam.png" alt="" width="100px">
+    <img src="../../../assets/resources/image/logos/logotam.png" alt="" width="100px">
     <div class="item">
         <div class="ml-2" *ngIf="btnDisabled">
             <form [formGroup]="formRegisterProyect" class="mt-2">
@@ -13,7 +13,7 @@
                 </button>
             </form>
         </div>
-        <button *ngIf="terminado" class="btn btn-success mx-2" (click)="downloadPDF()">
+        <button *ngIf="terminado" class="btn btn-success mx-2" (click)="downloadPDF(folio)">
             Descargar acuse
         </button>
     </div>

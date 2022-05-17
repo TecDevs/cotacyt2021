@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import jsPDF from 'jspdf';
 import { HttpEventType } from '@angular/common/http';
 import { Autor } from '../../models/autor.model';
+import { FormProyectService } from '../../user/services/form-proyect.service';
 
 
 @Component({
@@ -28,11 +29,14 @@ export class NavbarComponent implements OnInit {
   fileNameSelected = 'Cargar archivo';
   formRegisterProyect: FormGroup;
   autorData: Autor;
+  proyectData: any;
+  folio: String;
   constructor(
     private upload: UploadDocument,
     private fb: FormBuilder,
     private utilService: UtilService,
     private router: Router,
+    private formProyectService: FormProyectService,
 
   ) {
     this.formRegisterProyect = this.fb.group({
@@ -42,12 +46,22 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.autorData = JSON.parse(localStorage.getItem('autor-data'));
+    // console.log(this.autorData);
     if (localStorage.getItem(`button-${this.autorData.id_autores}`)) {
       this.terminado = true;
     }
     if (localStorage.getItem(`buttons-disabled-${this.autorData.id_autores}`)) {
       this.btnDisabled = true;
     }
+    this.formProyectService
+      .chargeDataFormProject(this.autorData.id_autores)
+      .subscribe(
+        (data) => {
+          this.folio = data.data.folio_proyecto;
+          this.proyectData = data.data;
+        },
+        (err) => console.log(err)
+      );
   }
   fileChange(ev: any): void {
     if (ev.target.files.length > 0) {
@@ -82,7 +96,7 @@ export class NavbarComponent implements OnInit {
                 console.log(data.body);
                 const response = data.body;
                 if (!response.error) {
-                  this.downloadPDF('');
+                  this.downloadPDF(data.body.data.folio);
                   Swal.fire({
                     icon: 'success',
                     text: 'Documento registrado exitosamente!'
@@ -224,7 +238,7 @@ export class NavbarComponent implements OnInit {
 
     
 
-    pdf.addImage('../assets/Acuse.jpg', 'jpg', 0, 0, 8.6, 11).setFontSize(14).setTextColor('#646464');
+    pdf.addImage('../assets/resources/general/Acuse.jpg', 'jpg', 0, 0, 8.6, 11).setFontSize(14).setTextColor('#646464');
     pdf.text(folio, 1.2, 2.42).setFontSize(10).setTextColor('#646464');
     pdf.text(info.project_name, 0.47, 3.75);
     pdf.text(area, width / 2, 4.5, { align: 'center' });
